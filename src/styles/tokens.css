@@ -1,0 +1,58 @@
+/* ============================================
+   DESIGN TOKENS
+   ============================================ */
+
+:root {
+  /* ─── Colours ─── */
+  --bg: #f2f2f0;
+  --ink: #0a0a0a;
+  --muted: #8a8a86;
+  --border: rgba(10, 10, 10, 0.12);
+  --overlay: rgba(10, 10, 10, 0.96);
+
+  /* ─── Typography ─── */
+  --font-display: 'Archivo', sans-serif;
+  --font-body: 'Archivo', sans-serif;
+
+  /* Display scale — fluid from 320px → 1440px */
+  --text-hero: clamp(3rem, 10vw, 9rem);
+  --text-h2: clamp(2.5rem, 6vw, 6rem);
+  --text-cta: clamp(3rem, 8vw, 8rem);
+  --text-lg: clamp(1.125rem, 2vw, 1.5rem);
+  --text-body: 1rem;
+  --text-sm: 0.875rem;
+  --text-eyebrow: 0.75rem;
+
+  /* Display weights */
+  --weight-display: 900;
+  --weight-medium: 500;
+  --weight-regular: 400;
+
+  /* ─── Spacing ─── */
+  --space-xs:  0.5rem;
+  --space-sm:  1rem;
+  --space-md:  2rem;
+  --space-lg:  4rem;
+  --space-xl:  6rem;
+  --space-2xl: 10rem;
+  --space-3xl: 16rem;
+
+  /* ─── Transitions ─── */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out:   cubic-bezier(0.87, 0, 0.13, 1);
+  --duration-fast: 200ms;
+  --duration-base: 400ms;
+  --duration-slow: 700ms;
+
+  /* ─── Layout ─── */
+  --container-max: 1400px;
+  --container-pad: clamp(1.5rem, 5vw, 5rem);
+
+  /* ─── Z-index ─── */
+  --z-canvas:   0;
+  --z-content:  10;
+  --z-nav:      100;
+  --z-menu:     200;
+  --z-modal:    300;
+  --z-preloader: 400;
+}

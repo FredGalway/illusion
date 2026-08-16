@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Lusion Studio — We create 3D visual storytelling, immersive digital experiences, and interactive design for forward-thinking brands." />
+    <title>Illusion Studio — 3D Visual Storytelling</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/sections.css" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+
+    <!-- Custom Cursor (desktop only) -->
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-circle" aria-hidden="true"></div>
+
+    <!-- Preloader -->
+    <div id="preloader" aria-hidden="true">
+      <div class="preloader__inner">
+        <span class="preloader__label">Loading</span>
+        <span class="preloader__count">0%</span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+      <a href="/" class="nav__logo" aria-label="Illusion Studio Home">ILLUSION</a>
+      <button class="nav__burger" id="js-burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="js-menu">
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+      </button>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="js-menu" role="dialog" aria-modal="true" aria-label="Navigation menu" hidden>
+      <ul class="menu-overlay__list">
+        <li><a href="/" class="menu-overlay__link" data-index="01">Home</a></li>
+        <li><a href="/about" class="menu-overlay__link" data-index="02">About</a></li>
+        <li><a href="/projects" class="menu-overlay__link" data-index="03">Projects</a></li>
+        <li><a href="/contact" class="menu-overlay__link" data-index="04">Contact</a></li>
+      </ul>
+      <div class="menu-overlay__footer">
+        <a href="mailto:hello@lusion.studio">hello@lusion.studio</a>
+      </div>
+    </div>
+
+    <!-- Fixed 3D Canvas -->
+    <canvas id="gl-canvas" aria-hidden="true"></canvas>
+
+    <!-- Main Content -->
+    <main id="main-content">
+
+      <!-- §1 — Hero -->
+      <section class="section hero" id="hero" aria-label="Hero">
+        <div class="hero__content">
+          <p class="eyebrow" data-reveal>Studio</p>
+          <h1 class="hero__headline" data-reveal>
+            <span class="hero__line">We create</span>
+            <span class="hero__line hero__line--indent">3D visual</span>
+            <span class="hero__line">storytelling.</span>
+          </h1>
+          <p class="hero__sub" data-reveal>Scroll to explore</p>
+
+          <!-- Interactive 3D jacks container card -->
+          <div id="home-hero-visual-container">
+            <canvas id="jacks-canvas"></canvas>
+          </div>
+        </div>
+        <div class="hero__scroll-hint" aria-hidden="true">
+          <span class="hero__scroll-arrow">↓</span>
+        </div>
+      </section>
+
+      <!-- §2 — Manifesto -->
+      <section class="section manifesto" id="manifesto" aria-label="Manifesto">
+        <div class="container">
+          <p class="eyebrow" data-reveal>Bold Ideas, Brought to Life</p>
+          <p class="manifesto__statement" data-reveal>
+            We are a creative studio obsessed with the intersection of technology
+            and imagination. Every pixel, every polygon, every interaction is
+            crafted to move people — not just screens.
+          </p>
+          <div class="manifesto__ctas" data-reveal>
+            <a href="/about" class="btn btn--pill js-magnetic">Our Approach</a>
+            <button class="btn btn--pill js-magnetic" id="js-reel-btn" aria-label="Play showreel video">
+              Play Reel
+              <span class="btn__icon" aria-hidden="true">▶</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- §3 — Featured Work -->
+      <section class="section work" id="work" aria-label="Featured Work">
+        <div class="container">
+          <div class="work__header">
+            <p class="eyebrow" data-reveal>Featured Work</p>
+          </div>
+          <ul class="work__list" role="list">
+            <li class="work__item" data-reveal>
+              <a href="/projects/emergence" class="work__link">
+                <div class="work__thumb" data-distort>
+                  <div class="work__thumb-inner"></div>
+                </div>
+                <div class="work__info">
+                  <h2 class="work__title">Emergence</h2>
+                  <p class="work__tags">Web · 3D · Design</p>
+                </div>
+                <span class="work__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li class="work__item" data-reveal>
+              <a href="/projects/monument" class="work__link">
+                <div class="work__thumb" data-distort>
+                  <div class="work__thumb-inner"></div>
+                </div>
+                <div class="work__info">
+                  <h2 class="work__title">Monument</h2>
+                  <p class="work__tags">Development · 3D</p>
+                </div>
+                <span class="work__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li class="work__item" data-reveal>
+              <a href="/projects/solstice" class="work__link">
+                <div class="work__thumb" data-distort>
+                  <div class="work__thumb-inner"></div>
+                </div>
+                <div class="work__info">
+                  <h2 class="work__title">Solstice</h2>
+                  <p class="work__tags">Web · Design · Development</p>
+                </div>
+                <span class="work__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li class="work__item" data-reveal>
+              <a href="/projects/nocturne" class="work__link">
+                <div class="work__thumb" data-distort>
+                  <div class="work__thumb-inner"></div>
+                </div>
+                <div class="work__info">
+                  <h2 class="work__title">Nocturne</h2>
+                  <p class="work__tags">3D · Art Direction</p>
+                </div>
+                <span class="work__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li class="work__item" data-reveal>
+              <a href="/projects/kinetic" class="work__link">
+                <div class="work__thumb" data-distort>
+                  <div class="work__thumb-inner"></div>
+                </div>
+                <div class="work__info">
+                  <h2 class="work__title">Kinetic</h2>
+                  <p class="work__tags">Web · Motion · 3D</p>
+                </div>
+                <span class="work__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+            <li class="work__item" data-reveal>
+              <a href="/projects/vortex" class="work__link">
+                <div class="work__thumb" data-distort>
+                  <div class="work__thumb-inner"></div>
+                </div>
+                <div class="work__info">
+                  <h2 class="work__title">Vortex</h2>
+                  <p class="work__tags">Design · Development · 3D</p>
+                </div>
+                <span class="work__arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+          </ul>
+          <div class="work__footer" data-reveal>
+            <a href="/projects" class="btn btn--pill js-magnetic">See all projects</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- §4 — Vision -->
+      <section class="section vision" id="vision" aria-label="Vision">
+        <div class="container">
+          <p class="eyebrow" data-reveal>Our Vision</p>
+          <h2 class="vision__headline" data-reveal>
+            Where Creative Ideas<br>Become Immersive<br>Experiences.
+          </h2>
+          <div class="vision__body" data-reveal>
+            <p>
+              We believe the web is the most powerful creative medium of our time.
+              At Lusion, we push its boundaries — combining real-time 3D, physics
+              simulation, and cinematic motion to craft experiences that feel alive.
+            </p>
+            <p>
+              Our process is rooted in deep craft: every project begins with
+              research, experimentation, and a relentless pursuit of the unexpected.
+              The result is always something that has never existed before.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- §5 — CTA + Marquee -->
+      <section class="section cta" id="cta" aria-label="Call to Action">
+        <div class="container">
+          <p class="eyebrow" data-reveal>Let's make something</p>
+          <h2 class="cta__headline" data-reveal>
+            Is Your Big Idea<br>Ready to Go Wild?
+          </h2>
+          <a href="/contact" class="btn btn--pill btn--large js-magnetic" data-reveal>Let's work together</a>
+        </div>
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee__track">
+            <span class="marquee__item">CONTINUE TO SCROLL</span>
+            <span class="marquee__item" aria-hidden="true">CONTINUE TO SCROLL</span>
+            <span class="marquee__item" aria-hidden="true">CONTINUE TO SCROLL</span>
+            <span class="marquee__item" aria-hidden="true">CONTINUE TO SCROLL</span>
+            <span class="marquee__item" aria-hidden="true">CONTINUE TO SCROLL</span>
+            <span class="marquee__item" aria-hidden="true">CONTINUE TO SCROLL</span>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo" aria-label="Lusion Studio">LUSION</a>
+          <p class="footer__tagline">3D Visual Storytelling Studio</p>
+        </div>
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <a href="/about">About</a>
+          <a href="/projects">Projects</a>
+          <a href="/contact">Contact</a>
+          <a href="/careers">Careers</a>
+        </nav>
+        <div class="footer__contact">
+          <a href="mailto:hello@lusion.studio">hello@lusion.studio</a>
+          <a href="mailto:press@lusion.studio">press@lusion.studio</a>
+        </div>
+        <div class="footer__social">
+          <a href="https://twitter.com/lusionstudio" target="_blank" rel="noopener noreferrer" aria-label="Twitter">TW</a>
+          <a href="https://instagram.com/lusionstudio" target="_blank" rel="noopener noreferrer" aria-label="Instagram">IG</a>
+          <a href="https://linkedin.com/company/lusion" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LI</a>
+        </div>
+        <div class="footer__bottom">
+          <p class="footer__address">London · New York · Tokyo</p>
+          <p class="footer__copy">&copy; 2026 Lusion Studio. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="modal reel-modal" id="js-modal" role="dialog" aria-modal="true" aria-label="Showreel video" hidden>
+      <button class="modal__close reel-modal__close" id="js-modal-close" aria-label="Close video">✕</button>
+      <div class="modal__content reel-modal__frame">
+        <iframe
+          id="js-modal-iframe"
+          class="reel-modal__iframe"
+          src=""
+          title="Showreel"
+          allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </div>
+
+  </body>
+</html>

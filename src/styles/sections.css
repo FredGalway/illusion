@@ -269,6 +269,58 @@
   color: var(--muted);
 }
 
+/* ─── Testimonials ─── */
+.testimonials {
+  padding-block: var(--space-2xl);
+  border-top: 1px solid var(--border);
+}
+
+.testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
+
+.testimonial__card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--duration-base) var(--ease-out-expo), border-color var(--duration-base);
+}
+
+.testimonial__card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ink);
+}
+
+.testimonial__quote {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: var(--space-md);
+}
+
+.testimonial__author {
+  font-weight: var(--weight-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.testimonial__role {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.25rem;
+}
+
 /* ─── CTA ─── */
 .cta {
   padding-top: var(--space-3xl);

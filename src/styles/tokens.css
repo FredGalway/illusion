@@ -51,8 +51,8 @@
   /* ─── Z-index ─── */
   --z-canvas:   0;
   --z-content:  10;
-  --z-nav:      100;
   --z-menu:     200;
-  --z-modal:    300;
-  --z-preloader: 400;
+  --z-nav:      300;
+  --z-modal:    400;
+  --z-preloader: 500;
 }

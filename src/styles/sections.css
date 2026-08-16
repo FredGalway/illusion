@@ -4,16 +4,22 @@
 
 /* ─── Hero ─── */
 .hero {
-  min-height: 100svh;
+  /*min-height: 100svh;*/
   display: flex;
-  align-items: flex-end;
-  padding-bottom: var(--space-xl);
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-top: clamp(5rem, 10vh, 8rem);
+  padding-bottom: var(--space-lg);
   padding-inline: var(--container-pad);
+  box-sizing: border-box;
 }
 
 .hero__content {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
 }
 
 .hero__headline {
@@ -23,6 +29,7 @@
   letter-spacing: -0.03em;
   margin-bottom: var(--space-md);
   text-transform: uppercase;
+  word-break: break-word;
 }
 
 .hero__line {
@@ -30,7 +37,7 @@
 }
 
 .hero__line--indent {
-  padding-left: clamp(3rem, 10vw, 10rem);
+  padding-left: clamp(2rem, 8vw, 8rem);
 }
 
 .hero__sub {
@@ -63,11 +70,11 @@
   display: block;
   position: relative;
   width: 100%;
-  aspect-ratio: 1.15;
-  max-width: 720px;
-  max-height: 50vh;
-  margin-top: var(--space-lg);
-  border-radius: 28px;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 48vh;
+  margin-top: var(--space-md);
+  border-radius: clamp(16px, 3vw, 28px);
   overflow: hidden;
   background: #141311;
   box-shadow: 0 35px 90px rgba(0, 0, 0, 0.45);
@@ -81,17 +88,50 @@
   display: block;
 }
 
-@media (max-width: 900px) {
+
+
+@media (max-width: 600px) {
+  .hero__line--indent {
+    padding-left: 0;
+  }
+
   #home-hero-visual-container {
-    max-width: 100%;
-    aspect-ratio: 1;
-    max-height: 45vh;
+    aspect-ratio: 4 / 3;
+    /*max-height: 35vh;*/
+    min-height: 80vh;
+    border-radius: 18px;
   }
 }
 
-@media (max-height: 600px) {
+@media (max-height: 650px) {
   #home-hero-visual-container {
-    max-height: 35vh;
+    /* max-height: 30vh;*/
+    min-height: 80vh;
+  }
+}
+
+@media (max-width: 900px) {
+  #home-hero-visual-container {
+    aspect-ratio: 16 / 10;
+    /*max-height: 40vh;*/
+    min-height: 80vh;
+  }
+}
+
+@media (max-width: 1024px) {
+  #home-hero-visual-container {
+    aspect-ratio: 16 / 10;
+    /*max-height: 40vh;*/
+    min-height: 80vh;
+  }
+}
+
+@media (min-width: 1030px) {
+  #home-hero-visual-container {
+    aspect-ratio: 16 / 10;
+    /*max-height: 40vh;*/
+    min-width: 1200px;
+    min-height: 1200px;
   }
 }
 

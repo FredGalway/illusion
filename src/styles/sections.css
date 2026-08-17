@@ -29,7 +29,9 @@
   letter-spacing: -0.03em;
   margin-bottom: var(--space-md);
   text-transform: uppercase;
-  word-break: break-word;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 .hero__line {
@@ -91,6 +93,10 @@
 
 
 @media (max-width: 600px) {
+  .hero__headline {
+    font-size: clamp(1.05rem, 5.1vw, 1.75rem);
+  }
+
   .hero__line--indent {
     padding-left: 0;
   }
@@ -343,6 +349,10 @@
 
 /* ─── Responsive fixes ─── */
 @media (max-width: 900px) {
+  .hero__headline {
+    font-size: clamp(2.7rem, 6.5vw, 3.5rem);
+  }
+
   .work__link {
     grid-template-columns: 120px 1fr auto;
     gap: var(--space-sm);

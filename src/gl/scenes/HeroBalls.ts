@@ -281,8 +281,16 @@ export class HeroBalls {
 
   // ─── FPS degradation ladder ───────────────────────────────────────────────
 
+  private warmupTimer = 0
+
   private trackFPS(dt: number): void {
     if (this.fpsDegraded >= 3) return
+
+    // Allow 3.5 seconds warmup after init before measuring FPS to avoid startup spike false alarms
+    if (this.warmupTimer < 3.5) {
+      this.warmupTimer += dt
+      return
+    }
 
     const fps = 1 / dt
     this.fpsBuffer.push(fps)
@@ -290,9 +298,9 @@ export class HeroBalls {
 
     const avg = this.fpsBuffer.reduce((a, b) => a + b, 0) / this.fpsBuffer.length
 
-    if (avg < 50 && this.fpsBuffer.length === 60) {
+    if (avg < 40 && this.fpsBuffer.length === 60) {
       this.degradeTimer += dt
-      if (this.degradeTimer >= 2) {
+      if (this.degradeTimer >= 4.0) {
         this.degradeTimer = 0
         this.fpsBuffer = []
         this.applyNextDegradation()
@@ -306,13 +314,13 @@ export class HeroBalls {
     this.fpsDegraded++
 
     if (this.fpsDegraded === 1) {
-      console.warn('[HeroBalls] FPS < 50 — reducing pixelRatio to 1.25')
+      console.info('[HeroBalls] Adaptive performance optimization: reducing pixelRatio to 1.25')
       this.renderer.setPixelRatio(1.25)
     } else if (this.fpsDegraded === 2) {
-      console.warn('[HeroBalls] FPS still low — disabling shadows')
+      console.info('[HeroBalls] Adaptive performance optimization: disabling shadows')
       this.renderer.disableShadows()
     } else if (this.fpsDegraded === 3) {
-      console.warn('[HeroBalls] FPS still low — reducing to 70 balls')
+      console.info('[HeroBalls] Adaptive performance optimization: reducing to 70 balls')
       this.reduceBalls(70)
     }
   }

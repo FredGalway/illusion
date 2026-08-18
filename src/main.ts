@@ -3,6 +3,13 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { App } from './app/App'
 
+// Silence legacy third-party deprecation warnings (e.g. three-bvh-csg maxLeafSize)
+const _origWarn = console.warn
+console.warn = function (...args: any[]) {
+  if (typeof args[0] === 'string' && args[0].includes('maxLeafSize')) return
+  _origWarn.apply(console, args)
+}
+
 gsap.registerPlugin(ScrollTrigger)
 
 // ─── Reduced-motion check ──────────────────────────────────────────────────

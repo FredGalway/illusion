@@ -27,7 +27,7 @@ export class HeroJacks {
   // Color Palette state
   private currentPalette: THREE.Color[] = [
     new THREE.Color('#f5f5f3'), // Off-white
-    new THREE.Color('#111111'), // Glossy Black
+    new THREE.Color('#000000'), // Glossy Grey
     new THREE.Color('#fbc531'), // Vibrant Golden Yellow
   ]
 

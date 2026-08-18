@@ -34,11 +34,8 @@
   hyphens: none;
 }
 
-.hero__line {
-  display: block;
-}
-
 .hero__line--indent {
+  display: inline-block;
   padding-left: clamp(2rem, 8vw, 8rem);
 }
 
@@ -94,8 +91,8 @@
 
 @media (max-width: 600px) {
   .hero__headline {
-    font-size: clamp(1.05rem, 5.1vw, 1.75rem);
-  }
+    font-size: clamp(2rem, 3vw, 2.5rem);
+}
 
   .hero__line--indent {
     padding-left: 0;
@@ -104,7 +101,7 @@
   #home-hero-visual-container {
     aspect-ratio: 4 / 3;
     /*max-height: 35vh;*/
-    min-height: 80vh;
+    min-height: 70vh;
     border-radius: 18px;
   }
 }
@@ -112,7 +109,7 @@
 @media (max-height: 650px) {
   #home-hero-visual-container {
     /* max-height: 30vh;*/
-    min-height: 80vh;
+    min-height: 70vh;
   }
 }
 
@@ -120,15 +117,18 @@
   #home-hero-visual-container {
     aspect-ratio: 16 / 10;
     /*max-height: 40vh;*/
-    min-height: 80vh;
+    min-height: 70vh;
   }
+  .hero__headline {
+    font-size: clamp(2.5rem, 4vw, 2.5rem);
+}
 }
 
 @media (max-width: 1024px) {
   #home-hero-visual-container {
     aspect-ratio: 16 / 10;
     /*max-height: 40vh;*/
-    min-height: 80vh;
+    min-height: 70vh;
   }
 }
 
@@ -136,9 +136,12 @@
   #home-hero-visual-container {
     aspect-ratio: 16 / 10;
     /*max-height: 40vh;*/
-    min-width: 1200px;
-    min-height: 1200px;
+    min-width: 90%;
+    min-height: 70vh;
   }
+  .hero__headline {
+    font-size: clamp(2rem, 4vw, 3rem);
+}
 }
 
 /* ─── Manifesto ─── */
@@ -350,7 +353,7 @@
 /* ─── Responsive fixes ─── */
 @media (max-width: 900px) {
   .hero__headline {
-    font-size: clamp(2.7rem, 6.5vw, 3.5rem);
+    font-size: clamp(4rem, 6.5vw, 3.5rem);
   }
 
   .work__link {

@@ -240,18 +240,18 @@ export class App {
       // Trigger hero headline immediately (not scroll-based)
       const heroSection = document.getElementById('hero')
       if (heroSection) {
-        const lines = heroSection.querySelectorAll<HTMLElement>('.reveal-line-inner')
+        const headline = heroSection.querySelector<HTMLElement>('.hero__headline')
         const eyebrow = heroSection.querySelector<HTMLElement>('.eyebrow')
         if (eyebrow) {
           gsap.to(eyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', delay: 0.2 })
         }
-        if (lines.length) {
-          gsap.to(lines, {
-            yPercent: 0,
-            duration: 1.1,
-            ease: 'power4.out',
-            stagger: 0.08,
-            delay: 0.5,
+        if (headline) {
+          gsap.to(headline, {
+            opacity: 1,
+            y: 0,
+            duration: 1.0,
+            ease: 'power3.out',
+            delay: 0.4,
           })
         }
       }

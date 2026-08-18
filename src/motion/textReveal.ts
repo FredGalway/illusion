@@ -8,34 +8,17 @@ gsap.registerPlugin(ScrollTrigger)
  * Uses a DOM-based measurement approach (no external lib required).
  */
 function splitLines(el: HTMLElement): HTMLElement[] {
-  const originalText = el.innerText
-  const words = originalText.split(' ')
-  const lines: string[][] = []
-  let currentLine: string[] = []
+  const lines = el.innerHTML.split(/<br\s*\/?>/i)
 
-  // Build words spans to measure lines
-  el.innerHTML = words.map(w => `<span class="word">${w} </span>`).join('')
-  const wordSpans = Array.from(el.querySelectorAll<HTMLElement>('.word'))
-
-  let lastTop = -1
-  for (const span of wordSpans) {
-    const top = span.offsetTop
-    if (top !== lastTop) {
-      if (currentLine.length > 0) lines.push(currentLine)
-      currentLine = [span.innerText]
-      lastTop = top
-    } else {
-      currentLine.push(span.innerText)
-    }
-  }
-  if (currentLine.length > 0) lines.push(currentLine)
-
-  // Re-build with line wrappers
-  el.innerHTML = lines.map(lineWords => `
-    <span class="reveal-line-outer" style="display:block;overflow:hidden;">
-      <span class="reveal-line-inner" style="display:block;">${lineWords.join(' ')}</span>
-    </span>
-  `).join('')
+  el.innerHTML = lines.map(lineText => {
+    const cleanText = lineText.trim()
+    if (!cleanText) return ''
+    return `
+      <span class="reveal-line-outer" style="display:block;overflow:hidden;">
+        <span class="reveal-line-inner" style="display:block;">${cleanText}</span>
+      </span>
+    `
+  }).filter(Boolean).join('')
 
   return Array.from(el.querySelectorAll<HTMLElement>('.reveal-line-inner'))
 }
@@ -60,15 +43,32 @@ export function initTextReveal(): void {
     })
   })
 
-  // Headlines — line-by-line reveal
-  const headlines = document.querySelectorAll<HTMLElement>('h1[data-reveal], h2[data-reveal]')
+  // H1 Headline — clean global fade + slide (no JS span splitting)
+  document.querySelectorAll<HTMLElement>('h1[data-reveal]').forEach(h1 => {
+    gsap.set(h1, { opacity: 0, y: 24 })
 
-  headlines.forEach(headline => {
-    const lines = splitLines(headline)
+    ScrollTrigger.create({
+      trigger: h1,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(h1, {
+          opacity: 1,
+          y: 0,
+          duration: 1.0,
+          ease: 'power3.out',
+        })
+      },
+    })
+  })
+
+  // H2 Headlines — line-by-line reveal
+  document.querySelectorAll<HTMLElement>('h2[data-reveal]').forEach(h2 => {
+    const lines = splitLines(h2)
     gsap.set(lines, { yPercent: 110 })
 
     ScrollTrigger.create({
-      trigger: headline,
+      trigger: h2,
       start: 'top 85%',
       once: true,
       onEnter: () => {

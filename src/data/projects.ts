@@ -64,15 +64,15 @@ export const projects: Project[] = [
   },
   {
     slug: 'alison-publisher',
-    title: 'Alison Publisher',
+    title: 'Alison Publishing',
     pitch: `Conception d'un progiciel de cr\u00e9ation de cours en ligne avec un design system complet et une interface pens\u00e9e pour la productivit\u00e9.`,
     client: 'Alison',
     year: 2023,
     services: ['UX/UI', 'Design System', 'Progiciel', 'Accessibility'],
-    launchUrl: undefined,
+    launchUrl: '/05-alison-publishing.html',
     heroMedia: {
       type: 'image',
-      src: '/media/projects/alison-publisher/hero.jpg',
+      src: '/src/ui/alison/publishing/01-HomePage.png',
       layout: 'full',
     },
     media: [

@@ -12,6 +12,7 @@
     "@dimforge/rapier3d-compat": "^0.14.0",
     "gsap": "^3.12.5",
     "lenis": "^1.1.14",
+    "particles.js": "^2.0.0",
     "three": "^0.179.1",
     "three-bvh-csg": "^0.0.18",
     "three-mesh-bvh": "^0.9.14"

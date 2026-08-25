@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scroll Horizontal Parallaxe V2 — Fond Flouté Animé</title>
+  <title>Scroll Horizontal Parallaxe V3 — Arrière-plan Particle.js</title>
+  <script src="./particles.min.js"></script>
   <style>
     /* ==========================================================================
        RESET & BASE STYLES
@@ -22,8 +23,36 @@
       line-height: 1.5;
     }
 
-    /* Section d'introduction avant le scroll horizontal */
-    .hero-intro,
+    /* Section d'introduction V3 avec Particles.js */
+    .hero-intro {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: radial-gradient(circle at center, #181236 0%, #0b0818 100%);
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .hero-intro h1,
+    .hero-intro p,
+    .hero-intro .scroll-down-badge {
+      position: relative;
+      z-index: 2;
+    }
+
     .outro-section {
       min-height: 80vh;
       display: flex;
@@ -49,7 +78,7 @@
     .hero-intro p {
       font-size: clamp(1rem, 1.5vw, 1.25rem);
       color: #9f9bba;
-      max-width: 50ch;
+      max-width: 55ch;
     }
 
     .scroll-down-badge {
@@ -68,7 +97,7 @@
     }
 
     /* ==========================================================================
-       SECTION SCROLL HORIZONTAL V2 (BACKGROUND FLOU DYNAMIQUE)
+       SECTION SCROLL HORIZONTAL V3 (BACKGROUND FLOU DYNAMIQUE)
        ========================================================================== */
     .horizontal-section {
       position: relative;
@@ -84,7 +113,7 @@
       overflow: hidden;
     }
 
-    /* Couche de Fond Floutée (V2) */
+    /* Couche de Fond Floutée (V3) */
     .bg-parallax-layer {
       position: absolute;
       inset: -15%;
@@ -205,14 +234,15 @@
 </head>
 <body>
 
-  <!-- Hero d'introduction -->
+  <!-- Hero d'introduction V3 avec Particle.js -->
   <section class="hero-intro">
-    <h1>Alison Publisher — V2</h1>
-    <p>Découvrez la V2 avec fond flouté immersif en défilement horizontal parallaxe à vitesse indépendante.</p>
+    <div id="particles-js"></div>
+    <h1>Alison Publisher — V3</h1>
+    <p>Découvrez la V3 avec animation de particules interactive en arrière-plan et défilement horizontal parallaxe à vitesse indépendante.</p>
     <div class="scroll-down-badge">Scrollez vers le bas ↓</div>
   </section>
 
-  <!-- Section de Scroll Horizontal Épinglée (V2) -->
+  <!-- Section de Scroll Horizontal Épinglée (V3) -->
   <section class="horizontal-section" id="js-horizontal-section">
     <div class="horizontal-sticky">
 
@@ -275,17 +305,107 @@
 
   <!-- Outro -->
   <section class="outro-section">
-    <h2>Fin de la Présentation V2</h2>
+    <h2>Fin de la Présentation V3</h2>
     <p>Le scroll vertical classique reprend naturellement son cours.</p>
   </section>
 
   <!-- ==========================================================================
-       JAVASCRIPT V2 AUTONOME
+       JAVASCRIPT V3 AUTONOME
        ========================================================================== -->
   <script>
     (function () {
       'use strict';
 
+      // 1. Initialisation Particles.js
+      function initParticles() {
+        if (typeof particlesJS !== 'undefined') {
+          particlesJS('particles-js', {
+            "particles": {
+              "number": {
+                "value": 90,
+                "density": {
+                  "enable": true,
+                  "value_area": 800
+                }
+              },
+              "color": {
+                "value": ["#ffffff", "#00f0ff", "#a09cb0"]
+              },
+              "shape": {
+                "type": "circle"
+              },
+              "opacity": {
+                "value": 0.6,
+                "random": true,
+                "anim": {
+                  "enable": true,
+                  "speed": 1,
+                  "opacity_min": 0.2,
+                  "sync": false
+                }
+              },
+              "size": {
+                "value": 3.5,
+                "random": true
+              },
+              "line_linked": {
+                "enable": true,
+                "distance": 140,
+                "color": "#ffffff",
+                "opacity": 0.35,
+                "width": 1.1
+              },
+              "move": {
+                "enable": true,
+                "speed": 1.8,
+                "direction": "none",
+                "random": true,
+                "straight": false,
+                "out_mode": "out",
+                "bounce": false
+              }
+            },
+            "interactivity": {
+              "detect_on": "canvas",
+              "events": {
+                "onhover": {
+                  "enable": true,
+                  "mode": "grab"
+                },
+                "onclick": {
+                  "enable": true,
+                  "mode": "push"
+                },
+                "resize": true
+              },
+              "modes": {
+                "grab": {
+                  "distance": 180,
+                  "line_linked": {
+                    "opacity": 0.8
+                  }
+                },
+                "push": {
+                  "particles_nb": 4
+                }
+              }
+            },
+            "retina_detect": true
+          });
+        }
+      }
+
+      // Fallback si particles.js ne s'est pas encore chargé
+      if (typeof particlesJS !== 'undefined') {
+        initParticles();
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js';
+        script.onload = initParticles;
+        document.head.appendChild(script);
+      }
+
+      // 2. Parallaxe et Sticky Scroll Horizontal
       const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (prefersReducedMotion) return;
 
@@ -353,7 +473,7 @@
         const trackX = -currentProgress * maxX;
         track.style.transform = `translate3d(${trackX.toFixed(2)}px, 0px, 0px)`;
 
-        // 2. Translation de l'arrière-plan flouté (Vitesse réduite 0.35x pour effet de profondeur)
+        // 2. Translation de l'arrière-plan flouté
         if (bgImg) {
           const bgX = -currentProgress * (maxX * 0.35);
           bgImg.style.transform = `translate3d(${bgX.toFixed(2.5)}px, 0px, 0px) scale(2.15)`;
@@ -388,3 +508,4 @@
   </script>
 </body>
 </html>
+

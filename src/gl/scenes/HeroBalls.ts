@@ -40,6 +40,12 @@ export class HeroBalls {
   // Collider refs for walls
   private wallHandles: RAPIER.Collider[] = []
 
+  // Bounded physics loop accumulator (Phase A fix for mobile freeze)
+  private accumulator = 0
+  private FIXED_DT = 1 / 60
+  private MAX_STEPS = 3
+  private nanCheckTimer = 0
+
   private TOTAL_BALLS = 110
   private CHROME_COUNT = 12
 
@@ -60,6 +66,10 @@ export class HeroBalls {
 
     this.renderer.onFrame(this.update.bind(this))
     window.addEventListener('mousemove', this.onMouseMove.bind(this))
+    window.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: true })
+    window.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: true })
+    window.addEventListener('touchend', this.onTouchEnd.bind(this), { passive: true })
+    window.addEventListener('touchcancel', this.onTouchEnd.bind(this), { passive: true })
     window.addEventListener('click', this.onClick.bind(this))
     window.addEventListener('resize', this.onResize.bind(this))
   }
@@ -107,9 +117,13 @@ export class HeroBalls {
   // ─── Balls ───────────────────────────────────────────────────────────────
 
   private createBalls(): void {
+    const q = this.renderer.quality
+    this.TOTAL_BALLS = q.spheresCount
+    this.CHROME_COUNT = Math.max(4, Math.round(this.TOTAL_BALLS * 0.11))
     const whiteCount = this.TOTAL_BALLS - this.CHROME_COUNT
 
-    const geo = new THREE.SphereGeometry(1, 32, 32)
+    const segs = q.sphereSegments
+    const geo = new THREE.SphereGeometry(1, segs, segs)
     const whiteMat = new THREE.MeshStandardMaterial({
       color: new THREE.Color('#f5f5f3'),
       roughness: 0.85,
@@ -121,13 +135,15 @@ export class HeroBalls {
       metalness: 1,
     })
 
+    const castShadows = q.shadows !== 'none'
+
     this.whiteInstancedMesh = new THREE.InstancedMesh(geo, whiteMat, whiteCount)
-    this.whiteInstancedMesh.castShadow = true
+    this.whiteInstancedMesh.castShadow = castShadows
     this.whiteInstancedMesh.receiveShadow = false
     this.renderer.scene.add(this.whiteInstancedMesh)
 
     this.chromeInstancedMesh = new THREE.InstancedMesh(geo, chromeMat, this.CHROME_COUNT)
-    this.chromeInstancedMesh.castShadow = true
+    this.chromeInstancedMesh.castShadow = castShadows
     this.chromeInstancedMesh.receiveShadow = false
     this.renderer.scene.add(this.chromeInstancedMesh)
 
@@ -181,12 +197,9 @@ export class HeroBalls {
     this.renderer.scene.add(this.shadowFloor)
   }
 
-  // ─── Event handlers ──────────────────────────────────────────────────────
-
-  private onMouseMove(e: MouseEvent): void {
-    // Project mouse to world plane z=0
-    const nx = (e.clientX / window.innerWidth) * 2 - 1
-    const ny = -((e.clientY / window.innerHeight) * 2 - 1)
+  private updateMouseFromCoords(clientX: number, clientY: number): void {
+    const nx = (clientX / window.innerWidth) * 2 - 1
+    const ny = -((clientY / window.innerHeight) * 2 - 1)
 
     const cam = this.renderer.camera
     const vec = new THREE.Vector3(nx, ny, 0.5)
@@ -196,6 +209,48 @@ export class HeroBalls {
     const pos = cam.position.clone().add(dir.multiplyScalar(t))
 
     this.mouse3D.set(pos.x, pos.y, 0)
+  }
+
+  private onMouseMove(e: MouseEvent): void {
+    this.updateMouseFromCoords(e.clientX, e.clientY)
+  }
+
+  private onTouchStart(e: TouchEvent): void {
+    if (e.touches.length > 0) {
+      this.updateMouseFromCoords(e.touches[0].clientX, e.touches[0].clientY)
+    }
+  }
+
+  private onTouchMove(e: TouchEvent): void {
+    if (e.touches.length > 0) {
+      this.updateMouseFromCoords(e.touches[0].clientX, e.touches[0].clientY)
+    }
+  }
+
+  private onTouchEnd(): void {
+    // Park cursor collider far outside frustum when touch ends (Phase D fix)
+    this.mouse3D.set(0, -999, 0)
+  }
+
+  private lastBurstTime = 0
+
+  public triggerBurst(): void {
+    const now = performance.now()
+    if (now - this.lastBurstTime < 1500) return // 1.5s cooldown requirement (Phase B)
+    this.lastBurstTime = now
+
+    for (const ball of this.balls) {
+      const force = 1.5 + Math.random() * 2.0
+      const angle = Math.random() * Math.PI * 2
+      ball.body.applyImpulse(
+        {
+          x: Math.cos(angle) * force,
+          y: Math.sin(angle) * force + 1.0,
+          z: (Math.random() - 0.5) * force,
+        },
+        true
+      )
+    }
   }
 
   private onClick(e: MouseEvent): void {
@@ -245,18 +300,33 @@ export class HeroBalls {
       z: 0,
     })
 
-    // Scroll impulse
+    // Scroll impulse with clamped velocity & impulse (Phase B fix)
     if (Math.abs(this.scrollVelocity) > 0.01) {
-      const impulseY = Math.max(-0.05, Math.min(0.05, this.scrollVelocity * 0.002))
+      const v = Math.max(-60, Math.min(60, this.scrollVelocity))
+      const impulseY = Math.max(-0.08, Math.min(0.08, v * 0.002))
       for (const ball of this.balls) {
-        const t = ball.body.translation()
         ball.body.applyImpulse({ x: 0, y: impulseY * ball.radius * 4, z: 0 }, true)
-        void t
       }
     }
 
-    // Step physics
-    this.world.step()
+    // Bounded physics loop (Phase A fix)
+    this.accumulator += Math.min(deltaTime, 0.1)
+    let steps = 0
+    while (this.accumulator >= this.FIXED_DT && steps < this.MAX_STEPS) {
+      this.world.step()
+      this.accumulator -= this.FIXED_DT
+      steps++
+    }
+    if (this.accumulator > this.FIXED_DT * this.MAX_STEPS) {
+      this.accumulator = 0
+    }
+
+    // 1-second NaN check safeguard
+    this.nanCheckTimer += deltaTime
+    if (this.nanCheckTimer >= 1.0) {
+      this.nanCheckTimer = 0
+      this.checkNaN()
+    }
 
     // Sync Three.js instances
     for (const ball of this.balls) {
@@ -340,5 +410,26 @@ export class HeroBalls {
       this.whiteInstancedMesh.setMatrixAt(i, dummy.matrix)
     }
     this.whiteInstancedMesh.instanceMatrix.needsUpdate = true
+  }
+
+  // ─── NaN Safeguard ────────────────────────────────────────────────────────
+  private checkNaN(): void {
+    if (this.balls.length === 0) return
+    const pos = this.balls[0].body.translation()
+    if (Number.isNaN(pos.x) || Number.isNaN(pos.y) || Number.isNaN(pos.z)) {
+      console.warn('[HeroBalls] NaN position detected! Resetting ball positions.')
+      this.resetBallPositions()
+    }
+  }
+
+  private resetBallPositions(): void {
+    for (const ball of this.balls) {
+      const spawnX = (Math.random() - 0.5) * this.frustumW * 0.9
+      const spawnY = this.frustumH / 2 + ball.radius + Math.random() * this.frustumH * 1.5
+      const spawnZ = (Math.random() - 0.5) * 1.5
+      ball.body.setTranslation({ x: spawnX, y: spawnY, z: spawnZ }, true)
+      ball.body.setLinvel({ x: 0, y: 0, z: 0 }, true)
+      ball.body.setAngvel({ x: 0, y: 0, z: 0 }, true)
+    }
   }
 }

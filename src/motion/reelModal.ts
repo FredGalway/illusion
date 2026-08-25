@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 
-const VIDEO_ID = 'KNh7BQc3KeU';
+const VIDEO_ID = 'AKueRGrUSPY';
 
 export function initReelModal(lenis: { stop(): void; start(): void }) {
   const modal = document.getElementById('reel-modal')!;
@@ -10,7 +10,7 @@ export function initReelModal(lenis: { stop(): void; start(): void }) {
   const open = () => {
     lenis.stop();
     // src posé à l'ouverture -> l'autoplay part avec le geste utilisateur
-    iframe.src = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`;
+    iframe.src = `https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0&modestbranding=1&vq=hd720&start=20&playsinline=0`;
     modal.removeAttribute('hidden');
     gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' });
   };

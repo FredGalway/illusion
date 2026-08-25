@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import RAPIER from '@dimforge/rapier3d-compat'
 import { SUBTRACTION, Brush, Evaluator } from 'three-bvh-csg'
+import { getQualityProfile, type QualityProfile } from '../quality'
 
 interface JackBody {
   body: RAPIER.RigidBody
@@ -13,6 +14,7 @@ export class HeroJacks {
   private container: HTMLElement
   private canvas: HTMLCanvasElement
   private renderer!: THREE.WebGLRenderer
+  private quality: QualityProfile = getQualityProfile()
   private scene!: THREE.Scene
   private camera!: THREE.PerspectiveCamera
   private world!: RAPIER.World
@@ -38,11 +40,18 @@ export class HeroJacks {
   // Collider refs for walls
   private wallHandles: RAPIER.Collider[] = []
 
+  private clock = new THREE.Clock()
+  private accumulator = 0
+  private FIXED_DT = 1 / 60
+  private MAX_STEPS = 3
+  private nanCheckTimer = 0
+
   private TOTAL_JACKS = 32
 
   constructor(container: HTMLElement, canvas: HTMLCanvasElement) {
     this.container = container
     this.canvas = canvas
+    this.TOTAL_JACKS = this.quality.tier === 'low' ? 12 : this.quality.tier === 'medium' ? 20 : 32
   }
 
   async init(): Promise<void> {
@@ -60,6 +69,10 @@ export class HeroJacks {
     this.renderer.setAnimationLoop(this.loop.bind(this))
 
     window.addEventListener('mousemove', this.onMouseMove.bind(this))
+    window.addEventListener('touchstart', this.onTouchStart.bind(this), { passive: true })
+    window.addEventListener('touchmove', this.onTouchMove.bind(this), { passive: true })
+    window.addEventListener('touchend', this.onTouchEnd.bind(this), { passive: true })
+    window.addEventListener('touchcancel', this.onTouchEnd.bind(this), { passive: true })
     window.addEventListener('click', this.onClick.bind(this))
     
     this.resizeObserver = new ResizeObserver(() => {
@@ -74,16 +87,33 @@ export class HeroJacks {
 
     this.renderer = new THREE.WebGLRenderer({
       canvas: this.canvas,
-      antialias: true,
+      antialias: this.quality.antialias,
       alpha: true, // Transparent background so CSS styles the card background
     })
     this.renderer.setSize(width, height)
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.quality.maxPixelRatio))
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
     this.renderer.toneMappingExposure = 1.2
     this.renderer.outputColorSpace = THREE.SRGBColorSpace
-    this.renderer.shadowMap.enabled = true
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+
+    if (this.quality.shadows === 'none') {
+      this.renderer.shadowMap.enabled = false
+    } else {
+      this.renderer.shadowMap.enabled = true
+      this.renderer.shadowMap.type =
+        this.quality.shadows === 'pcf' ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap
+    }
+
+    this.canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault()
+      console.warn('[HeroJacks] WebGL context lost!')
+      this.active = false
+      this.renderer.setAnimationLoop(null)
+    })
+    this.canvas.addEventListener('webglcontextrestored', () => {
+      console.info('[HeroJacks] WebGL context restored! Reloading page.')
+      location.reload()
+    })
 
     this.scene = new THREE.Scene()
 
@@ -365,17 +395,14 @@ export class HeroJacks {
     this.world.createCollider(RAPIER.ColliderDesc.ball(0.55), this.cursorBody)
   }
 
-  private onMouseMove(e: MouseEvent): void {
+  private updateMouseFromCoords(clientX: number, clientY: number): void {
     const rect = this.container.getBoundingClientRect()
-    // Localized coordinates within the home-hero-visual-container bounds
-    const rx = e.clientX - rect.left
-    const ry = e.clientY - rect.top
+    const rx = clientX - rect.left
+    const ry = clientY - rect.top
 
-    // Map to normalized device coords [-1, 1] relative to container
     const nx = (rx / rect.width) * 2 - 1
     const ny = -((ry / rect.height) * 2 - 1)
 
-    // Project container NDC back to world coords at z=0 local space
     const vec = new THREE.Vector3(nx, ny, 0.5)
     vec.unproject(this.camera)
     const dir = vec.sub(this.camera.position).normalize()
@@ -383,6 +410,27 @@ export class HeroJacks {
     const pos = this.camera.position.clone().add(dir.multiplyScalar(t))
 
     this.mouse3D.set(pos.x, pos.y, 0)
+  }
+
+  private onMouseMove(e: MouseEvent): void {
+    this.updateMouseFromCoords(e.clientX, e.clientY)
+  }
+
+  private onTouchStart(e: TouchEvent): void {
+    if (e.touches.length > 0) {
+      this.updateMouseFromCoords(e.touches[0].clientX, e.touches[0].clientY)
+    }
+  }
+
+  private onTouchMove(e: TouchEvent): void {
+    if (e.touches.length > 0) {
+      this.updateMouseFromCoords(e.touches[0].clientX, e.touches[0].clientY)
+    }
+  }
+
+  private onTouchEnd(): void {
+    // Park cursor collider far outside frustum when touch ends (Phase D fix)
+    this.mouse3D.set(0, -999, 0)
   }
 
   private onClick(e: MouseEvent): void {
@@ -470,8 +518,26 @@ export class HeroJacks {
   private loop(): void {
     if (!this.active) return
 
-    // Step Rapier Physics
-    this.world.step()
+    const deltaTime = Math.min(this.clock.getDelta(), 0.1)
+
+    // Bounded physics loop (Phase A fix)
+    this.accumulator += deltaTime
+    let steps = 0
+    while (this.accumulator >= this.FIXED_DT && steps < this.MAX_STEPS) {
+      this.world.step()
+      this.accumulator -= this.FIXED_DT
+      steps++
+    }
+    if (this.accumulator > this.FIXED_DT * this.MAX_STEPS) {
+      this.accumulator = 0
+    }
+
+    // 1-second NaN check safeguard
+    this.nanCheckTimer += deltaTime
+    if (this.nanCheckTimer >= 1.0) {
+      this.nanCheckTimer = 0
+      this.checkNaN()
+    }
 
     // Lerp cursor collider positional placement
     this.cursorLerp.x += (this.mouse3D.x - this.cursorLerp.x) * 0.1
@@ -515,6 +581,27 @@ export class HeroJacks {
       this.instancedMesh.material.forEach(m => m.dispose())
     } else {
       this.instancedMesh.material.dispose()
+    }
+  }
+
+  // ─── NaN Safeguard ────────────────────────────────────────────────────────
+  private checkNaN(): void {
+    if (this.jacks.length === 0) return
+    const pos = this.jacks[0].body.translation()
+    if (Number.isNaN(pos.x) || Number.isNaN(pos.y) || Number.isNaN(pos.z)) {
+      console.warn('[HeroJacks] NaN position detected! Resetting jack positions.')
+      this.resetJackPositions()
+    }
+  }
+
+  private resetJackPositions(): void {
+    for (const jack of this.jacks) {
+      const spawnX = (Math.random() - 0.5) * 1.0
+      const spawnY = 1.2 + Math.random() * 0.8
+      const spawnZ = (Math.random() - 0.5) * 0.4
+      jack.body.setTranslation({ x: spawnX, y: spawnY, z: spawnZ }, true)
+      jack.body.setLinvel({ x: 0, y: 0, z: 0 }, true)
+      jack.body.setAngvel({ x: 0, y: 0, z: 0 }, true)
     }
   }
 }

@@ -1,11 +1,17 @@
 import type Lenis from 'lenis'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Renderer } from '../gl/Renderer'
 import { HeroBalls } from '../gl/scenes/HeroBalls'
 import { HeroJacks } from '../gl/scenes/HeroJacks'
 import { initTextReveal } from '../motion/textReveal'
 import { initMagnetic } from '../motion/magnetic'
 import { initCursor } from '../motion/cursor'
+import { Router } from './Router'
+import { getProject } from '../data/projects'
+import { renderProjectPage, mountProjectPage, unmountProjectPage } from './ProjectPage'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export class App {
   private lenis: Lenis | null
@@ -13,6 +19,11 @@ export class App {
   private renderer!: Renderer
   private heroBalls!: HeroBalls
   private heroJacks: HeroJacks | null = null
+  private router!: Router
+  private mainEl!: HTMLElement
+  private homeContent = ''
+  private currentView: 'home' | 'project' = 'home'
+  private glActive = false
 
   constructor(lenis: Lenis | null, prefersReduced: boolean) {
     this.lenis = lenis
@@ -21,11 +32,18 @@ export class App {
 
   async init(): Promise<void> {
     document.body.classList.add('is-loading')
+
+    // Cache main element and home content
+    this.mainEl = document.getElementById('main-content')!
+    this.homeContent = this.mainEl.innerHTML
+
+    // Shell setup (runs ONCE, survives route changes)
     this.setupNav()
     this.setupModal()
 
     if (this.prefersReduced) {
       this.reducedMotionInit()
+      this.setupRouter()
       return
     }
 
@@ -35,7 +53,6 @@ export class App {
     await this.renderer.init()
 
     this.heroBalls = new HeroBalls(this.renderer)
-    // Don't init balls yet — wait for preloader to complete
 
     // Boot 3D Foreground Card (Jacks)
     const jacksContainer = document.getElementById('home-hero-visual-container')
@@ -47,19 +64,127 @@ export class App {
     // Lenis velocity → ball scroll impulse
     if (this.lenis) {
       this.lenis.on('scroll', ({ velocity }: { velocity: number }) => {
-        this.heroBalls.scrollVelocity = velocity
+        const clampedV = Math.max(-60, Math.min(60, velocity))
+        if (this.heroBalls) this.heroBalls.scrollVelocity = clampedV
       })
     }
 
-    // Motion
-    if (!this.prefersReduced) {
-      initCursor()
-      initMagnetic()
-      // Text reveals triggered AFTER preloader completes
-    }
+    // Motion (once)
+    initCursor()
+    initMagnetic()
 
     // Run preloader, then chain intro
     await this.runPreloader()
+
+    // Setup router AFTER preloader completes
+    this.setupRouter()
+  }
+
+  // ─── Router ────────────────────────────────────────────────────────────────
+  private setupRouter(): void {
+    this.router = new Router({
+      onHome: () => this.showHome(),
+      onProject: (slug) => this.showProject(slug),
+    })
+    // Resolve initial route
+    this.router.resolve()
+  }
+
+  private async showHome(): Promise<void> {
+    if (this.currentView === 'home') return
+    this.currentView = 'home'
+
+    document.body.classList.remove('is-project-page')
+
+    // Cleanup project page
+    unmountProjectPage()
+
+    // Restore home content
+    this.mainEl.innerHTML = this.homeContent
+
+    // Scroll to top
+    window.scrollTo(0, 0)
+    this.lenis?.scrollTo(0, { immediate: true })
+
+    // Show 3D
+    this.startGL()
+
+    // Re-init anchor links for home page
+    this.setupAnchorLinks()
+
+    // Re-init text reveals for new DOM
+    if (!this.prefersReduced) {
+      // Small delay so DOM is settled
+      requestAnimationFrame(() => {
+        initTextReveal()
+        initMagnetic()
+
+        // Force hero elements visible (already past preloader)
+        const heroSection = document.getElementById('hero')
+        if (heroSection) {
+          const headline = heroSection.querySelector<HTMLElement>('.hero__headline')
+          const eyebrow = heroSection.querySelector<HTMLElement>('.eyebrow')
+          if (eyebrow) gsap.set(eyebrow, { opacity: 1, y: 0 })
+          if (headline) gsap.set(headline, { opacity: 1, y: 0 })
+        }
+      })
+    }
+  }
+
+  private showProject(slug: string): void {
+    const project = getProject(slug)
+    if (!project) {
+      Router.toHome()
+      return
+    }
+
+    // If switching from home, teardown home-specific stuff
+    if (this.currentView === 'home') {
+      this.killHomeScrollTriggers()
+      this.stopGL()
+    } else {
+      // Project → Project: cleanup previous project
+      unmountProjectPage()
+    }
+
+    this.currentView = 'project'
+    document.body.classList.add('is-project-page')
+
+    // Render project page
+    this.mainEl.innerHTML = renderProjectPage(project)
+
+    // Scroll to top
+    window.scrollTo(0, 0)
+    this.lenis?.scrollTo(0, { immediate: true })
+
+    // Add enter animation
+    const article = this.mainEl.querySelector('.project')
+    if (article) article.classList.add('project--entering')
+
+    // Mount project page logic (observers, scroll-through, reveals)
+    requestAnimationFrame(() => {
+      mountProjectPage(this.mainEl, project)
+    })
+  }
+
+  // ─── GL lifecycle ──────────────────────────────────────────────────────────
+  private startGL(): void {
+    if (this.prefersReduced || this.glActive) return
+    const canvas = document.getElementById('gl-canvas') as HTMLCanvasElement
+    if (canvas) canvas.style.display = ''
+    this.glActive = true
+  }
+
+  private stopGL(): void {
+    if (!this.glActive) return
+    const canvas = document.getElementById('gl-canvas') as HTMLCanvasElement
+    if (canvas) canvas.style.display = 'none'
+    this.glActive = false
+  }
+
+  private killHomeScrollTriggers(): void {
+    // Kill ScrollTrigger instances created by textReveal on home
+    ScrollTrigger.getAll().forEach((st) => st.kill())
   }
 
   // ─── Navigation ────────────────────────────────────────────────────────────
@@ -94,6 +219,30 @@ export class App {
     })
   }
 
+  // ─── Anchor navigation (Lenis controlled) ──────────────────────────────
+  private setupAnchorLinks(): void {
+    document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+      // Skip router-style links (#/projects/...)
+      const href = a.getAttribute('href')
+      if (!href || href === '#' || href.startsWith('#/')) return
+
+      a.addEventListener('click', (e) => {
+        const target = document.querySelector(href)
+        if (target) {
+          e.preventDefault()
+          if (this.lenis) {
+            this.lenis.scrollTo(target as HTMLElement, {
+              duration: 1.4,
+              easing: (t: number) => 1 - Math.pow(1 - t, 4),
+            })
+          } else {
+            target.scrollIntoView({ behavior: 'smooth' })
+          }
+        }
+      })
+    })
+  }
+
   // ─── Video modal ───────────────────────────────────────────────────────────
   private setupModal(): void {
     const reelBtn  = document.getElementById('js-reel-btn')
@@ -106,8 +255,8 @@ export class App {
       modal.removeAttribute('hidden')
 
       iframe.src =
-        'https://www.youtube.com/embed/KNh7BQc3KeU' +
-        '?autoplay=1&fullscreen=1&fs=1&playsinline=0&rel=0&enablejsapi=1'
+        'https://www.youtube-nocookie.com/embed/AKueRGrUSPY' +
+        '?autoplay=1&fs=1&rel=0&enablejsapi=1&start=20&vq=hd720&playsinline=0'
 
       this.lenis?.stop()
 
@@ -166,9 +315,8 @@ export class App {
       }
 
       const startTime = performance.now()
-      const MIN_DURATION = 1200 // ms
+      const MIN_DURATION = 1200
 
-      // Animate counter 0 → 100
       const counter = { value: 0 }
       const tl = gsap.timeline()
 
@@ -182,7 +330,6 @@ export class App {
       })
 
       tl.call(() => {
-        // Ensure minimum duration has passed
         const elapsed = performance.now() - startTime
         const wait = Math.max(0, MIN_DURATION - elapsed)
 
@@ -201,7 +348,6 @@ export class App {
   ): void {
     const tl = gsap.timeline()
 
-    // 1. Count slides up
     tl.to([labelEl, countEl], {
       yPercent: -120,
       opacity: 0,
@@ -210,14 +356,12 @@ export class App {
       stagger: 0.05,
     })
 
-    // 2. Clip-path overlay reveal (top to bottom)
     tl.fromTo(preloader,
       { clipPath: 'inset(0% 0% 0% 0%)' },
       { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: 'power4.inOut' },
       '-=0.3'
     )
 
-    // 3. Balls fall (init physics world)
     tl.call(async () => {
       preloader.setAttribute('hidden', '')
       preloader.removeAttribute('aria-hidden')
@@ -225,19 +369,19 @@ export class App {
       document.body.classList.remove('is-loading')
       document.body.style.cursor = ''
 
-      // Init hero balls (they'll start falling from above)
       await this.heroBalls.init()
 
-      // Init interactive jacks if present
       if (this.heroJacks) {
         await this.heroJacks.init()
       }
+
+      this.glActive = true
     })
 
-    // 4. Short delay, then text reveals
     tl.call(() => {
       initTextReveal()
-      // Trigger hero headline immediately (not scroll-based)
+      this.setupAnchorLinks()
+
       const heroSection = document.getElementById('hero')
       if (heroSection) {
         const headline = heroSection.querySelector<HTMLElement>('.hero__headline')
@@ -266,6 +410,5 @@ export class App {
       preloader.setAttribute('hidden', '')
     }
     document.body.classList.remove('is-loading')
-    // No 3D, no reveals, no Lenis — page is fully readable static
   }
 }

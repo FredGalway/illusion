@@ -15,7 +15,7 @@
   --font-body: 'Archivo', sans-serif;
 
   /* Display scale — fluid from 320px → 1440px */
-  --text-hero: clamp(2rem, 7vw, 7rem);
+  --text-hero: clamp(3.25rem, 6.5vw, 7.5rem);
   --text-h2: clamp(2.5rem, 6vw, 6rem);
   --text-cta: clamp(3rem, 8vw, 8rem);
   --text-lg: clamp(1.125rem, 2vw, 1.5rem);

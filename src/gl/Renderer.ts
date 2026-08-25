@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+import { getQualityProfile, type QualityProfile } from './quality'
 
 type FrameCallback = (deltaTime: number, elapsed: number) => void
 
@@ -7,6 +8,7 @@ export class Renderer {
   scene: THREE.Scene
   camera: THREE.PerspectiveCamera
   renderer!: THREE.WebGLRenderer
+  quality: QualityProfile = getQualityProfile()
   private canvas: HTMLCanvasElement
   private frameCallbacks: FrameCallback[] = []
   private clock = new THREE.Clock()
@@ -35,24 +37,54 @@ export class Renderer {
     this.setupLights()
     this.setupCursorParallax()
     this.setupResize()
+    this.setupContextAndVisibility()
     this.renderer.setAnimationLoop(this.loop.bind(this))
   }
 
+  private setupContextAndVisibility(): void {
+    // 1. WebGL Context Lost & Restored Safeguards
+    this.canvas.addEventListener('webglcontextlost', (e) => {
+      e.preventDefault()
+      console.warn('[Renderer] WebGL context lost!')
+      this.renderer.setAnimationLoop(null)
+    })
+    this.canvas.addEventListener('webglcontextrestored', () => {
+      console.info('[Renderer] WebGL context restored! Reloading page.')
+      location.reload()
+    })
+
+    // 2. Background tab performance guard
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        this.renderer.setAnimationLoop(null)
+      } else {
+        this.renderer.setAnimationLoop(this.loop.bind(this))
+      }
+    })
+  }
+
   private initRenderer(): void {
-    this.renderer = new THREE.WebGLRenderer({ canvas: this.canvas, antialias: true })
-    console.log('[Renderer] WebGL active')
+    this.renderer = new THREE.WebGLRenderer({
+      canvas: this.canvas,
+      antialias: this.quality.antialias,
+    })
+    console.log(`[Renderer] WebGL active (Tier: ${this.quality.tier})`)
 
     this.renderer.setSize(window.innerWidth, window.innerHeight)
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio, this.quality.maxPixelRatio))
 
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
     this.renderer.toneMappingExposure = 1.1
     this.renderer.outputColorSpace = THREE.SRGBColorSpace
 
-    this.renderer.shadowMap.enabled = true
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    if (this.quality.shadows === 'none') {
+      this.renderer.shadowMap.enabled = false
+    } else {
+      this.renderer.shadowMap.enabled = true
+      this.renderer.shadowMap.type =
+        this.quality.shadows === 'pcf' ? THREE.PCFShadowMap : THREE.PCFSoftShadowMap
+    }
   }
-
 
   private setupEnvironment(): void {
     const pmrem = new THREE.PMREMGenerator(this.renderer)
@@ -66,15 +98,19 @@ export class Renderer {
   private setupLights(): void {
     const sun = new THREE.DirectionalLight(0xffffff, 2.2)
     sun.position.set(4, 8, 6)
-    sun.castShadow = true
-    sun.shadow.mapSize.set(2048, 2048)
-    sun.shadow.camera.near = 0.5
-    sun.shadow.camera.far = 50
-    sun.shadow.camera.left = -12
-    sun.shadow.camera.right = 12
-    sun.shadow.camera.top = 12
-    sun.shadow.camera.bottom = -12
-    ;(sun.shadow as THREE.DirectionalLightShadow & { radius: number }).radius = 8
+    if (this.quality.shadows !== 'none') {
+      sun.castShadow = true
+      sun.shadow.mapSize.set(this.quality.shadowMapSize, this.quality.shadowMapSize)
+      sun.shadow.camera.near = 0.5
+      sun.shadow.camera.far = 50
+      sun.shadow.camera.left = -12
+      sun.shadow.camera.right = 12
+      sun.shadow.camera.top = 12
+      sun.shadow.camera.bottom = -12
+      ;(sun.shadow as THREE.DirectionalLightShadow & { radius: number }).radius = 8
+    } else {
+      sun.castShadow = false
+    }
     this.scene.add(sun)
   }
 

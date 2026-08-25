@@ -1,0 +1,562 @@
+/* ============================================
+   LUSION-AUTHENTIC PROJECT PAGE DESIGN
+   ============================================ */
+
+/* ─── Root Project Theme (Dark Slate / Neon Cyan) ─── */
+.project {
+  --proj-bg: #0b0818;
+  --proj-bg-elevated: #141026;
+  --proj-card-bg: #181330;
+  --proj-text-main: #ffffff;
+  --proj-text-muted: #9f9bba;
+  --proj-accent: #00f0ff;
+  --proj-accent-glow: rgba(0, 240, 255, 0.15);
+  --proj-border: rgba(255, 255, 255, 0.1);
+  --proj-pill-bg: #ffffff;
+  --proj-pill-text: #0b0818;
+
+  background-color: var(--proj-bg);
+  color: var(--proj-text-main);
+  min-height: 100vh;
+  position: relative;
+  font-family: var(--font-body, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  overflow-x: hidden;
+}
+
+/* Hide home navbar logo when on project page to prevent text overlap */
+body.is-project-page .nav__logo {
+  display: none !important;
+}
+
+/* Background Subtle Mesh Gradient */
+.project::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(0, 240, 255, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(120, 50, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Top Floating Header Bar (Lusion Style) ─── */
+.project__top-bar {
+  position: fixed;
+  top: 1.5rem;
+  left: var(--container-pad, 2rem);
+  right: var(--container-pad, 2rem);
+  z-index: var(--z-nav, 100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.project__top-bar * {
+  pointer-events: auto;
+}
+
+/* Left Brand Logo */
+.project__brand {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--proj-text-main);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.project__brand-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--proj-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--proj-accent);
+}
+
+/* Right Pill Actions Group */
+.project__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Generic Lusion Capsule / Pill */
+.project__pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+/* Primary White Capsule (BACK / MENU) */
+.project__pill--primary {
+  background-color: var(--proj-pill-bg);
+  color: var(--proj-pill-text);
+  border-color: var(--proj-pill-bg);
+}
+
+.project__pill--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.25);
+  opacity: 0.95;
+}
+
+/* Secondary Glassmorphism Capsule (LET'S TALK / MUTE) */
+.project__pill--glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--proj-text-main);
+  border-color: var(--proj-border);
+}
+
+.project__pill--glass:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Icon Pills (Sound, Icon only) */
+.project__pill--icon {
+  padding: 0.6rem 0.8rem;
+  min-width: 42px;
+}
+
+/* ─── Hero Section (Lusion Split Layout) ─── */
+.project__hero {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+  padding: 8rem var(--container-pad, 2rem) 4rem;
+  z-index: 1;
+}
+
+/* Left Hero Column */
+.project__hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 580px;
+}
+
+.project__title {
+  font-size: clamp(2.8rem, 5.5vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--proj-text-main);
+  margin-bottom: 1.5rem;
+}
+
+.project__pitch {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--proj-text-muted);
+  margin-bottom: 2.5rem;
+  max-width: 48ch;
+}
+
+/* Hero Meta & Services (Split Column) */
+.project__hero-meta {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--proj-border);
+}
+
+.project__meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.project__meta-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--proj-accent);
+}
+
+.project__meta-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--proj-text-muted);
+}
+
+.project__meta-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--proj-text-main);
+}
+
+/* Launch Action Pill */
+.project__launch-wrap {
+  margin-top: 0.5rem;
+}
+
+.project__launch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 2.2rem;
+  border-radius: 9999px;
+  background-color: var(--proj-pill-bg);
+  color: var(--proj-pill-text);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.project__launch-btn:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 14px 40px rgba(0, 240, 255, 0.25);
+  background-color: var(--proj-accent);
+  color: #000000;
+}
+
+/* Right Hero Showcase Media Card */
+.project__hero-showcase {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 75vh;
+  border-radius: 24px;
+  overflow: hidden;
+  background-color: var(--proj-card-bg);
+  border: 1px solid var(--proj-border);
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px var(--proj-accent-glow);
+  transform: translateY(0);
+  transition: transform 0.5s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.project__hero-showcase img,
+.project__hero-showcase video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Scroll Explorer Hint */
+.project__scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  right: var(--container-pad, 2rem);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--proj-accent);
+  opacity: 0.8;
+}
+
+.project__scroll-hint-arrow {
+  display: inline-block;
+  animation: hint-bounce 2s infinite ease-in-out;
+}
+
+@keyframes hint-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* ─── Media Flow Section (GSAP Pinned Horizontal Scroll) ─── */
+.project__media-flow {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding-block: 6rem;
+  z-index: 1;
+}
+
+.project__media-track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4vw;
+  padding-inline: max(2rem, 8vw);
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+.project__media-item {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(340px, 55vw, 850px);
+}
+
+.project__media-item[data-layout="full"] {
+  width: clamp(450px, 75vw, 1100px);
+}
+
+.project__media-item[data-layout="left"] {
+  width: clamp(340px, 48vw, 750px);
+}
+
+.project__media-item[data-layout="right"] {
+  width: clamp(340px, 48vw, 750px);
+}
+
+.project__media-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: var(--proj-card-bg);
+  border: 1px solid var(--proj-border);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project__media-card:hover {
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px var(--proj-accent-glow);
+}
+
+.project__media-card img,
+.project__media-card video,
+.project__media-card .project__media-poster {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  min-height: 250px;
+  background: linear-gradient(135deg, #181330 0%, #0e0b1f 100%);
+}
+
+.project__media-card video {
+  aspect-ratio: 16 / 9;
+}
+
+.project__media-caption {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgba(11, 8, 24, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--proj-border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--proj-text-main);
+  pointer-events: none;
+}
+
+/* Play Overlay Button for Low Tier */
+.project__play-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(11, 8, 24, 0.5);
+  border: none;
+  color: var(--proj-accent);
+  font-size: 3rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.project__play-overlay:hover {
+  background: rgba(11, 8, 24, 0.7);
+  transform: scale(1.05);
+}
+
+/* ─── Next Project Section ─── */
+.project__next {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem var(--container-pad, 2rem);
+  border-top: 1px solid var(--proj-border);
+  background-color: #070512;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.project__next-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--proj-accent);
+  margin-bottom: 1.5rem;
+}
+
+.project__next-title {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--proj-text-main);
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+  max-width: 15ch;
+}
+
+.project__next-title:hover {
+  color: var(--proj-accent);
+  transform: scale(1.02);
+}
+
+.project__next-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.12;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.project__next:hover .project__next-bg {
+  opacity: 0.25;
+}
+
+/* ─── Gauge Controls ─── */
+.project__gauge-svg {
+  position: fixed;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  z-index: 200;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project__next:hover .project__gauge-svg {
+  opacity: 1;
+}
+
+.project__gauge-bar-wrap {
+  display: none;
+}
+
+@media (hover: none) {
+  .project__gauge-svg {
+    display: none;
+  }
+
+  .project__gauge-bar-wrap {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 200;
+  }
+
+  .project__gauge-bar {
+    height: 100%;
+    background: var(--proj-accent);
+    transform-origin: left center;
+    transform: scaleX(0);
+    opacity: 0;
+    transition: opacity 0.2s;
+    box-shadow: 0 0 10px var(--proj-accent);
+  }
+}
+
+/* ─── Responsive Breakpoints ─── */
+@media (max-width: 1024px) {
+  .project__hero {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-top: 7rem;
+    min-height: auto;
+  }
+
+  .project__hero-content {
+    max-width: 100%;
+  }
+
+  .project__hero-showcase {
+    aspect-ratio: 16 / 10;
+    max-height: 50vh;
+  }
+
+  .project__media-item[data-layout="left"],
+  .project__media-item[data-layout="right"] {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .project__top-bar {
+    top: 1rem;
+  }
+
+  .project__pill {
+    padding: 0.5rem 1rem;
+    font-size: 0.72rem;
+  }
+
+  .project__title {
+    font-size: 2.5rem;
+  }
+
+  .project__hero-meta {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+}
+
+/* Page Entry Fade */
+.project--entering {
+  animation: proj-fade-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes proj-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

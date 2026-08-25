@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Horizontal Parallaxe V2 — Fond Flouté Animé</title>
+  <style>
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0b0818;
+      color: #ffffff;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Section d'introduction avant le scroll horizontal */
+    .hero-intro,
+    .outro-section {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: radial-gradient(circle at center, #181236 0%, #0b0818 100%);
+    }
+
+    .hero-intro h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, #a09cb0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-intro p {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      color: #9f9bba;
+      max-width: 50ch;
+    }
+
+    .scroll-down-badge {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #00f0ff;
+    }
+
+    /* ==========================================================================
+       SECTION SCROLL HORIZONTAL V2 (BACKGROUND FLOU DYNAMIQUE)
+       ========================================================================== */
+    .horizontal-section {
+      position: relative;
+      width: 100%;
+      background-color: #0b0818;
+    }
+
+    .horizontal-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* Couche de Fond Floutée (V2) */
+    .bg-parallax-layer {
+      position: absolute;
+      inset: -15%;
+      width: 145%;
+      height: 130%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-parallax-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(2px) brightness(0.9);
+      opacity: 0.8; /* 80% d'opacité */
+      will-change: transform;
+    }
+
+    .horizontal-track {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: nowrap;
+      height: 100%;
+      width: max-content;
+      will-change: transform;
+      align-items: center;
+    }
+
+    /* Panneaux principaux */
+    .panel {
+      position: relative;
+      flex: 0 0 auto;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4vw;
+      overflow: hidden;
+    }
+
+    .panel__card {
+      position: relative;
+      width: clamp(320px, 75vw, 1100px);
+      height: clamp(240px, 70vh, 700px);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(20, 16, 38, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 240, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Images Parallaxe interne */
+    .parallax {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      display: block;
+      will-change: transform;
+      transition: transform 0.05s linear;
+    }
+
+    .panel__caption {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      background: rgba(11, 8, 24, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #00f0ff;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .panel__number {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.15);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       FALLBACK PREFERS-REDUCED-MOTION & JAVASCRIPT DÉSACTIVÉ
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      .horizontal-section { height: auto !important; }
+      .horizontal-sticky { position: relative !important; height: auto !important; overflow: visible !important; }
+      .bg-parallax-layer { display: none !important; }
+      .horizontal-track { flex-direction: column !important; transform: none !important; width: 100% !important; }
+      .panel { width: 100% !important; height: auto !important; min-height: 60vh !important; padding: 4rem 2rem !important; }
+      .parallax { transform: none !important; width: 100% !important; height: auto !important; }
+    }
+
+    noscript .horizontal-section { height: auto !important; }
+    noscript .horizontal-sticky { position: relative !important; height: auto !important; }
+    noscript .bg-parallax-layer { display: none !important; }
+    noscript .horizontal-track { flex-direction: column !important; transform: none !important; width: 100% !important; }
+    noscript .panel { width: 100% !important; height: auto !important; padding: 4rem 2rem !important; }
+    noscript .parallax { transform: none !important; width: 100% !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Hero d'introduction -->
+  <section class="hero-intro">
+    <h1>Alison Publisher — V2</h1>
+    <p>Découvrez la V2 avec fond flouté immersif en défilement horizontal parallaxe à vitesse indépendante.</p>
+    <div class="scroll-down-badge">Scrollez vers le bas ↓</div>
+  </section>
+
+  <!-- Section de Scroll Horizontal Épinglée (V2) -->
+  <section class="horizontal-section" id="js-horizontal-section">
+    <div class="horizontal-sticky">
+
+      <!-- Arrière-plan flouté d'une maquette Alison (défile à vitesse 0.35x) -->
+      <div class="bg-parallax-layer">
+        <img class="bg-parallax-img" id="js-bg-parallax" src="./src/ui/alison/publishing/01-HomePage.png" alt="Fond Flouté Alison">
+      </div>
+
+      <!-- Rail de contenu horizontal principal -->
+      <div class="horizontal-track" id="js-horizontal-track">
+
+        <!-- Panneau 1 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">01</span>
+            <img class="parallax parallax-x-20" src="./src/ui/alison/publishing/01-HomePage.png" alt="01 - Home Page">
+            <span class="panel__caption">01. Page d'Accueil — Vue d'ensemble</span>
+          </div>
+        </article>
+
+        <!-- Panneau 2 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">02</span>
+            <img class="parallax parallax-x-10 reverse" src="./src/ui/alison/publishing/02-Dashboard-Preview.png" alt="02 - Dashboard Preview">
+            <span class="panel__caption">02. Aperçu du Dashboard Apprenants</span>
+          </div>
+        </article>
+
+        <!-- Panneau 3 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">03</span>
+            <img class="parallax parallax-y-15" src="./src/ui/alison/publishing/03-New-course.png" alt="03 - New Course">
+            <span class="panel__caption">03. Module de Création de Cours</span>
+          </div>
+        </article>
+
+        <!-- Panneau 4 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">04</span>
+            <img class="parallax parallax-x-20 parallax-y-15" src="./src/ui/alison/publishing/04-New-Module.png" alt="04 - New Module">
+            <span class="panel__caption">04. Éditeur de Modules & Contenus</span>
+          </div>
+        </article>
+
+        <!-- Panneau 5 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">05</span>
+            <img class="parallax parallax-x-15 reverse" src="./src/ui/alison/publishing/05-Dashboard-Full.png" alt="05 - Dashboard Full">
+            <span class="panel__caption">05. Dashboard Progiciel Complet</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Outro -->
+  <section class="outro-section">
+    <h2>Fin de la Présentation V2</h2>
+    <p>Le scroll vertical classique reprend naturellement son cours.</p>
+  </section>
+
+  <!-- ==========================================================================
+       JAVASCRIPT V2 AUTONOME
+       ========================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      const section = document.getElementById('js-horizontal-section');
+      const track = document.getElementById('js-horizontal-track');
+      const bgImg = document.getElementById('js-bg-parallax');
+      if (!section || !track) return;
+
+      const parallaxElements = Array.from(document.querySelectorAll('.parallax'));
+
+      let targetProgress = 0;
+      let currentProgress = 0;
+      let maxX = 0;
+
+      const parallaxConfig = parallaxElements.map(el => {
+        const classList = Array.from(el.classList);
+        let speedX = 0;
+        let speedY = 0;
+        let reverse = classList.includes('reverse');
+
+        classList.forEach(cls => {
+          const matchX = cls.match(/^parallax-x-(\d+)$/);
+          if (matchX) speedX = parseFloat(matchX[1]);
+
+          const matchY = cls.match(/^parallax-y-(\d+)$/);
+          if (matchY) speedY = parseFloat(matchY[1]);
+        });
+
+        return {
+          el,
+          speedX: reverse ? -speedX : speedX,
+          speedY: reverse ? -speedY : speedY
+        };
+      });
+
+      function calculateDimensions() {
+        const trackWidth = track.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        maxX = trackWidth - viewportWidth;
+        section.style.height = (maxX + viewportHeight) + 'px';
+      }
+
+      function updateScrollProgress() {
+        const sectionRect = section.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const totalScrollableDistance = section.offsetHeight - viewportHeight;
+
+        if (totalScrollableDistance <= 0) return;
+
+        const rawProgress = -sectionRect.top / totalScrollableDistance;
+        targetProgress = Math.max(0, Math.min(1, rawProgress));
+      }
+
+      function render() {
+        // Interpolation douce (0.08)
+        currentProgress += (targetProgress - currentProgress) * 0.08;
+
+        if (Math.abs(targetProgress - currentProgress) < 0.0001) {
+          currentProgress = targetProgress;
+        }
+
+        // 1. Translation du track principal
+        const trackX = -currentProgress * maxX;
+        track.style.transform = `translate3d(${trackX.toFixed(2)}px, 0px, 0px)`;
+
+        // 2. Translation de l'arrière-plan flouté (Vitesse réduite 0.35x pour effet de profondeur)
+        if (bgImg) {
+          const bgX = -currentProgress * (maxX * 0.35);
+          bgImg.style.transform = `translate3d(${bgX.toFixed(2.5)}px, 0px, 0px) scale(2.15)`;
+        }
+
+        // 3. Décalages parallaxe des cartes internes
+        parallaxConfig.forEach(cfg => {
+          const offsetX = (currentProgress - 0.5) * cfg.speedX * 2;
+          const offsetY = (currentProgress - 0.5) * cfg.speedY * 2;
+
+          cfg.el.style.transform = `translate3d(${offsetX.toFixed(2)}px, ${offsetY.toFixed(2)}px, 0px) scale(1.2)`;
+        });
+
+        requestAnimationFrame(render);
+      }
+
+      function init() {
+        calculateDimensions();
+        updateScrollProgress();
+        requestAnimationFrame(render);
+      }
+
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+      window.addEventListener('resize', calculateDimensions);
+
+      if (document.readyState === 'complete') {
+        init();
+      } else {
+        window.addEventListener('load', init);
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -163,4 +163,14 @@ export function initTextReveal(): void {
       },
     })
   })
+
+  // Fallback: Ensure all text reveals become visible after max 2s if animation/trigger delayed
+  setTimeout(() => {
+    document.querySelectorAll<HTMLElement>('[data-reveal], .reveal-line-inner').forEach(el => {
+      const computed = window.getComputedStyle(el)
+      if (computed.opacity === '0' || computed.visibility === 'hidden') {
+        gsap.to(el, { opacity: 1, y: 0, yPercent: 0, duration: 0.4, overwrite: 'auto' })
+      }
+    })
+  }, 2000)
 }

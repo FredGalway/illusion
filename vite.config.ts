@@ -17,6 +17,7 @@ export default defineConfig({
         '04-alison-app': resolve(__dirname, '04-alison-app.html'),
         '05-alison-publishing': resolve(__dirname, '05-alison-publishing.html'),
         '06-alison-publishing-app': resolve(__dirname, '06-alison-publishing-app.html'),
+        '07-credit-agricol-app': resolve(__dirname, '07-credit-agricol-app.html'),
         'horizontal-parallax-v1': resolve(__dirname, 'horizontal-parallax-v1.html'),
       },
     },

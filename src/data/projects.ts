@@ -45,7 +45,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'alison-app',
-    title: 'Alison App Mobile',
+    title: 'Alison Mobile App',
     pitch: `Prototype haute fid\u00e9lit\u00e9 d'une application mobile \u00e9ducative pens\u00e9e pour l'engagement des apprenants \u00e0 travers la gamification.`,
     client: 'Alison',
     year: 2023,

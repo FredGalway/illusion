@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scroll Horizontal Parallaxe V3 — Arrière-plan Particle.js</title>
+  <title>Scroll Horizontal Parallaxe — Alison Mobile App</title>
   <script src="/bg-canvas-effects.js"></script>
   <style>
     /* ==========================================================================
@@ -71,6 +71,7 @@
       letter-spacing: -0.02em;
       margin-bottom: 1rem;
       background: linear-gradient(135deg, #ffffff 0%, #a09cb0 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -509,16 +510,15 @@
     <span class="back-btn__arrow">←</span> RETOUR
   </a>
 
-  <a href="https://publishing-v2.alison.com/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Accès au site officiel Alison">
+  <a href="https://alison.com/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Accès au site officiel Alison">
     ACCÈS AU SITE <span class="site-btn__icon">↗</span>
   </a>
 
   <!-- Hero d'introduction V3 avec Particle.js -->
   <section class="hero-intro">
     <div id="particles-js"></div>
-    <h1>Alison Publishing</h1>
-    <p>Alison Publishing est la branche édition de cours de la plateforme éducative Alison. En tant que Lead UX UI pour la société Capernaum Ltd, j'ai aidé son dirigeant Mike Feerick à moderniser
-ses outils de production et de communication Alison en fournissant des interfaces hyper-réaliste et prêtes à être intégrées pour des environnements softwares et dynamiques. Voici ci-dessous quelques interfaces témoins de mon travail au coeur d'une équipe internationale de 8 développeurs.</p>
+    <h1>Alison Mobile App</h1>
+    <p>Alison Mobile App est l'application smartphone éducative de la plateforme Alison. Conçue avec une approche centrée sur l'expérience mobile (UX/UI), elle intègre la gamification, le suivi d'apprentissage personnalisé, l'évaluation continue et un parcours utilisateur ergonomique pour des millions d'apprenants.</p>
     <div class="scroll-down-badge">Scrollez vers le bas ↓</div>
   </section>
 
@@ -526,9 +526,9 @@ ses outils de production et de communication Alison en fournissant des interface
   <section class="horizontal-section" id="js-horizontal-section">
     <div class="horizontal-sticky">
 
-      <!-- Arrière-plan flouté d'une maquette Alison (défile à vitesse 0.35x) -->
+      <!-- Arrière-plan flouté d'une maquette Alison Mobile App -->
       <div class="bg-parallax-layer">
-        <img class="bg-parallax-img" id="js-bg-parallax" src="./src/ui/alison/publishing/01-HomePage.png" alt="Fond Flouté Alison">
+        <img class="bg-parallax-img" id="js-bg-parallax" src="./src/ui/alison/app/01-Alison-App-Course-part.jpg" alt="Fond Flouté Alison Mobile App">
       </div>
 
       <!-- Rail de contenu horizontal principal -->
@@ -538,8 +538,8 @@ ses outils de production et de communication Alison en fournissant des interface
         <article class="panel">
           <div class="panel__card">
             <span class="panel__number">01</span>
-            <img class="parallax parallax-x-20" src="./src/ui/alison/publishing/01-HomePage.png" alt="01 - Home Page">
-            <span class="panel__caption">01. Page d'Accueil — Vue d'ensemble</span>
+            <img class="parallax parallax-x-20" src="./src/ui/alison/app/01-Alison-App-Course-part.jpg" alt="01 - Course Part">
+            <span class="panel__caption">01. Interface de Cours & Leçons Mobile</span>
           </div>
         </article>
 
@@ -547,8 +547,8 @@ ses outils de production et de communication Alison en fournissant des interface
         <article class="panel">
           <div class="panel__card">
             <span class="panel__number">02</span>
-            <img class="parallax parallax-x-10 reverse" src="./src/ui/alison/publishing/02-Dashboard-Preview.png" alt="02 - Dashboard Preview">
-            <span class="panel__caption">02. Aperçu du Dashboard Apprenants</span>
+            <img class="parallax parallax-x-10 reverse" src="./src/ui/alison/app/02-Alison-App-Ranking-Page.jpg" alt="02 - Ranking Page">
+            <span class="panel__caption">02. Classement & Engagement Gamifié</span>
           </div>
         </article>
 
@@ -556,8 +556,8 @@ ses outils de production et de communication Alison en fournissant des interface
         <article class="panel">
           <div class="panel__card">
             <span class="panel__number">03</span>
-            <img class="parallax parallax-y-15" src="./src/ui/alison/publishing/03-New-course.png" alt="03 - New Course">
-            <span class="panel__caption">03. Module de Création de Cours</span>
+            <img class="parallax parallax-y-15" src="./src/ui/alison/app/03-Alison-App-User-Profile.jpg" alt="03 - User Profile">
+            <span class="panel__caption">03. Profil Utilisateur & Suivi de Progression</span>
           </div>
         </article>
 
@@ -565,8 +565,8 @@ ses outils de production et de communication Alison en fournissant des interface
         <article class="panel">
           <div class="panel__card">
             <span class="panel__number">04</span>
-            <img class="parallax parallax-x-20 parallax-y-15" src="./src/ui/alison/publishing/04-New-Module.png" alt="04 - New Module">
-            <span class="panel__caption">04. Éditeur de Modules & Contenus</span>
+            <img class="parallax parallax-x-20 parallax-y-15" src="./src/ui/alison/app/04-Alison-App-scoring-pages.jpg" alt="04 - Scoring Pages">
+            <span class="panel__caption">04. Système de Notation & Évaluations</span>
           </div>
         </article>
 
@@ -574,8 +574,8 @@ ses outils de production et de communication Alison en fournissant des interface
         <article class="panel">
           <div class="panel__card">
             <span class="panel__number">05</span>
-            <img class="parallax parallax-x-15 reverse" src="./src/ui/alison/publishing/05-Dashboard-Full.png" alt="05 - Dashboard Full">
-            <span class="panel__caption">05. Dashboard Progiciel Complet</span>
+            <img class="parallax parallax-x-15 reverse" src="./src/ui/alison/app/05-Alison-App-Checkout-Process-2.jpg" alt="05 - Checkout Process">
+            <span class="panel__caption">05. Parcours de Conversion & Inscription</span>
           </div>
         </article>
 
@@ -593,45 +593,45 @@ ses outils de production et de communication Alison en fournissant des interface
       </div>
 
       <div class="projects-grid">
-        <!-- Projet 1 : Alison Publishing App -->
-        <a href="/06-alison-publishing-app.html" class="project-card">
+        <!-- Projet 1 : Alison Publishing -->
+        <a href="/05-alison-publishing.html" class="project-card">
           <div class="project-card__thumb">
-            <div class="project-card__bg project-card__bg--1" style="background-image: url('/src/ui/alison/publishing-app/01-Editor-App.jpg'); background-size: cover; background-position: top center;"></div>
-            <span class="project-card__tag">UX Innovation · LMS</span>
+            <div class="project-card__bg project-card__bg--1" style="background-image: url('/src/ui/alison/publishing/01-HomePage.png'); background-size: cover; background-position: top center;"></div>
+            <span class="project-card__tag">Progiciel · Design System</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Alison Publishing App</h3>
-            <p class="project-card__desc">Module d'édition d'applications et de création de questionnaires QCM.</p>
+            <h3 class="project-card__title">Alison Publishing</h3>
+            <p class="project-card__desc">Conception du progiciel de création de cours et système de publication en ligne.</p>
             <div class="project-card__footer">
               <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
 
-        <!-- Projet 2 : Alison Mobile App -->
-        <a href="/04-alison-app.html" class="project-card">
-          <div class="project-card__thumb">
-            <div class="project-card__bg project-card__bg--2" style="background-image: url('/src/ui/alison/app/01-Alison-App-Course-part.jpg'); background-size: cover; background-position: top center;"></div>
-            <span class="project-card__tag">Prototype XD · Mobile</span>
-          </div>
-          <div class="project-card__content">
-            <h3 class="project-card__title">Alison Mobile App</h3>
-            <p class="project-card__desc">Application mobile éducative axée sur la gamification et l'engagement des apprenants.</p>
-            <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Projet 3 : Alison Landing Pages -->
+        <!-- Projet 2 : Alison Landing Pages -->
         <a href="/03-alison-landing-pages.html" class="project-card">
           <div class="project-card__thumb">
-            <div class="project-card__bg project-card__bg--3" style="background-image: url('/src/ui/alison/landing-pages/01-Result-Page.jpg'); background-size: cover; background-position: top center;"></div>
+            <div class="project-card__bg project-card__bg--2" style="background-image: url('/src/ui/alison/landing-pages/01-Result-Page.jpg'); background-size: cover; background-position: top center;"></div>
             <span class="project-card__tag">EduTech · Irlande</span>
           </div>
           <div class="project-card__content">
             <h3 class="project-card__title">Alison Landing Pages</h3>
             <p class="project-card__desc">Refonte des pages d'acquisition du leader mondial de la formation gratuite (+34% de conversion).</p>
+            <div class="project-card__footer">
+              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Projet 3 : BNP & IA Secure -->
+        <a href="/#work" class="project-card">
+          <div class="project-card__thumb">
+            <div class="project-card__bg project-card__bg--3"></div>
+            <span class="project-card__tag">Adobe Award · Finance</span>
+          </div>
+          <div class="project-card__content">
+            <h3 class="project-card__title">BNP & IA Secure</h3>
+            <p class="project-card__desc">Interface primée par Adobe pour la meilleure UI internationale de sécurité bancaire.</p>
             <div class="project-card__footer">
               <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
             </div>
@@ -874,4 +874,3 @@ ses outils de production et de communication Alison en fournissant des interface
   </script>
 </body>
 </html>
-

@@ -13,6 +13,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        '02-bnp-motion-card': resolve(__dirname, '02-bnp-motion-card.html'),
         '03-alison-landing-pages': resolve(__dirname, '03-alison-landing-pages.html'),
         '04-alison-app': resolve(__dirname, '04-alison-app.html'),
         '05-alison-publishing': resolve(__dirname, '05-alison-publishing.html'),

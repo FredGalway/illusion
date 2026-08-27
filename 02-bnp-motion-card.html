@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Horizontal Parallaxe — BNP & IA Secure</title>
+  <script src="/bg-canvas-effects.js"></script>
+  <style>
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #0b0818;
+      color: #ffffff;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Section d'introduction V3 avec Particles.js */
+    .hero-intro {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: radial-gradient(circle at center, #047755 0%, #001d11 100%);
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .hero-intro h1,
+    .hero-intro p,
+    .hero-intro .scroll-down-badge {
+      position: relative;
+      z-index: 2;
+    }
+
+    .outro-section {
+      min-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: radial-gradient(circle at center, #181236 0%, #0b0818 100%);
+    }
+
+    .hero-intro h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #ffffff 0%, #d8d8d8 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-intro p {
+      font-size: clamp(1rem, 1.5vw, 1.25rem);
+      color: #c4c4c4;
+      max-width: 55ch;
+    }
+
+    .scroll-down-badge {
+      margin-top: 3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #00f0ff;
+    }
+
+    /* ==========================================================================
+       SECTION SCROLL HORIZONTAL V3 (BACKGROUND FLOU DYNAMIQUE)
+       ========================================================================== */
+    .horizontal-section {
+      position: relative;
+      width: 100%;
+      background-color: #0b0818;
+    }
+
+    .horizontal-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* Couche de Fond Floutée (V3) */
+    .bg-parallax-layer {
+      position: absolute;
+      inset: -15%;
+      width: 145%;
+      height: 130%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-parallax-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(2px) brightness(0.9);
+      opacity: 0.8; /* 80% d'opacité */
+      will-change: transform;
+    }
+
+    .horizontal-track {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: nowrap;
+      height: 100%;
+      width: max-content;
+      will-change: transform;
+      align-items: center;
+    }
+
+    /* Panneaux principaux */
+    .panel {
+      position: relative;
+      flex: 0 0 auto;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 4vw;
+      overflow: hidden;
+    }
+
+    .panel__card {
+      position: relative;
+      width: clamp(320px, 75vw, 1100px);
+      height: clamp(240px, 70vh, 700px);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(20, 16, 38, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 240, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Images Parallaxe interne */
+    .parallax {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      display: block;
+      will-change: transform;
+      transition: transform 0.05s linear;
+    }
+
+    .panel__caption {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 9999px;
+      background: rgba(11, 8, 24, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #00f0ff;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .panel__number {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-size: 3rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.15);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* ==========================================================================
+       FALLBACK PREFERS-REDUCED-MOTION & JAVASCRIPT DÉSACTIVÉ
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      .horizontal-section { height: auto !important; }
+      .horizontal-sticky { position: relative !important; height: auto !important; overflow: visible !important; }
+      .bg-parallax-layer { display: none !important; }
+      .horizontal-track { flex-direction: column !important; transform: none !important; width: 100% !important; }
+      .panel { width: 100% !important; height: auto !important; min-height: 60vh !important; padding: 4rem 2rem !important; }
+      .parallax { transform: none !important; width: 100% !important; height: auto !important; }
+    }
+
+    /* Bouton Retour haut à gauche */
+    .back-btn {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      background: #ffffff;
+      color: #0b0818;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      background: #00f0ff;
+      color: #0b0818;
+      box-shadow: 0 6px 25px rgba(0, 240, 255, 0.4);
+    }
+
+    .back-btn__arrow {
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .back-btn:hover .back-btn__arrow {
+      transform: translateX(-3px);
+    }
+
+    /* Bouton Accès au site haut à droite */
+    .site-btn {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.4rem;
+      border-radius: 9999px;
+      background: #ffffff;
+      color: #0b0818;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .site-btn:hover {
+      transform: translateY(-2px) scale(1.04);
+      background: #00f0ff;
+      color: #0b0818;
+      box-shadow: 0 6px 25px rgba(0, 240, 255, 0.4);
+    }
+
+    .site-btn__icon {
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .site-btn:hover .site-btn__icon {
+      transform: translate(2px, -2px);
+    }
+
+    /* Modal Lightbox Maquette Plein Écran Full Responsive */
+    .project-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(11, 8, 24, 0.98);
+      backdrop-filter: blur(20px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .project-modal.is-active {
+      display: block;
+      opacity: 1;
+    }
+
+    .project-modal__content {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 5rem 1rem 3rem 1rem;
+    }
+
+    .project-modal__img {
+      width: 100vw;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 240, 255, 0.2);
+    }
+
+    .project-modal__close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(11, 8, 24, 0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+      z-index: 2010;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .project-modal__close:hover {
+      background: #00f0ff;
+      color: #0b0818;
+      border-color: #00f0ff;
+      transform: scale(1.1);
+    }
+
+    /* ==========================================================================
+       SECTION PROJETS À DÉCOUVRIR (DESIGN SYSTEM RESPONSIVE)
+       ========================================================================== */
+    .projects-section {
+      padding: 6rem 2rem;
+      background: radial-gradient(circle at 50% 0%, #150e2e 0%, #0b0818 100%);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 2;
+    }
+
+    .projects-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .projects-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .projects-eyebrow {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #00f0ff;
+      display: block;
+      margin-bottom: 0.75rem;
+    }
+
+    .projects-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+      color: #ffffff;
+    }
+
+    .projects-subtitle {
+      font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+      color: #9f9bba;
+      max-width: 60ch;
+      margin: 0 auto;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      background: rgba(20, 16, 38, 0.6);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.4s ease,
+                  box-shadow 0.4s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 240, 255, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 240, 255, 0.15);
+    }
+
+    .project-card__thumb {
+      position: relative;
+      width: 100%;
+      height: 190px;
+      overflow: hidden;
+      background: #181236;
+    }
+
+    .project-card__bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card:hover .project-card__bg {
+      transform: scale(1.08);
+    }
+
+    .project-card__bg--1 {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+    }
+    .project-card__bg--2 {
+      background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #10b981 100%);
+    }
+    .project-card__bg--3 {
+      background: linear-gradient(135deg, #831843 0%, #be185d 50%, #f43f5e 100%);
+    }
+    .project-card__bg--4 {
+      background: linear-gradient(135deg, #7c2d12 0%, #c2410c 50%, #f97316 100%);
+    }
+    .project-card__bg--5 {
+      background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #0284c7 100%);
+    }
+
+    .project-card__tag {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      background: rgba(11, 8, 24, 0.8);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #00f0ff;
+    }
+
+    .project-card__content {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .project-card__title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .project-card:hover .project-card__title {
+      color: #00f0ff;
+    }
+
+    .project-card__desc {
+      font-size: 0.9rem;
+      color: #9f9bba;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .project-card__footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .project-card__link {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.3s ease;
+    }
+
+    .project-card__link .arrow {
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-card__link {
+      color: #00f0ff;
+    }
+
+    .project-card:hover .project-card__link .arrow {
+      transform: translateX(5px);
+    }
+
+    @media (max-width: 600px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .projects-section {
+        padding: 4rem 1.25rem;
+      }
+    }
+
+    noscript .horizontal-section { height: auto !important; }
+    noscript .horizontal-sticky { position: relative !important; height: auto !important; }
+    noscript .bg-parallax-layer { display: none !important; }
+    noscript .horizontal-track { flex-direction: column !important; transform: none !important; width: 100% !important; }
+    noscript .panel { width: 100% !important; height: auto !important; padding: 4rem 2rem !important; }
+    noscript .parallax { transform: none !important; width: 100% !important; }
+  </style>
+</head>
+<body>
+
+  <!-- Boutons de Navigation (Haut Gauche / Haut Droite) -->
+  <a href="/#work" class="back-btn" aria-label="Retour à l'accueil">
+    <span class="back-btn__arrow">←</span> RETOUR
+  </a>
+
+  <a href="/src/ui/bnp-fortris/project/BNP%20Fortris%20_%20Motion%20eCard%20Process.png" target="_blank" rel="noopener noreferrer" class="site-btn" id="js-project-btn" aria-label="Accès au projet BNP Fortris Motion eCard Process">
+    ACCÈS AU PROJET <span class="site-btn__icon">↗</span>
+  </a>
+
+  <!-- Hero d'introduction V3 avec Particle.js -->
+  <section class="hero-intro">
+    <div id="particles-js"></div>
+    <h1>BNP & IA Secure</h1>
+    <p>BNP & IA Secure (Fortris Motion eCard) est la solution pionnière de sécurité bancaire et de carte à cryptogramme dynamique (Motion Code). Récompensée par un Adobe Award pour la meilleure UI internationale de sécurité financière.</p>
+    <div class="scroll-down-badge">Scrollez vers le bas ↓</div>
+  </section>
+
+  <!-- Section de Scroll Horizontal Épinglée (V3) -->
+  <section class="horizontal-section" id="js-horizontal-section">
+    <div class="horizontal-sticky">
+
+      <!-- Arrière-plan flouté d'une maquette BNP Fortris -->
+      <div class="bg-parallax-layer">
+        <img class="bg-parallax-img" id="js-bg-parallax" src="./src/ui/bnp-fortris/01-BNP-Fortris-Project.jpg" alt="Fond Flouté BNP & IA Secure">
+      </div>
+
+      <!-- Rail de contenu horizontal principal -->
+      <div class="horizontal-track" id="js-horizontal-track">
+
+        <!-- Panneau 1 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">01</span>
+            <img class="parallax parallax-x-20" src="./src/ui/bnp-fortris/01-BNP-Fortris-Project.jpg" alt="01 - BNP Fortris Project">
+            <span class="panel__caption">01. Présentation du Projet Fortris</span>
+          </div>
+        </article>
+
+        <!-- Panneau 2 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">02</span>
+            <img class="parallax parallax-x-10 reverse" src="./src/ui/bnp-fortris/02-BNP-Fortris-CVV-Motion-Code.jpg" alt="02 - CVV Motion Code">
+            <span class="panel__caption">02. Cryptogramme Dynamique & Code CVV</span>
+          </div>
+        </article>
+
+        <!-- Panneau 3 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">03</span>
+            <img class="parallax parallax-y-15" src="./src/ui/bnp-fortris/03-BNP-Fortris-How-it-Works.jpg" alt="03 - How it Works">
+            <span class="panel__caption">03. Fonctionnement & Expérience Utilisateur</span>
+          </div>
+        </article>
+
+        <!-- Panneau 4 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">04</span>
+            <img class="parallax parallax-x-20 parallax-y-15" src="./src/ui/bnp-fortris/04-BNP-Validatate-New-Bank-Card.jpg" alt="04 - Validate New Bank Card">
+            <span class="panel__caption">04. Validation de la Nouvelle Carte Bancaire</span>
+          </div>
+        </article>
+
+        <!-- Panneau 5 -->
+        <article class="panel">
+          <div class="panel__card">
+            <span class="panel__number">05</span>
+            <img class="parallax parallax-x-15 reverse" src="./src/ui/bnp-fortris/05-BNP-Check-Online-your-delivery.jpg" alt="05 - Check Online Delivery">
+            <span class="panel__caption">05. Suivi en Ligne de la Livraison</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Projets à Découvrir (Design System Responsive) -->
+  <section class="projects-section">
+    <div class="projects-container">
+      <div class="projects-header">
+        <span class="projects-eyebrow">PORTFOLIO & DESIGN SYSTEM</span>
+        <h2 class="projects-title">D’autres Projets à Découvrir</h2>
+        <p class="projects-subtitle">Explorez les autres réalisations majeures en UX/UI, Design System et Innovation Digitale.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Projet 1 : Crédit Agricole App -->
+        <a href="/07-credit-agricol-app.html" class="project-card">
+          <div class="project-card__thumb">
+            <div class="project-card__bg project-card__bg--1" style="background-image: url('/src/ui/credit-agricol/01-ca-mobile-app-home-screen.jpg'); background-size: cover; background-position: top center;"></div>
+            <span class="project-card__tag">Figma App · Banking</span>
+          </div>
+          <div class="project-card__content">
+            <h3 class="project-card__title">Crédit Agricole App</h3>
+            <p class="project-card__desc">Solution mobile bancaire optimisée pour l'engagement et la gestion de comptes.</p>
+            <div class="project-card__footer">
+              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Projet 2 : Alison Landing Pages -->
+        <a href="/03-alison-landing-pages.html" class="project-card">
+          <div class="project-card__thumb">
+            <div class="project-card__bg project-card__bg--2" style="background-image: url('/src/ui/alison/landing-pages/01-Result-Page.jpg'); background-size: cover; background-position: top center;"></div>
+            <span class="project-card__tag">EduTech · Irlande</span>
+          </div>
+          <div class="project-card__content">
+            <h3 class="project-card__title">Alison Landing Pages</h3>
+            <p class="project-card__desc">Refonte des pages d'acquisition du leader mondial de la formation gratuite (+34% de conversion).</p>
+            <div class="project-card__footer">
+              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Projet 3 : Alison Mobile App -->
+        <a href="/04-alison-app.html" class="project-card">
+          <div class="project-card__thumb">
+            <div class="project-card__bg project-card__bg--3" style="background-image: url('/src/ui/alison/app/01-Alison-App-Course-part.jpg'); background-size: cover; background-position: top center;"></div>
+            <span class="project-card__tag">Prototype XD · Mobile</span>
+          </div>
+          <div class="project-card__content">
+            <h3 class="project-card__title">Alison Mobile App</h3>
+            <p class="project-card__desc">Application mobile éducative axée sur la gamification et l'engagement des apprenants.</p>
+            <div class="project-card__footer">
+              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Projet 4 : Alison Publishing -->
+        <a href="/05-alison-publishing.html" class="project-card">
+          <div class="project-card__thumb">
+            <div class="project-card__bg project-card__bg--4" style="background-image: url('/src/ui/alison/publishing/01-HomePage.png'); background-size: cover; background-position: top center;"></div>
+            <span class="project-card__tag">Progiciel · Design System</span>
+          </div>
+          <div class="project-card__content">
+            <h3 class="project-card__title">Alison Publishing</h3>
+            <p class="project-card__desc">Conception du progiciel de création de cours et système de publication en ligne.</p>
+            <div class="project-card__footer">
+              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Projet 5 : Alison Publishing App -->
+        <a href="/06-alison-publishing-app.html" class="project-card">
+          <div class="project-card__thumb">
+            <div class="project-card__bg project-card__bg--5" style="background-image: url('/src/ui/alison/publishing-app/01-Editor-App.jpg'); background-size: cover; background-position: top center;"></div>
+            <span class="project-card__tag">UX Innovation · LMS</span>
+          </div>
+          <div class="project-card__content">
+            <h3 class="project-card__title">Alison Publishing App</h3>
+            <p class="project-card__desc">Module d'édition d'applications et de création de questionnaires QCM.</p>
+            <div class="project-card__footer">
+              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Plein Écran Maquette Projet -->
+  <div class="project-modal" id="js-project-modal" aria-hidden="true">
+    <button class="project-modal__close" id="js-modal-close" aria-label="Fermer la vue plein écran">×</button>
+    <div class="project-modal__content">
+      <img src="/src/ui/bnp-fortris/project/BNP%20Fortris%20_%20Motion%20eCard%20Process.png" alt="BNP Fortris Motion eCard Process" class="project-modal__img" />
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT V3 AUTONOME
+       ========================================================================== -->
+  <script>
+    (function () {
+      'use strict';
+
+      // 1. Initialisation Particles.js
+      function initParticles() {
+        if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js')) {
+          particlesJS('particles-js', {
+            "particles": {
+              "number": {
+                "value": 110,
+                "density": {
+                  "enable": true,
+                  "value_area": 800
+                }
+              },
+              "color": {
+                "value": ["#ffffff", "#00f0ff", "#a09cb0"]
+              },
+              "shape": {
+                "type": "circle"
+              },
+              "opacity": {
+                "value": 0.7,
+                "random": true,
+                "anim": {
+                  "enable": true,
+                  "speed": 1.2,
+                  "opacity_min": 0.2,
+                  "sync": false
+                }
+              },
+              "size": {
+                "value": 3.5,
+                "random": true
+              },
+              "line_linked": {
+                "enable": true,
+                "distance": 150,
+                "color": "#00f0ff",
+                "opacity": 0.45,
+                "width": 1.2
+              },
+              "move": {
+                "enable": true,
+                "speed": 2.2,
+                "direction": "none",
+                "random": true,
+                "straight": false,
+                "out_mode": "out",
+                "bounce": false
+              }
+            },
+            "interactivity": {
+              "detect_on": "canvas",
+              "events": {
+                "onhover": {
+                  "enable": true,
+                  "mode": "grab"
+                },
+                "onclick": {
+                  "enable": true,
+                  "mode": "push"
+                },
+                "resize": true
+              },
+              "modes": {
+                "grab": {
+                  "distance": 200,
+                  "line_linked": {
+                    "opacity": 0.95
+                  }
+                },
+                "push": {
+                  "particles_nb": 5
+                }
+              }
+            },
+            "retina_detect": true
+          });
+        }
+      }
+
+      // Attente que le DOM et le script soient prêts
+      function tryInitParticles() {
+        if (typeof particlesJS !== 'undefined') {
+          initParticles();
+        } else {
+          setTimeout(tryInitParticles, 100);
+        }
+      }
+      if (document.readyState === 'complete') {
+        tryInitParticles();
+      } else {
+        window.addEventListener('load', tryInitParticles);
+      }
+
+      // 2. Modal Lightbox Plein Écran Maquette
+      const projectBtn = document.getElementById('js-project-btn');
+      const projectModal = document.getElementById('js-project-modal');
+      const modalClose = document.getElementById('js-modal-close');
+
+      if (projectBtn && projectModal) {
+        projectBtn.addEventListener('click', function (e) {
+          if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
+            e.preventDefault();
+            projectModal.classList.add('is-active');
+            projectModal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+
+        function closeModal() {
+          projectModal.classList.remove('is-active');
+          projectModal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+
+        if (modalClose) {
+          modalClose.addEventListener('click', closeModal);
+        }
+
+        projectModal.addEventListener('click', function (e) {
+          if (e.target === projectModal || e.target.classList.contains('project-modal__content')) {
+            closeModal();
+          }
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && projectModal.classList.contains('is-active')) {
+            closeModal();
+          }
+        });
+      }
+
+      // 3. Parallaxe et Sticky Scroll Horizontal
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) return;
+
+      const section = document.getElementById('js-horizontal-section');
+      const track = document.getElementById('js-horizontal-track');
+      const bgImg = document.getElementById('js-bg-parallax');
+      if (!section || !track) return;
+
+      const parallaxElements = Array.from(document.querySelectorAll('.parallax'));
+
+      let targetProgress = 0;
+      let currentProgress = 0;
+      let maxX = 0;
+
+      const parallaxConfig = parallaxElements.map(el => {
+        const classList = Array.from(el.classList);
+        let speedX = 0;
+        let speedY = 0;
+        let reverse = classList.includes('reverse');
+
+        classList.forEach(cls => {
+          const matchX = cls.match(/^parallax-x-(\d+)$/);
+          if (matchX) speedX = parseFloat(matchX[1]);
+
+          const matchY = cls.match(/^parallax-y-(\d+)$/);
+          if (matchY) speedY = parseFloat(matchY[1]);
+        });
+
+        return {
+          el,
+          speedX: reverse ? -speedX : speedX,
+          speedY: reverse ? -speedY : speedY
+        };
+      });
+
+      function calculateDimensions() {
+        const trackWidth = track.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        maxX = trackWidth - viewportWidth;
+        section.style.height = (maxX + viewportHeight) + 'px';
+      }
+
+      function updateScrollProgress() {
+        const sectionRect = section.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        const totalScrollableDistance = section.offsetHeight - viewportHeight;
+
+        if (totalScrollableDistance <= 0) return;
+
+        const rawProgress = -sectionRect.top / totalScrollableDistance;
+        targetProgress = Math.max(0, Math.min(1, rawProgress));
+      }
+
+      function render() {
+        // Interpolation douce (0.08)
+        currentProgress += (targetProgress - currentProgress) * 0.08;
+
+        if (Math.abs(targetProgress - currentProgress) < 0.0001) {
+          currentProgress = targetProgress;
+        }
+
+        // 1. Translation du track principal
+        const trackX = -currentProgress * maxX;
+        track.style.transform = `translate3d(${trackX.toFixed(2)}px, 0px, 0px)`;
+
+        // 2. Translation de l'arrière-plan flouté
+        if (bgImg) {
+          const bgX = -currentProgress * (maxX * 0.35);
+          bgImg.style.transform = `translate3d(${bgX.toFixed(2.5)}px, 0px, 0px) scale(2.15)`;
+        }
+
+        // 3. Décalages parallaxe des cartes internes
+        parallaxConfig.forEach(cfg => {
+          const offsetX = (currentProgress - 0.5) * cfg.speedX * 2;
+          const offsetY = (currentProgress - 0.5) * cfg.speedY * 2;
+
+          cfg.el.style.transform = `translate3d(${offsetX.toFixed(2)}px, ${offsetY.toFixed(2)}px, 0px) scale(1.2)`;
+        });
+
+        requestAnimationFrame(render);
+      }
+
+      function init() {
+        calculateDimensions();
+        updateScrollProgress();
+        requestAnimationFrame(render);
+      }
+
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+      window.addEventListener('resize', calculateDimensions);
+
+      if (document.readyState === 'complete') {
+        init();
+      } else {
+        window.addEventListener('load', init);
+      }
+    })();
+  </script>
+</body>
+</html>

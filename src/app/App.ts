@@ -40,6 +40,7 @@ export class App {
     // Shell setup (runs ONCE, survives route changes)
     this.setupNav()
     this.setupModal()
+    this.setupPDFModal()
 
     if (this.prefersReduced) {
       this.reducedMotionInit()
@@ -296,6 +297,38 @@ export class App {
     document.addEventListener('webkitfullscreenchange', onFullscreenChange)
 
     reelBtn.addEventListener('click', openModal)
+    closeBtn.addEventListener('click', closeModal)
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal() })
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal()
+    })
+  }
+
+  // ─── PDF modal ─────────────────────────────────────────────────────────────
+  private setupPDFModal(): void {
+    const cvLink   = document.getElementById('js-cv-link')
+    const modal    = document.getElementById('js-pdf-modal')
+    const closeBtn = document.getElementById('js-pdf-modal-close')
+    const iframe   = document.getElementById('js-pdf-modal-iframe') as HTMLIFrameElement | null
+    if (!cvLink || !modal || !closeBtn || !iframe) return
+
+    const openModal = () => {
+      modal.removeAttribute('hidden')
+      iframe.src = '/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf'
+      this.lenis?.stop()
+    }
+
+    const closeModal = () => {
+      modal.setAttribute('hidden', '')
+      iframe.src = ''
+      this.lenis?.start()
+    }
+
+    cvLink.addEventListener('click', (e) => {
+      e.preventDefault()
+      openModal()
+    })
+
     closeBtn.addEventListener('click', closeModal)
     modal.addEventListener('click', (e) => { if (e.target === modal) closeModal() })
     document.addEventListener('keydown', (e) => {

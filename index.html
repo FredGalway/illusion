@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Frédéric Moitry — Product Designer & Expert UX/UI. Plus de +25 ans d'expérience en conception de solutions web sur-mesure, récompensé par Adobe et auteur chez Dunod." />
     <title>Frédéric Moitry — Product Designer & Expert UX/UI</title>
+    <script>
+      // Unregister any conflicting service worker from other projects (e.g. Quiz Battle) on this port
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const registration of registrations) {
+            registration.unregister().then((unregistered) => {
+              if (unregistered) {
+                console.log('Unregistered conflicting service worker.');
+                window.location.reload();
+              }
+            });
+          }
+        });
+      }
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -88,11 +103,8 @@
             Pionnier du design numérique depuis plus de +25 ans, je conçois des solutions web et des interfaces sur-mesure combinant ergonomie, direction artistique et nouvelles technologies (IA, Game Design). Récompensé par Adobe pour la meilleure interface UI internationale et co-auteur de 2 livres chez Dunod, j’accompagne grands comptes (Publicis, Havas, BNP, France TV) et agences dans la réalisation de produits digitaux d’exception.
           </p>
           <div class="manifesto__ctas" data-reveal>
-            <a href="#vision" class="btn btn--pill js-magnetic">Pourquoi m'embaucher ?</a>
-            <button class="btn btn--pill js-magnetic" id="js-reel-btn" aria-label="Voir la vidéo de présentation">
-              Voir le Réel
-              <span class="btn__icon" aria-hidden="true">▶</span>
-            </button>
+            <a href="#work" class="btn btn--pill js-magnetic">Voir mes Réalisations</a>
+            
           </div>
         </div>
       </section>
@@ -101,7 +113,7 @@
       <section class="section work" id="work" aria-label="Featured Work">
         <div class="container">
           <div class="work__header">
-            <p class="eyebrow" data-reveal>Projets & Réalisations Clés</p>
+            <p class="eyebrow" data-reveal>Réalisations Clés</p>
           </div>
           <ul class="work__list" role="list">
              <li class="work__item" data-reveal>
@@ -219,7 +231,7 @@
             </li>
           </ul>
           <div class="work__footer" data-reveal>
-            <a href="#cta" class="btn btn--pill js-magnetic">Voir mon portfolio complet</a>
+            <a href="#vision" class="btn btn--pill js-magnetic">Pourquoi m'embaucher ?</a>
           </div>
         </div>
       </section>
@@ -238,6 +250,9 @@
             <p>
               Des agences parisiennes (Havas, Publicis) au groupe Alison en Irlande, en passant par la co-écriture de 2 livres pour Dunod et l’initiation aux technologies FullStack (Python, React, GODOT, IA), j’explore vos nouveaux projets et construis des solutions sur-mesure adaptées à vos enjeux actuels et futurs.
             </p>
+          </div>
+          <div class="work__footer" data-reveal>
+            <a href="#testimonials" class="btn btn--pill js-magnetic">Témoignages & Références</a>
           </div>
         </div>
       </section>
@@ -330,11 +345,13 @@
           <a href="#cta">Me contacter</a>
         </nav>
         <div class="footer__contact">
-          <a href="mailto:fmoitry@gmail.com">fmoitry@gmail.com</a>
+          <a href="mailto:	
+infos@fredericmoitry.fr">	
+infos@fredericmoitry.fr</a>
           <a href="https://fredericmoitry.fr" target="_blank" rel="noopener noreferrer">fredericmoitry.fr</a>
         </div>
         <div class="footer__social">
-          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" target="_blank" rel="noopener noreferrer" aria-label="Voir mon CV">Voir mon CV</a>
+          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" target="_blank" id="js-cv-link" rel="noopener noreferrer" aria-label="Voir mon CV">Voir mon CV</a>
         </div>
         <div class="footer__bottom">
           <p class="footer__address">Paris · Dublin· Galway · Montpellier · Remote</p>
@@ -355,6 +372,21 @@
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           loading="lazy"
           referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- PDF Modal -->
+    <div class="modal pdf-modal" id="js-pdf-modal" role="dialog" aria-modal="true" aria-label="Mon CV" hidden>
+      <button class="modal__close pdf-modal__close" id="js-pdf-modal-close" aria-label="Fermer le CV">✕</button>
+      <div class="modal__content pdf-modal__frame">
+        <iframe
+          id="js-pdf-modal-iframe"
+          class="pdf-modal__iframe"
+          src=""
+          title="Mon CV"
+          allow="fullscreen"
+          loading="lazy"
         ></iframe>
       </div>
     </div>

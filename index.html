@@ -378,7 +378,15 @@ infos@fredericmoitry.fr</a>
 
     <!-- PDF Modal -->
     <div class="modal pdf-modal" id="js-pdf-modal" role="dialog" aria-modal="true" aria-label="Mon CV" hidden>
-      <button class="modal__close pdf-modal__close" id="js-pdf-modal-close" aria-label="Fermer le CV">✕</button>
+      <div class="pdf-modal__header">
+        <div class="pdf-modal__title">CV — Frédéric Moitry</div>
+        <div class="pdf-modal__actions">
+          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" download class="pdf-modal__btn pdf-modal__btn--download" aria-label="Télécharger le CV">
+            <span>Télécharger</span> ⤓
+          </a>
+          <button class="modal__close pdf-modal__close" id="js-pdf-modal-close" aria-label="Fermer le CV">✕</button>
+        </div>
+      </div>
       <div class="modal__content pdf-modal__frame">
         <iframe
           id="js-pdf-modal-iframe"

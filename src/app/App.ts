@@ -314,7 +314,7 @@ export class App {
 
     const openModal = () => {
       modal.removeAttribute('hidden')
-      iframe.src = '/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf'
+      iframe.src = '/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf#view=FitH&zoom=125'
       this.lenis?.stop()
     }
 
@@ -325,12 +325,27 @@ export class App {
     }
 
     cvLink.addEventListener('click', (e) => {
+      const isMobile = window.innerWidth <= 800 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      if (isMobile) {
+        // On mobile/tablet, open directly in native browser PDF reader for native zoom, download, print, share
+        return
+      }
       e.preventDefault()
       openModal()
     })
 
-    closeBtn.addEventListener('click', closeModal)
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal() })
+    const handleClose = (e: Event) => {
+      e.preventDefault()
+      e.stopPropagation()
+      closeModal()
+    }
+
+    closeBtn.addEventListener('click', handleClose)
+    closeBtn.addEventListener('pointerdown', handleClose)
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal()
+    })
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal()
     })

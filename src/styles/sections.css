@@ -214,7 +214,19 @@
 }
 
 .work__item:hover .work__thumb-inner {
-  transform: scale(1.06);
+  transform: scale(1.50);
+}
+
+@keyframes workGoBack {
+  0% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(5%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .work__title {
@@ -222,6 +234,11 @@
   font-weight: var(--weight-display);
   letter-spacing: -0.02em;
   margin-bottom: 0.25rem;
+  will-change: transform;
+}
+
+.work__item:hover .work__title {
+  animation: workGoBack 0.38s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .work__tags {
@@ -229,6 +246,11 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
+  will-change: transform;
+}
+
+.work__item:hover .work__tags {
+  animation: workGoBack 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
 }
 
 .work__arrow {

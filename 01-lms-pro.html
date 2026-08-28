@@ -263,7 +263,7 @@
       transform: translateX(-3px);
     }
 
-    /* Bouton Accès au site haut à droite */
+    /* Bouton Voir site haut à droite */
     .site-btn {
       position: fixed;
       top: 1.5rem;
@@ -391,7 +391,13 @@
     }
 
     .project-card:hover .project-card__bg {
-      transform: scale(1.08);
+      transform: scale(1.10);
+    }
+
+    @keyframes cardGoBack {
+      0% { transform: translateX(0); }
+      35% { transform: translateX(10%); }
+      100% { transform: translateX(0); }
     }
 
     .project-card__bg--1 {
@@ -442,10 +448,12 @@
       color: #ffffff;
       margin-bottom: 0.5rem;
       transition: color 0.3s ease;
+      will-change: transform;
     }
 
     .project-card:hover .project-card__title {
       color: #00f0ff;
+      animation: cardGoBack 0.38s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .project-card__desc {
@@ -454,6 +462,11 @@
       line-height: 1.5;
       margin-bottom: 1.5rem;
       flex-grow: 1;
+      will-change: transform;
+    }
+
+    .project-card:hover .project-card__desc {
+      animation: cardGoBack 0.38s cubic-bezier(0.16, 1, 0.3, 1) 0.05s;
     }
 
     .project-card__footer {
@@ -513,8 +526,8 @@
     <span class="back-btn__arrow">←</span> RETOUR
   </a>
 
-  <a href="https://lmspro.fr/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Accès au site officiel LMS Pro">
-    ACCÈS AU SITE <span class="site-btn__icon">↗</span>
+  <a href="https://lmspro.fr/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Voir site officiel LMS Pro">
+    Voir SITE <span class="site-btn__icon">↗</span>
   </a>
 
   <!-- Hero d'introduction V3 avec Particle.js -->

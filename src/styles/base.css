@@ -316,12 +316,12 @@ a.menu-overlay__link {
   position: fixed;
   inset: 0;
   z-index: var(--z-preloader);
-  background: var(--bg);
+  background: var(--bg, #f8f8f9);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: space-between;
+  padding: 3rem 2rem 2.5rem;
   clip-path: inset(0% 0% 0% 0%);
 }
 
@@ -329,25 +329,46 @@ a.menu-overlay__link {
   display: none;
 }
 
-.preloader__inner {
+.preloader__center {
   display: flex;
-  align-items: baseline;
-  gap: 1rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  margin: auto;
 }
 
-.preloader__label {
-  font-size: var(--text-eyebrow);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
+.preloader__logo {
+  width: 68px;
+  height: auto;
+  display: block;
+}
+
+.preloader__logo-path {
+  fill: var(--ink, #000000);
 }
 
 .preloader__count {
-  font-size: clamp(4rem, 12vw, 9rem);
-  font-weight: var(--weight-display);
+  font-size: 0.9rem;
+  font-weight: var(--weight-medium, 500);
   line-height: 1;
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
+  color: var(--muted, #666);
+  opacity: 0.75;
+}
+
+.preloader__footer {
+  margin-top: auto;
+  text-align: center;
+}
+
+.preloader__tagline {
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink, #111111);
+  white-space: nowrap;
 }
 
 /* Parallax sections — CSS variable set by ScrollTrigger */

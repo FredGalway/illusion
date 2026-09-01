@@ -354,13 +354,18 @@ export class App {
   // ─── Preloader — master GSAP timeline ─────────────────────────────────────
   private runPreloader(): Promise<void> {
     return new Promise((resolve) => {
-      const preloader  = document.getElementById('preloader')
-      const countEl    = preloader?.querySelector<HTMLElement>('.preloader__count')
-      const labelEl    = preloader?.querySelector<HTMLElement>('.preloader__label') ?? null
+      const preloader = document.getElementById('preloader')
+      const countEl   = preloader?.querySelector<HTMLElement>('.preloader__count')
+      const logoEl    = preloader?.querySelector<HTMLElement>('.preloader__logo')
+      const footerEl  = preloader?.querySelector<HTMLElement>('.preloader__footer')
       if (!preloader || !countEl) {
         resolve()
         return
       }
+
+      // Initial gentle reveal for logo & footer
+      if (logoEl) gsap.fromTo(logoEl, { scale: 0.88, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: 'power2.out' })
+      if (footerEl) gsap.fromTo(footerEl, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.15 })
 
       const startTime = performance.now()
       const MIN_DURATION = 1200
@@ -370,7 +375,7 @@ export class App {
 
       tl.to(counter, {
         value: 100,
-        duration: 1.5,
+        duration: 1.4,
         ease: 'power2.inOut',
         onUpdate: () => {
           countEl.textContent = `${Math.round(counter.value)}%`
@@ -382,7 +387,7 @@ export class App {
         const wait = Math.max(0, MIN_DURATION - elapsed)
 
         setTimeout(() => {
-          this.playOutro(preloader, labelEl, countEl, resolve)
+          this.playOutro(preloader, logoEl, countEl, footerEl, resolve)
         }, wait)
       })
     })
@@ -390,24 +395,25 @@ export class App {
 
   private playOutro(
     preloader: HTMLElement,
-    labelEl: HTMLElement | null,
+    logoEl: HTMLElement | null | undefined,
     countEl: HTMLElement,
+    footerEl: HTMLElement | null | undefined,
     onComplete: () => void
   ): void {
     const tl = gsap.timeline()
 
-    tl.to([labelEl, countEl], {
-      yPercent: -120,
+    tl.to([logoEl, countEl, footerEl].filter(Boolean), {
+      y: -24,
       opacity: 0,
-      duration: 0.9,
-      ease: 'power4.inOut',
-      stagger: 0.05,
+      duration: 0.75,
+      ease: 'power3.inOut',
+      stagger: 0.04,
     })
 
     tl.fromTo(preloader,
       { clipPath: 'inset(0% 0% 0% 0%)' },
-      { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.1, ease: 'power4.inOut' },
-      '-=0.3'
+      { clipPath: 'inset(0% 0% 100% 0%)', duration: 1.0, ease: 'power4.inOut' },
+      '-=0.25'
     )
 
     tl.call(async () => {

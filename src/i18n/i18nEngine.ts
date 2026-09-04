@@ -240,6 +240,26 @@ class I18nEngine {
         });
       });
 
+      // Scroll isolation: prevent wheel events from scrolling background page
+      dropdown.addEventListener(
+        'wheel',
+        (e) => {
+          e.stopPropagation();
+          const scrollTop = dropdown.scrollTop;
+          const scrollHeight = dropdown.scrollHeight;
+          const height = dropdown.clientHeight;
+          const delta = e.deltaY;
+
+          if (
+            (delta > 0 && scrollTop + height >= scrollHeight - 1) ||
+            (delta < 0 && scrollTop <= 0)
+          ) {
+            e.preventDefault();
+          }
+        },
+        { passive: false }
+      );
+
       document.addEventListener('click', () => {
         if (!dropdown.hasAttribute('hidden')) {
           dropdown.setAttribute('hidden', '');

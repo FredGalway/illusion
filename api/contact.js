@@ -20,10 +20,49 @@ export default async function handler(req, res) {
   }
   body = body || {};
 
-  const { name, email, company, service, budget, timeline, message, attachment } = body;
+  const { name, email, company, service, budget, timeline, message, attachment, website, _t } = body;
+
+  // 1. Anti-Spam: Honeypot field trap (bots fill hidden inputs)
+  if (website && website.trim().length > 0) {
+    console.warn('Spam detected via honeypot field');
+    return res.status(200).json({ success: true }); // Silent success for bots
+  }
+
+  // 2. Anti-Spam: Velocity check (bot submitted form in < 1.5 seconds)
+  if (_t && (Date.now() - Number(_t)) < 1500) {
+    console.warn('Spam detected via submission velocity');
+    return res.status(200).json({ success: true }); // Silent success for bots
+  }
 
   if (!name || !email || !service) {
     return res.status(400).json({ error: 'Champs obligatoires manquants (Nom, Email ou Service)' });
+  }
+
+  // 3. Email Validation: RFC 5322 Syntax Check
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+  const cleanedEmail = email.trim().toLowerCase();
+
+  if (!emailRegex.test(cleanedEmail)) {
+    return res.status(400).json({ error: 'L\'adresse email saisie est invalide. Veuillez vérifier le format (ex: nom@domaine.fr).' });
+  }
+
+  // 4. Anti-Spam: Disposable / Temporary Email Domain Blocklist
+  const DISPOSABLE_DOMAINS = [
+    'yopmail.com', 'yopmail.fr', 'mailinator.com', 'tempmail.com', '10minutemail.com',
+    'guerrillamail.com', 'dispostable.com', 'trashmail.com', 'sharklasers.com',
+    'getnada.com', 'throwawaymail.com', 'tempail.com', 'mohmal.com', 'maildrop.cc',
+    'inboxbear.com', 'crazymailing.com', 'tmail.ws', 'tmpmail.org', 'bupkis.com'
+  ];
+
+  const emailDomain = cleanedEmail.split('@')[1] || '';
+  if (DISPOSABLE_DOMAINS.includes(emailDomain)) {
+    return res.status(400).json({ error: 'Les adresses email temporaires ou jetables ne sont pas acceptées.' });
+  }
+
+  // 5. Email Typo Warning Check (e.g., gmai.com, hotmai.com)
+  const TYPO_DOMAINS = ['gmai.com', 'gmal.com', 'gmaill.com', 'hotmai.com', 'hotmal.com', 'outlok.com', 'yaho.com'];
+  if (TYPO_DOMAINS.includes(emailDomain)) {
+    return res.status(400).json({ error: `Le domaine @${emailDomain} semble contenir une faute de frappe. Veuillez vérifier votre adresse email.` });
   }
 
   const finalMessage = message || 'Demande transmise via le formulaire de contact.';

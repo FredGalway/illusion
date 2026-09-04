@@ -617,10 +617,14 @@
                 <input type="text" id="form-name" name="name" class="form-input" placeholder="ex: Sarah Martin" required />
               </div>
 
+              <!-- Honeypot anti-spam trap field (invisible to real users) -->
+              <input type="text" name="website" id="form-website" tabindex="-1" autocomplete="off" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" />
+
               <!-- Email -->
               <div class="form-group">
                 <label for="form-email" class="form-label">Adresse Email <span>*</span></label>
                 <input type="email" id="form-email" name="email" class="form-input" placeholder="ex: s.martin@entreprise.com" required />
+                <div class="email-validation-msg" id="js-email-validation" style="display: none; font-size: 0.82rem; margin-top: 0.4rem; font-weight: 500;"></div>
               </div>
 
               <!-- Entreprise -->
@@ -942,6 +946,70 @@
           });
         }
 
+        // Page load timestamp for velocity anti-bot check
+        const pageLoadTime = Date.now();
+
+        // Live Email Validation & Anti-Spam Check
+        const emailInput = document.getElementById('form-email');
+        const emailValidationEl = document.getElementById('js-email-validation');
+
+        const DISPOSABLE_DOMAINS = [
+          'yopmail.com', 'yopmail.fr', 'mailinator.com', 'tempmail.com', '10minutemail.com',
+          'guerrillamail.com', 'dispostable.com', 'trashmail.com', 'sharklasers.com',
+          'getnada.com', 'throwawaymail.com', 'tempail.com', 'mohmal.com', 'maildrop.cc',
+          'inboxbear.com', 'crazymailing.com', 'tmail.ws', 'tmpmail.org', 'bupkis.com'
+        ];
+        const TYPO_DOMAINS = ['gmai.com', 'gmal.com', 'gmaill.com', 'hotmai.com', 'hotmal.com', 'outlok.com', 'yaho.com'];
+        const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+
+        function validateEmailLive() {
+          if (!emailInput || !emailValidationEl) return true;
+          const val = emailInput.value.trim().toLowerCase();
+
+          if (!val) {
+            emailValidationEl.style.display = 'none';
+            emailInput.style.borderColor = '';
+            return false;
+          }
+
+          if (!EMAIL_REGEX.test(val)) {
+            emailValidationEl.style.display = 'block';
+            emailValidationEl.style.color = '#ff5555';
+            emailValidationEl.textContent = '❌ Format d\'email invalide (ex: nom@domaine.fr)';
+            emailInput.style.borderColor = '#ff5555';
+            return false;
+          }
+
+          const domain = val.split('@')[1] || '';
+
+          if (DISPOSABLE_DOMAINS.includes(domain)) {
+            emailValidationEl.style.display = 'block';
+            emailValidationEl.style.color = '#ff5555';
+            emailValidationEl.textContent = '🚫 Les adresses jetables / temporaires ne sont pas acceptées';
+            emailInput.style.borderColor = '#ff5555';
+            return false;
+          }
+
+          if (TYPO_DOMAINS.includes(domain)) {
+            emailValidationEl.style.display = 'block';
+            emailValidationEl.style.color = '#ffaa00';
+            emailValidationEl.textContent = `⚠️ Attention : @${domain} semble contenir une faute de frappe`;
+            emailInput.style.borderColor = '#ffaa00';
+            return true;
+          }
+
+          emailValidationEl.style.display = 'block';
+          emailValidationEl.style.color = '#00f0ff';
+          emailValidationEl.textContent = '✓ Adresse email valide';
+          emailInput.style.borderColor = 'rgba(0, 240, 255, 0.5)';
+          return true;
+        }
+
+        if (emailInput) {
+          emailInput.addEventListener('input', validateEmailLive);
+          emailInput.addEventListener('blur', validateEmailLive);
+        }
+
         // Handle Form Submission via Vercel serverless function
         if (contactForm) {
           contactForm.addEventListener('submit', async (e) => {
@@ -950,9 +1018,15 @@
             const nameVal = document.getElementById('form-name').value.trim();
             const emailVal = document.getElementById('form-email').value.trim();
             const serviceOpt = serviceSelect.options[serviceSelect.selectedIndex]?.text || 'Service';
+            const websiteVal = document.getElementById('form-website')?.value || '';
 
             if (!nameVal || !emailVal || !serviceSelect.value) {
               alert('Veuillez remplir tous les champs obligatoires (Nom, Email et Offre de service).');
+              return;
+            }
+
+            if (!validateEmailLive()) {
+              alert('Veuillez vérifier votre adresse email avant d\'envoyer le formulaire.');
               return;
             }
 
@@ -983,6 +1057,8 @@
                 timeline: document.getElementById('form-timeline')?.value || '',
                 message: document.getElementById('form-message')?.value?.trim() || '',
                 attachment: attachmentPayload,
+                website: websiteVal,
+                _t: pageLoadTime,
               };
 
               const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -1007,10 +1083,12 @@
                 }
                 contactForm.reset();
                 clearSelectedFile();
+                if (emailValidationEl) emailValidationEl.style.display = 'none';
+                if (emailInput) emailInput.style.borderColor = '';
                 // Reset active cards
                 serviceCards.forEach(c => c.classList.remove('is-active'));
               } else {
-                alert('Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr');
+                alert(result.error || 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr');
               }
             } catch (error) {
               alert('Erreur de connexion. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr');

@@ -14,9 +14,11 @@ export default async function handler(req, res) {
 
   const { name, email, company, service, budget, timeline, message } = req.body;
 
-  if (!name || !email || !service || !message) {
-    return res.status(400).json({ error: 'Champs obligatoires manquants' });
+  if (!name || !email || !service) {
+    return res.status(400).json({ error: 'Champs obligatoires manquants (Nom, Email ou Service)' });
   }
+
+  const finalMessage = message || 'Demande transmise via le formulaire de contact.';
 
   const defaultKey = 're_Fw71tMoR_' + 'KTteZs9a6wxA5KBRGUHSjcrT';
   const RESEND_API_KEY = process.env.RESEND_API_KEY || defaultKey;
@@ -54,7 +56,7 @@ export default async function handler(req, res) {
       </tr>
       <tr>
         <td style="padding:12px 8px;font-weight:bold;color:#555;vertical-align:top;">Message</td>
-        <td style="padding:12px 8px;white-space:pre-wrap;">${message}</td>
+        <td style="padding:12px 8px;white-space:pre-wrap;">${finalMessage}</td>
       </tr>
     </table>
   `;

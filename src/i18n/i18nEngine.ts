@@ -9,14 +9,22 @@ class I18nEngine {
   private initialized = false;
 
   constructor() {
-    // Initial sync load from localStorage or browser language as immediate default
-    const saved = localStorage.getItem(STORAGE_KEY) as SupportedLanguage | null;
-    if (saved && SUPPORTED_LANGUAGES[saved]) {
-      this.currentLang = saved;
+    // 1. Check URL query parameter first (?lang=en, ?lang=de, ?lang=es, etc.)
+    const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const urlLang = urlParams ? (urlParams.get('lang') as SupportedLanguage) : null;
+
+    if (urlLang && SUPPORTED_LANGUAGES[urlLang]) {
+      this.currentLang = urlLang;
     } else {
-      const browserLang = this.detectBrowserLanguage();
-      if (browserLang) {
-        this.currentLang = browserLang;
+      // 2. Initial sync load from localStorage or browser language as immediate default
+      const saved = localStorage.getItem(STORAGE_KEY) as SupportedLanguage | null;
+      if (saved && SUPPORTED_LANGUAGES[saved]) {
+        this.currentLang = saved;
+      } else {
+        const browserLang = this.detectBrowserLanguage();
+        if (browserLang) {
+          this.currentLang = browserLang;
+        }
       }
     }
   }
@@ -31,9 +39,12 @@ class I18nEngine {
     // Apply immediate local translation for preloader & page
     this.applyTranslations();
 
-    // If no manual preference in localStorage, detect country via IP API asynchronously
+    // If no explicit URL query param or manual preference in localStorage, detect country via IP API
+    const urlParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const urlLang = urlParams ? (urlParams.get('lang') as SupportedLanguage) : null;
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved) {
+
+    if (!urlLang && !saved) {
       await this.detectIpCountry();
     }
 
@@ -128,6 +139,16 @@ class I18nEngine {
     const preloaderTagline = document.querySelector<HTMLElement>('.preloader__tagline');
     if (preloaderTagline && dict['preloader.tagline']) {
       preloaderTagline.textContent = dict['preloader.tagline'];
+    }
+
+    // 5. Update Document Title & Meta Description for international SEO & browser tab
+    if (dict['hero.eyebrow']) {
+      document.title = `Frédéric Moitry — ${dict['hero.eyebrow']}`;
+    }
+    const metaDesc = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    if (metaDesc && dict['manifesto.statement']) {
+      const cleanDesc = dict['manifesto.statement'].replace(/<[^>]*>/g, '').trim();
+      metaDesc.setAttribute('content', cleanDesc.slice(0, 160) + '...');
     }
   }
 

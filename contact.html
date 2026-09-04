@@ -293,6 +293,109 @@
         transform: translateY(0);
       }
 
+      /* File upload styling */
+      .file-upload-wrapper {
+        position: relative;
+        width: 100%;
+      }
+
+      .file-upload-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 5;
+      }
+
+      .file-upload-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 1.25rem 1rem;
+        background: rgba(11, 8, 24, 0.6);
+        border: 2px dashed rgba(159, 155, 186, 0.3);
+        border-radius: 16px;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .file-upload-wrapper:hover .file-upload-box,
+      .file-upload-wrapper.is-dragover .file-upload-box {
+        border-color: #00f0ff;
+        background: rgba(0, 240, 255, 0.04);
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+      }
+
+      .file-upload-icon {
+        font-size: 1.4rem;
+        line-height: 1;
+      }
+
+      .file-upload-text {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .file-upload-hint {
+        font-size: 0.75rem;
+        color: #9f9bba;
+      }
+
+      .file-upload-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.8rem 1.2rem;
+        background: rgba(20, 16, 38, 0.9);
+        border: 1px solid rgba(0, 240, 255, 0.4);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .file-name-container {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        overflow: hidden;
+      }
+
+      .file-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #00f0ff;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .file-size {
+        font-size: 0.75rem;
+        color: #9f9bba;
+      }
+
+      .btn-remove-file {
+        background: transparent;
+        border: none;
+        color: #ff5555;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        transition: background 0.2s ease;
+        z-index: 10;
+      }
+
+      .btn-remove-file:hover {
+        background: rgba(255, 85, 85, 0.15);
+      }
+
       /* Modal Success Confirmation */
       .contact-success-modal {
         position: fixed;
@@ -565,10 +668,28 @@
                 </select>
               </div>
 
-              <!-- Message -->
+              <!-- Document joint -->
               <div class="form-group form-group--full">
-                <label for="form-message" class="form-label">Présentation de votre projet <span>*</span></label>
-                <textarea id="form-message" name="message" class="form-textarea" placeholder="Décrivez les objectifs de votre projet, le contexte, vos attentes vis-à-vis de la prestation..." required></textarea>
+                <label for="form-file" class="form-label">Joindre un document <span style="font-weight: 400; color: #9f9bba;">(Optionnel — PDF, MD, DOCX, TXT — Max 2 Mo)</span></label>
+                <div class="file-upload-wrapper" id="js-file-wrapper">
+                  <input type="file" id="form-file" name="attachment" accept=".pdf,.md,.docx,.txt,application/pdf,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="file-upload-input" />
+                  <div class="file-upload-box" id="js-file-box">
+                    <span class="file-upload-icon">📎</span>
+                    <span class="file-upload-text" id="js-file-text">Cliquez ou glissez-déposez votre document ici</span>
+                    <span class="file-upload-hint">PDF, MD, DOCX, TXT (Maximum 2 Mo)</span>
+                  </div>
+                  <div class="file-upload-info" id="js-file-info" style="display: none;">
+                    <div class="file-name-container">
+                      <span style="font-size: 1.1rem;">📄</span>
+                      <div>
+                        <div class="file-name" id="js-file-name">document.pdf</div>
+                        <div class="file-size" id="js-file-size">0 KB</div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn-remove-file" id="js-remove-file" title="Supprimer le fichier">✕ Retirer</button>
+                  </div>
+                </div>
+                <div class="file-error-msg" id="js-file-error" style="display: none; color: #ff5555; font-size: 0.85rem; margin-top: 0.5rem; font-weight: 600;"></div>
               </div>
 
             </div>
@@ -707,6 +828,114 @@
           });
         }
 
+        // File Upload Handling & Validation
+        const fileInput = document.getElementById('form-file');
+        const fileBox = document.getElementById('js-file-box');
+        const fileInfo = document.getElementById('js-file-info');
+        const fileNameEl = document.getElementById('js-file-name');
+        const fileSizeEl = document.getElementById('js-file-size');
+        const removeFileBtn = document.getElementById('js-remove-file');
+        const fileErrorEl = document.getElementById('js-file-error');
+        const fileWrapper = document.getElementById('js-file-wrapper');
+
+        let selectedFile = null;
+        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2 MB in bytes
+        const ALLOWED_EXTENSIONS = ['pdf', 'md', 'docx', 'txt'];
+
+        function validateAndSetFile(file) {
+          if (!file) return;
+
+          if (fileErrorEl) {
+            fileErrorEl.style.display = 'none';
+            fileErrorEl.textContent = '';
+          }
+
+          const fileExt = file.name.split('.').pop().toLowerCase();
+
+          if (!ALLOWED_EXTENSIONS.includes(fileExt)) {
+            if (fileErrorEl) {
+              fileErrorEl.textContent = `Format non autorisé (.${fileExt}). Seuls les fichiers PDF, MD, DOCX et TXT sont acceptés.`;
+              fileErrorEl.style.display = 'block';
+            }
+            if (fileInput) fileInput.value = '';
+            selectedFile = null;
+            return;
+          }
+
+          if (file.size > MAX_FILE_SIZE) {
+            if (fileErrorEl) {
+              fileErrorEl.textContent = `Le fichier dépasse la taille maximale de 2 Mo (${(file.size / (1024 * 1024)).toFixed(2)} Mo).`;
+              fileErrorEl.style.display = 'block';
+            }
+            if (fileInput) fileInput.value = '';
+            selectedFile = null;
+            return;
+          }
+
+          selectedFile = file;
+          if (fileNameEl) fileNameEl.textContent = file.name;
+          if (fileSizeEl) fileSizeEl.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+          if (fileBox) fileBox.style.display = 'none';
+          if (fileInfo) fileInfo.style.display = 'flex';
+        }
+
+        function clearSelectedFile() {
+          selectedFile = null;
+          if (fileInput) fileInput.value = '';
+          if (fileBox) fileBox.style.display = 'flex';
+          if (fileInfo) fileInfo.style.display = 'none';
+          if (fileErrorEl) {
+            fileErrorEl.style.display = 'none';
+            fileErrorEl.textContent = '';
+          }
+        }
+
+        if (fileInput) {
+          fileInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+              validateAndSetFile(e.target.files[0]);
+            }
+          });
+        }
+
+        if (removeFileBtn) {
+          removeFileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            clearSelectedFile();
+          });
+        }
+
+        // Drag & Drop visual feedback
+        if (fileWrapper) {
+          ['dragenter', 'dragover'].forEach(eventName => {
+            fileWrapper.addEventListener(eventName, (e) => {
+              e.preventDefault();
+              fileWrapper.classList.add('is-dragover');
+            });
+          });
+          ['dragleave', 'drop'].forEach(eventName => {
+            fileWrapper.addEventListener(eventName, (e) => {
+              e.preventDefault();
+              fileWrapper.classList.remove('is-dragover');
+            });
+          });
+          fileWrapper.addEventListener('drop', (e) => {
+            if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+              validateAndSetFile(e.dataTransfer.files[0]);
+            }
+          });
+        }
+
+        // Helper to convert File object to Base64 data URL
+        function readFileAsBase64(file) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
+          });
+        }
+
         // Handle Form Submission via Vercel serverless function
         if (contactForm) {
           contactForm.addEventListener('submit', async (e) => {
@@ -730,6 +959,15 @@
             }
 
             try {
+              let attachmentPayload = null;
+              if (selectedFile) {
+                const base64Content = await readFileAsBase64(selectedFile);
+                attachmentPayload = {
+                  filename: selectedFile.name,
+                  content: base64Content,
+                };
+              }
+
               const payload = {
                 name: nameVal,
                 email: emailVal,
@@ -738,6 +976,7 @@
                 budget: document.getElementById('form-budget')?.value || '',
                 timeline: document.getElementById('form-timeline')?.value || '',
                 message: document.getElementById('form-message')?.value?.trim() || '',
+                attachment: attachmentPayload,
               };
 
               const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
@@ -754,12 +993,14 @@
               if (result.success) {
                 // Customize success modal message
                 if (successText) {
-                  successText.innerHTML = `Merci <strong>${nameVal}</strong> ! Votre demande pour la prestation <strong>${serviceOpt}</strong> a bien été enregistrée. Je vous recontacterai à l'adresse <strong>${emailVal}</strong> sous 24 à 48h.`;
+                  const attachmentNote = selectedFile ? ` et votre fichier (<strong>${selectedFile.name}</strong>)` : '';
+                  successText.innerHTML = `Merci <strong>${nameVal}</strong> ! Votre demande pour la prestation <strong>${serviceOpt}</strong>${attachmentNote} a bien été enregistrée. Je vous recontacterai à l'adresse <strong>${emailVal}</strong> sous 24 à 48h.`;
                 }
                 if (successModal) {
                   successModal.classList.add('is-open');
                 }
                 contactForm.reset();
+                clearSelectedFile();
                 // Reset active cards
                 serviceCards.forEach(c => c.classList.remove('is-active'));
               } else {

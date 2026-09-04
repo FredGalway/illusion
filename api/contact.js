@@ -12,7 +12,15 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, email, company, service, budget, timeline, message } = req.body;
+  let body = req.body;
+  if (typeof body === 'string') {
+    try { body = JSON.parse(body); } catch(e) { body = {}; }
+  } else if (Buffer.isBuffer(body)) {
+    try { body = JSON.parse(body.toString('utf-8')); } catch(e) { body = {}; }
+  }
+  body = body || {};
+
+  const { name, email, company, service, budget, timeline, message } = body;
 
   if (!name || !email || !service) {
     return res.status(400).json({ error: 'Champs obligatoires manquants (Nom, Email ou Service)' });

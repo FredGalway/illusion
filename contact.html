@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Contact — Frédéric Moitry. Product Designer & Expert UX/UI. Proposez votre projet, demandez un devis ou planifiez un audit UX/UI." />
+    <title>Contact & Offres de Service — Frédéric Moitry</title>
+    <script>
+      // Unregister any conflicting service worker from other projects on this port
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          for (const registration of registrations) {
+            registration.unregister().then((unregistered) => {
+              if (unregistered) {
+                console.log('Unregistered conflicting service worker.');
+                window.location.reload();
+              }
+            });
+          }
+        });
+      }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/styles/tokens.css" />
+    <link rel="stylesheet" href="/src/styles/base.css" />
+    <link rel="stylesheet" href="/src/styles/sections.css" />
+    <link rel="stylesheet" href="/src/styles/project.css" />
+    <script type="module" src="/src/main.ts"></script>
+    <style>
+      /* Dedicated Contact Page Custom Styling */
+      .contact-page {
+        min-height: 100vh;
+        padding-top: 120px;
+        padding-bottom: 80px;
+        position: relative;
+        background: radial-gradient(circle at 50% 10%, #171133 0%, #0b0818 70%);
+        color: #ffffff;
+      }
+
+      .contact-hero {
+        text-align: center;
+        margin-bottom: 4rem;
+      }
+
+      .contact-hero__headline {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        margin-top: 0.75rem;
+        margin-bottom: 1.25rem;
+        background: linear-gradient(135deg, #ffffff 0%, #a09cb0 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .contact-hero__sub {
+        font-size: clamp(1rem, 1.4vw, 1.2rem);
+        color: var(--color-text-muted, #9f9bba);
+        max-width: 650px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Services Showcase Cards */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.25rem;
+        margin-bottom: 3.5rem;
+      }
+
+      .service-card {
+        background: rgba(20, 16, 38, 0.6);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 1.5rem;
+        cursor: pointer;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.3s ease,
+                    box-shadow 0.3s ease,
+                    background-color 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .service-card:hover, .service-card.is-active {
+        transform: translateY(-4px);
+        border-color: rgba(0, 240, 255, 0.5);
+        background: rgba(26, 20, 50, 0.85);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 240, 255, 0.15);
+      }
+
+      .service-card.is-active::after {
+        content: '✓ SÉLECTIONNÉ';
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        color: #00f0ff;
+        background: rgba(0, 240, 255, 0.1);
+        padding: 0.25rem 0.6rem;
+        border-radius: 9999px;
+        border: 1px solid rgba(0, 240, 255, 0.3);
+      }
+
+      .service-card__icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+      }
+
+      .service-card__title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+      }
+
+      .service-card__desc {
+        font-size: 0.88rem;
+        color: #9f9bba;
+        line-height: 1.5;
+      }
+
+      /* Form Layout & Elements */
+      .contact-form-wrapper {
+        background: rgba(18, 14, 35, 0.75);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        padding: 3rem 2.5rem;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        max-width: 850px;
+        margin: 0 auto;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-group--full {
+        grid-column: span 2;
+      }
+
+      .form-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #d1ceea;
+      }
+
+      .form-label span {
+        color: #00f0ff;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        background: rgba(11, 8, 24, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        padding: 0.9rem 1.1rem;
+        color: #ffffff;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+        outline: none;
+      }
+
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        border-color: #00f0ff;
+        background: rgba(15, 11, 32, 0.9);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+      }
+
+      .form-select {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300f0ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1.25em;
+        cursor: pointer;
+      }
+
+      .form-select option {
+        background-color: #0b0818;
+        color: #ffffff;
+        padding: 0.8rem;
+      }
+
+      .form-textarea {
+        resize: vertical;
+        min-height: 140px;
+      }
+
+
+
+      /* Custom specific style for contact submit button */
+      .btn-contact-submit {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 1.1rem 2.6rem;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #ffffff;
+        background: #322d72;
+        border: 1px solid rgba(255, 255, 255, 0);
+        margin: 20px 0 20px 0;
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(50, 45, 114, 0.4);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      .btn-contact-submit:hover {
+        background: #433ca6;
+    color: #ffffff;
+    border-color: #ffffff;
+    box-shadow: 0 8px 30px rgb(45 50 156 / 40%), 0 0 15px rgba(50, 45, 114, 0.6);
+      }
+
+      .contact-direct-info {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.9rem;
+        color: #9f9bba;
+        position: relative;
+      }
+
+      .contact-direct-info a {
+        color: #00f0ff;
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        transition: color 0.2s ease, text-shadow 0.2s ease;
+        cursor: pointer;
+      }
+
+      .contact-direct-info a:hover {
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+      }
+
+      .email-copy-toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #141026;
+        border: 1px solid #00f0ff;
+        color: #ffffff;
+        padding: 0.8rem 1.4rem;
+        border-radius: 9999px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 240, 255, 0.3);
+        z-index: 10000;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+      }
+
+      .email-copy-toast.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Modal Success Confirmation */
+      .contact-success-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(11, 8, 24, 0.88);
+        backdrop-filter: blur(16px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease;
+      }
+
+      .contact-success-modal.is-open {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .contact-success-card {
+        background: #141026;
+        border: 1px solid rgba(0, 240, 255, 0.4);
+        border-radius: 24px;
+        padding: 3rem 2.5rem;
+        max-width: 520px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 240, 255, 0.2);
+        transform: scale(0.9);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .contact-success-modal.is-open .contact-success-card {
+        transform: scale(1);
+      }
+
+      .contact-success__icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: rgba(0, 240, 255, 0.15);
+        border: 2px solid #00f0ff;
+        color: #00f0ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.2rem;
+        margin: 0 auto 1.5rem auto;
+      }
+
+      .contact-success__title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: #ffffff;
+      }
+
+      .contact-success__text {
+        font-size: 0.95rem;
+        color: #9f9bba;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .contact-page {
+          padding-top: 100px;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-group--full {
+          grid-column: span 1;
+        }
+        .contact-form-wrapper {
+          padding: 2rem 1.25rem;
+        }
+        .form-actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .contact-direct-info {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Custom Cursor (desktop only) -->
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-circle" aria-hidden="true"></div>
+
+    <!-- Preloader -->
+    <div id="preloader" aria-hidden="true">
+      <div class="preloader__center">
+        <svg class="preloader__logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 577.63 596.57" aria-label="Sigle Frédéric Moitry">
+          <path class="preloader__logo-path" d="M337.73,355.75c5.1,30.1,3.48,57.88-6.43,86.79l-11.74,34.25c-14.76,38.29-18.16,77.64-12.3,119.78-17.8-29.4-31.88-58.98-44.24-90.07-20.02-50.37-32.83-104.46-29.68-158.64,4.49-77.16,42.73-141.05,101.48-189.72,29.4-24.35,61.13-44.5,95.31-61.69,42.73-21.48,86.96-38.3,132.58-52.45,5.15-1.6,9.21-3.53,14.92-3.95-5.42,30.52-14.75,58.15-27.2,85.69-21.1,46.69-50.66,88.14-88.16,122.9-19.36,17.94-39.45,33.52-62.02,47.04l-36.91,22.1c-29.14,17.45-62.7,37.73-78.69,68.07-5.15,9.77-9.35,20.07-8.93,31.34,8.55-16.87,17.31-31.51,31.3-42.77,9.38-7.54,18.65-13.71,30.7-18.68h0Z"/>
+          <path class="preloader__logo-path" d="M198.03,389.4c-15.18-28.85-17.73-58.89-26.61-90.27-11-38.84-38.93-69.24-76.96-82.92-19.9-7.16-40.07-10.29-61.25-10.84-6.03-.16-12.01-.83-17.9-.27-5.28.5-9.9.79-15.31,0,36.66-10.06,74.93-11.55,112.8-5.56,3.09.49,6.93.6,9.67.35,42.03-32.05,91.73-26.48,128.09,10.92l8.21,8.95c-38.99,61.14-48.25,127.1-37.14,199.46-10.64-8.42-16.73-19.07-23.6-29.82h0Z"/>
+          <path class="preloader__logo-path" d="M336.26,136.06c3.7-6.31,8.68-10.75,13.15-16.34l34.02-33.8,12.67-11.48,10.13-9.04C433.72,42.43,461.58,20.79,492.22.01c3.09,17.85,3.12,33.78,3.16,50.65-40.85,15.56-79.44,34.03-116.5,56.55-14.79,8.99-27.57,18.35-42.62,28.86h0Z"/>
+        </svg>
+        <span class="preloader__label">CHARGEMENT</span>
+        <span class="preloader__count">0%</span>
+      </div>
+      <div class="preloader__footer">
+        <p class="preloader__tagline">Frédéric Moitry — Product Designer &amp; Expert UX/UI</p>
+      </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav class="nav" role="navigation" aria-label="Navigation principale">
+      <a href="/" class="nav__logo" aria-label="Frédéric Moitry Portfolio">FRÉDÉRIC MOITRY</a>
+      <button class="nav__burger" id="js-burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="js-menu">
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+      </button>
+    </nav>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay" id="js-menu" role="dialog" aria-modal="true" aria-label="Menu de navigation" hidden>
+      <ul class="menu-overlay__list">
+        <li><a href="/" class="menu-overlay__link" data-index="01">Accueil</a></li>
+        <li><a href="/#manifesto" class="menu-overlay__link" data-index="02">Vision & Parcours</a></li>
+        <li><a href="/#work" class="menu-overlay__link" data-index="03">Projets Clés</a></li>
+        <li><a href="/#testimonials" class="menu-overlay__link" data-index="03">Témoignages</a></li>
+        <li><a href="/contact.html" class="menu-overlay__link" data-index="04">Contact</a></li>
+      </ul>
+      <div class="menu-overlay__footer">
+        <a href="mailto:contact@fredericmoitry.fr">contact@fredericmoitry.fr</a>
+      </div>
+    </div>
+
+    <!-- Fixed 3D Background Canvas -->
+    <canvas id="gl-canvas" aria-hidden="true"></canvas>
+
+    <!-- Main Content -->
+    <main id="main-content" class="contact-page">
+      <div class="container">
+
+        <!-- Hero Section -->
+        <header class="contact-hero">
+          <p class="eyebrow" data-reveal>Offres de Service & Collaboration</p>
+          <h1 class="contact-hero__headline" data-reveal>
+            Discutons de votre projet.<br>Des solutions sur-mesure & iA.
+          </h1>
+          <p class="contact-hero__sub" data-reveal>
+            Sélectionnez une prestation ci-dessous pour pré-remplir votre demande ou décrivez directement vos besoins. Réponse garantie sous 24 à 48h.
+          </p>
+        </header>
+
+        <!-- Interactive Service Offer Cards -->
+        <section class="services-grid" aria-label="Offres de Service">
+          <div class="service-card" data-service-value="da-product-design" data-reveal>
+            <span class="service-card__icon">🎨</span>
+            <h3 class="service-card__title">Direction Artistique & DA</h3>
+            <p class="service-card__desc">Conception UI/UX haut de gamme, création d'identités visuelles digitales et Design Systems scalables.</p>
+          </div>
+
+          <div class="service-card" data-service-value="audit-ux-ui" data-reveal>
+            <span class="service-card__icon">🔍</span>
+            <h3 class="service-card__title">Audit UX/UI & Ergonomie</h3>
+            <p class="service-card__desc">Analyse approfondie de vos parcours utilisateurs, optimisation du taux de conversion et de l'accessibilité.</p>
+          </div>
+
+          <div class="service-card" data-service-value="prototypage-webgl" data-reveal>
+            <span class="service-card__icon">🚀</span>
+            <h3 class="service-card__title">Prototypage & WebGL</h3>
+            <p class="service-card__desc">Prototypes haute fidélité (Figma / XD), micro-animations interactives et intégrations WebGL / GSAP 3D.</p>
+          </div>
+
+          <div class="service-card" data-service-value="innovation-ia-gamedesign" data-reveal>
+            <span class="service-card__icon">🤖</span>
+            <h3 class="service-card__title">Innovation UX & IA</h3>
+            <p class="service-card__desc">Intégration d'expériences génératives IA, workflows automatisés, interfaces conversationnelles et Gamification.</p>
+          </div>
+
+          <div class="service-card" data-service-value="consulting-formation" data-reveal>
+            <span class="service-card__icon">📚</span>
+            <h3 class="service-card__title">Consulting & Formation</h3>
+            <p class="service-card__desc">Accompagnement stratégique des équipes, ateliers de Co-Design, Masterclass et mentorat UX/UI.</p>
+          </div>
+        </section>
+
+        <!-- Form Section -->
+        <section class="contact-form-wrapper" data-reveal>
+          <form id="js-contact-form" action="#" method="POST" novalidate>
+            <div class="form-grid">
+              
+              <!-- Nom & Prénom -->
+              <div class="form-group">
+                <label for="form-name" class="form-label">Nom & Prénom <span>*</span></label>
+                <input type="text" id="form-name" name="name" class="form-input" placeholder="ex: Sarah Martin" required />
+              </div>
+
+              <!-- Email -->
+              <div class="form-group">
+                <label for="form-email" class="form-label">Adresse Email <span>*</span></label>
+                <input type="email" id="form-email" name="email" class="form-input" placeholder="ex: s.martin@entreprise.com" required />
+              </div>
+
+              <!-- Entreprise -->
+              <div class="form-group">
+                <label for="form-company" class="form-label">Entreprise / Organisation</label>
+                <input type="text" id="form-company" name="company" class="form-input" placeholder="ex: Nom de votre société ou agence" />
+              </div>
+
+              <!-- Dropdown Offre de Service -->
+              <div class="form-group">
+                <label for="form-service" class="form-label">Offre de Service souhaitée <span>*</span></label>
+                <select id="form-service" name="service" class="form-select" required>
+                  <option value="" disabled selected>Choisissez une prestation dans le menu...</option>
+                  <option value="da-product-design">🎨 Direction Artistique & Product Design (UI/UX sur-mesure)</option>
+                  <option value="audit-ux-ui">🔍 Audit UX/UI & Optimisation Ergonomique</option>
+                  <option value="prototypage-webgl">🚀 Prototypage Interactif & Expériences WebGL</option>
+                  <option value="innovation-ia-gamedesign">🤖 Innovation UX & Intégration IA / Game Design</option>
+                  <option value="consulting-formation">📚 Consulting, Co-Design & Formation Pro</option>
+                  <option value="autre">💼 Autre projet / Besoin personnalisé</option>
+                </select>
+              </div>
+
+              <!-- Budget estimé -->
+              <div class="form-group">
+                <label for="form-budget" class="form-label">Budget estimé</label>
+                <select id="form-budget" name="budget" class="form-select">
+                  <option value="" selected>Sélectionner une fourchette de budget...</option>
+                  <option value="moins-5k">Moins de 5 000 €</option>
+                  <option value="5k-15k">5 000 € — 15 000 €</option>
+                  <option value="15k-30k">15 000 € — 30 000 €</option>
+                  <option value="plus-30k">Plus de 30 000 €</option>
+                  <option value="a-definir">À définir ensemble</option>
+                </select>
+              </div>
+
+              <!-- Échéance -->
+              <div class="form-group">
+                <label for="form-timeline" class="form-label">Échéance de réalisation</label>
+                <select id="form-timeline" name="timeline" class="form-select">
+                  <option value="" selected>Choisir un délai souhaité...</option>
+                  <option value="urgent">Urgent (&lt; 1 mois)</option>
+                  <option value="court-terme">1 à 3 mois</option>
+                  <option value="moyen-terme">3 à 6 mois</option>
+                  <option value="exploration">Phase de cadrage / Exploration</option>
+                </select>
+              </div>
+
+              <!-- Message -->
+              <div class="form-group form-group--full">
+                <label for="form-message" class="form-label">Présentation de votre projet <span>*</span></label>
+                <textarea id="form-message" name="message" class="form-textarea" placeholder="Décrivez les objectifs de votre projet, le contexte, vos attentes vis-à-vis de la prestation..." required></textarea>
+              </div>
+
+            </div>
+
+            <!-- Submit Actions -->
+            <div class="form-actions">
+              <button type="submit" class="btn-contact-submit js-magnetic">
+                Envoyer ma Demande →
+              </button>
+              
+              <div class="contact-direct-info">
+                <span>Ou écrivez-moi directement :</span>
+                <a href="mailto:contact@fredericmoitry.fr" id="js-copy-email" title="Cliquer pour écrire un mail (ou copier l'adresse)">contact@fredericmoitry.fr</a>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <!-- Toast notification for copied email -->
+        <div class="email-copy-toast" id="js-email-toast">✓ Adresse contact@fredericmoitry.fr copiée !</div>
+
+      </div>
+    </main>
+
+    <!-- Success Confirmation Modal -->
+    <div class="contact-success-modal" id="js-success-modal" role="dialog" aria-modal="true" aria-label="Confirmation d'envoi">
+      <div class="contact-success-card">
+        <div class="contact-success__icon">✓</div>
+        <h2 class="contact-success__title">Demande Envoyée !</h2>
+        <p class="contact-success__text" id="js-success-text">
+          Merci ! Votre demande de projet a bien été enregistrée. Je reviens vers vous dans un délai de 24 à 48 heures.
+        </p>
+        <button type="button" class="btn btn--pill js-magnetic" id="js-close-success" style="border: none; cursor: pointer;">
+          Fermer / Revenir au portfolio
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="container footer__inner">
+        <div class="footer__brand">
+          <a href="/" class="footer__logo" aria-label="Frédéric Moitry Portfolio">FRÉDÉRIC MOITRY</a>
+          <p class="footer__tagline">Product Designer & Expert UX/UI</p>
+        </div>
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <a href="/#manifesto">Vision</a>
+          <a href="/#work">Réalisations clés</a>
+          <a href="/#vision">Mes atouts</a>
+          <a href="/contact.html">Me contacter</a>
+        </nav>
+        <div class="footer__contact">
+          <a href="mailto:contact@fredericmoitry.fr">contact@fredericmoitry.fr</a>
+          <a href="https://fredericmoitry.fr" target="_blank" rel="noopener noreferrer">fredericmoitry.fr</a>
+        </div>
+        <div class="footer__social">
+          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" target="_blank" id="js-cv-link" rel="noopener noreferrer" aria-label="Voir mon CV">Voir mon CV</a>
+        </div>
+        <div class="footer__bottom">
+          <p class="footer__address">Paris · Dublin · Galway · Montpellier · Remote</p>
+          <p class="footer__copy">&copy; 2026 Frédéric Moitry. Tous droits réservés.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Service Selection & Form Script -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const serviceSelect = document.getElementById('form-service');
+        const serviceCards = document.querySelectorAll('.service-card');
+        const contactForm = document.getElementById('js-contact-form');
+        const successModal = document.getElementById('js-success-modal');
+        const successText = document.getElementById('js-success-text');
+        const closeSuccessBtn = document.getElementById('js-close-success');
+
+        // Function to update active card states based on dropdown selection
+        function updateActiveCards(selectedValue) {
+          serviceCards.forEach(card => {
+            if (card.getAttribute('data-service-value') === selectedValue) {
+              card.classList.add('is-active');
+            } else {
+              card.classList.remove('is-active');
+            }
+          });
+        }
+
+        // Handle Service Card Clicks
+        serviceCards.forEach(card => {
+          card.addEventListener('click', () => {
+            const serviceValue = card.getAttribute('data-service-value');
+            if (serviceSelect && serviceValue) {
+              serviceSelect.value = serviceValue;
+              updateActiveCards(serviceValue);
+              
+              // Smooth scroll down to the form
+              contactForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+        });
+
+        // Sync dropdown selection with card highlights
+        if (serviceSelect) {
+          serviceSelect.addEventListener('change', (e) => {
+            updateActiveCards(e.target.value);
+          });
+        }
+
+        // Check URL parameters for pre-selected service (e.g., contact.html?service=audit-ux-ui)
+        const urlParams = new URLSearchParams(window.location.search);
+        const preselectedService = urlParams.get('service');
+        if (preselectedService && serviceSelect) {
+          const matchOption = Array.from(serviceSelect.options).find(opt => opt.value === preselectedService);
+          if (matchOption) {
+            serviceSelect.value = preselectedService;
+            updateActiveCards(preselectedService);
+          }
+        }
+
+        // Copy email to clipboard on click with toast feedback
+        const copyEmailBtn = document.getElementById('js-copy-email');
+        const emailToast = document.getElementById('js-email-toast');
+
+        if (copyEmailBtn) {
+          copyEmailBtn.addEventListener('click', (e) => {
+            // Keep default mailto behavior, but also copy to clipboard and show toast
+            navigator.clipboard.writeText('contact@fredericmoitry.fr').then(() => {
+              if (emailToast) {
+                emailToast.classList.add('is-visible');
+                setTimeout(() => {
+                  emailToast.classList.remove('is-visible');
+                }, 3000);
+              }
+            }).catch(() => {
+              // Fallback if clipboard API is restricted
+            });
+          });
+        }
+
+        // Handle Form Submission
+        if (contactForm) {
+          contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const nameVal = document.getElementById('form-name').value.trim();
+            const emailVal = document.getElementById('form-email').value.trim();
+            const serviceOpt = serviceSelect.options[serviceSelect.selectedIndex]?.text || 'Service';
+
+            if (!nameVal || !emailVal || !serviceSelect.value) {
+              alert('Veuillez remplir tous les champs obligatoires (Nom, Email et Offre de service).');
+              return;
+            }
+
+            // Customize success modal message
+            if (successText) {
+              successText.innerHTML = `Merci <strong>${nameVal}</strong> ! Votre demande pour la prestation <strong>${serviceOpt}</strong> a bien été enregistrée. Je vous recontacterai à l'adresse <strong>${emailVal}</strong> sous 24 à 48h.`;
+            }
+
+            if (successModal) {
+              successModal.classList.add('is-open');
+            }
+          });
+        }
+
+        if (closeSuccessBtn && successModal) {
+          closeSuccessBtn.addEventListener('click', () => {
+            successModal.classList.remove('is-open');
+            window.location.href = '/';
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

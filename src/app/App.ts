@@ -10,6 +10,7 @@ import { initCursor } from '../motion/cursor'
 import { Router } from './Router'
 import { getProject } from '../data/projects'
 import { renderProjectPage, mountProjectPage, unmountProjectPage } from './ProjectPage'
+import { i18n } from '../i18n/i18nEngine'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -314,7 +315,9 @@ export class App {
 
     const openModal = () => {
       modal.removeAttribute('hidden')
-      iframe.src = '/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf#view=FitH&zoom=125'
+      const lang = i18n.getLanguage()
+      const cvFile = lang === 'fr' ? 'CV-FREDERIC-MOITRY-2026-Fr.pdf' : 'CV-FREDERIC-MOITRY-2026-En.pdf'
+      iframe.src = `/cv/${cvFile}#view=FitH&zoom=125`
       this.lenis?.stop()
     }
 

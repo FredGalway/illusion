@@ -150,6 +150,13 @@ class I18nEngine {
       const cleanDesc = dict['manifesto.statement'].replace(/<[^>]*>/g, '').trim();
       metaDesc.setAttribute('content', cleanDesc.slice(0, 160) + '...');
     }
+
+    // 6. Update CV Links dynamically (French CV for 'fr', English CV for all non-French languages)
+    const cvFile = this.currentLang === 'fr' ? 'CV-FREDERIC-MOITRY-2026-Fr.pdf' : 'CV-FREDERIC-MOITRY-2026-En.pdf';
+    const cvPath = `/cv/${cvFile}`;
+    document.querySelectorAll<HTMLAnchorElement>('#js-cv-link, a[href*="CV-FREDERIC-MOITRY"]').forEach((link) => {
+      link.href = cvPath;
+    });
   }
 
   public renderLanguageSwitcher(): void {

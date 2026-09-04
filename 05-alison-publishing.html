@@ -509,21 +509,20 @@
 <body>
 
   <!-- Boutons de Navigation (Haut Gauche / Haut Droite) -->
-  <a href="/#work" class="back-btn" aria-label="Retour à l'accueil">
+  <a href="/#work" class="back-btn" aria-label="Retour à l'accueil" data-i18n="case_study.back">
     <span class="back-btn__arrow">←</span> RETOUR
   </a>
 
-  <a href="https://publishing-v2.alison.com/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Voir site officiel Alison">
+  <a href="https://publishing-v2.alison.com/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Voir site officiel Alison" data-i18n="case_study.visit_site">
     Voir SITE <span class="site-btn__icon">↗</span>
   </a>
 
   <!-- Hero d'introduction V3 avec Particle.js -->
   <section class="hero-intro">
     <div id="particles-js"></div>
-    <h1>Alison Publishing</h1>
-    <p>Alison Publishing est la branche édition de cours de la plateforme éducative Alison. En tant que Lead UX UI pour la société Capernaum Ltd, j'ai aidé son dirigeant Mike Feerick à moderniser
-ses outils de production et de communication Alison en fournissant des interfaces hyper-réaliste et prêtes à être intégrées pour des environnements softwares et dynamiques. Voici ci-dessous quelques interfaces témoins de mon travail au coeur d'une équipe internationale de 8 développeurs.</p>
-    <div class="scroll-down-badge">Scrollez vers le bas ↓</div>
+    <h1 data-i18n="work.alison_pub.title">Alison Publishing</h1>
+    <p data-i18n="project.alison_pub.intro">Alison Publishing est la branche édition de cours de la plateforme éducative Alison. En tant que Lead UX UI pour la société Capernaum Ltd, j'ai aidé son dirigeant Mike Feerick à moderniser ses outils de production et de communication Alison.</p>
+    <div class="scroll-down-badge" data-i18n="case_study.scroll_down">Scrollez vers le bas ↓</div>
   </section>
 
   <!-- Section de Scroll Horizontal Épinglée (V3) -->
@@ -543,7 +542,7 @@ ses outils de production et de communication Alison en fournissant des interface
           <div class="panel__card">
             <span class="panel__number">01</span>
             <img class="parallax parallax-x-20" src="./src/ui/alison/publishing/01-HomePage.png" alt="01 - Home Page">
-            <span class="panel__caption">01. Page d'Accueil — Vue d'ensemble</span>
+            <span class="panel__caption" data-i18n="project.alison_pub.panel1">01. Page d'Accueil — Vue d'ensemble</span>
           </div>
         </article>
 
@@ -552,7 +551,7 @@ ses outils de production et de communication Alison en fournissant des interface
           <div class="panel__card">
             <span class="panel__number">02</span>
             <img class="parallax parallax-x-10 reverse" src="./src/ui/alison/publishing/02-Dashboard-Preview.png" alt="02 - Dashboard Preview">
-            <span class="panel__caption">02. Aperçu du Dashboard Apprenants</span>
+            <span class="panel__caption" data-i18n="project.alison_pub.panel2">02. Aperçu du Dashboard Apprenants</span>
           </div>
         </article>
 
@@ -561,7 +560,7 @@ ses outils de production et de communication Alison en fournissant des interface
           <div class="panel__card">
             <span class="panel__number">03</span>
             <img class="parallax parallax-y-15" src="./src/ui/alison/publishing/03-New-course.png" alt="03 - New Course">
-            <span class="panel__caption">03. Module de Création de Cours</span>
+            <span class="panel__caption" data-i18n="project.alison_pub.panel3">03. Module de Création de Cours</span>
           </div>
         </article>
 
@@ -570,7 +569,7 @@ ses outils de production et de communication Alison en fournissant des interface
           <div class="panel__card">
             <span class="panel__number">04</span>
             <img class="parallax parallax-x-20 parallax-y-15" src="./src/ui/alison/publishing/04-New-Module.png" alt="04 - New Module">
-            <span class="panel__caption">04. Éditeur de Modules & Contenus</span>
+            <span class="panel__caption" data-i18n="project.alison_pub.panel4">04. Éditeur de Modules & Contenus</span>
           </div>
         </article>
 
@@ -579,7 +578,7 @@ ses outils de production et de communication Alison en fournissant des interface
           <div class="panel__card">
             <span class="panel__number">05</span>
             <img class="parallax parallax-x-15 reverse" src="./src/ui/alison/publishing/05-Dashboard-Full.png" alt="05 - Dashboard Full">
-            <span class="panel__caption">05. Dashboard Progiciel Complet</span>
+            <span class="panel__caption" data-i18n="project.alison_pub.panel5">05. Dashboard Progiciel Complet</span>
           </div>
         </article>
 
@@ -591,9 +590,9 @@ ses outils de production et de communication Alison en fournissant des interface
   <section class="projects-section">
     <div class="projects-container">
       <div class="projects-header">
-        <span class="projects-eyebrow">PORTFOLIO & DESIGN SYSTEM</span>
-        <h2 class="projects-title">D’autres Projets à Découvrir</h2>
-        <p class="projects-subtitle">Explorez les autres réalisations majeures en UX/UI, Design System et Innovation Digitale.</p>
+        <span class="projects-eyebrow" data-i18n="case_study.more_projects_eyebrow">PORTFOLIO & DESIGN SYSTEM</span>
+        <h2 class="projects-title" data-i18n="case_study.more_projects_title">D’autres Projets à Découvrir</h2>
+        <p class="projects-subtitle" data-i18n="case_study.more_projects_subtitle">Explorez les autres réalisations majeures en UX/UI, Design System et Innovation Digitale.</p>
       </div>
 
       <div class="projects-grid">
@@ -604,10 +603,10 @@ ses outils de production et de communication Alison en fournissant des interface
             <span class="project-card__tag">UX Innovation · Software · LMS</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Alison Publishing App</h3>
-            <p class="project-card__desc">Éditeur d'applications de publication en ligne pour l'acquisition de compétences.</p>
+            <h3 class="project-card__title" data-i18n="work.alison_pub_app.title">Alison Publishing App</h3>
+            <p class="project-card__desc" data-i18n="work.alison_pub_app.desc">Éditeur d'applications de publication en ligne pour l'acquisition de compétences.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -619,10 +618,10 @@ ses outils de production et de communication Alison en fournissant des interface
             <span class="project-card__tag">Crédit Agricole · Figma App · UX/UI</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Crédit Agricole App</h3>
-            <p class="project-card__desc">Conception de l'application mobile grand public et transactions bancaires sécurisées.</p>
+            <h3 class="project-card__title" data-i18n="work.ca.title">Crédit Agricole App</h3>
+            <p class="project-card__desc" data-i18n="work.ca.desc">Conception de l'application mobile grand public et transactions bancaires sécurisées.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -634,10 +633,10 @@ ses outils de production et de communication Alison en fournissant des interface
             <span class="project-card__tag">Trading · Application · FinTech</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Trading 230 - App</h3>
-            <p class="project-card__desc">Application de services de courtage et d'investissement avec scénarios UX optimisés.</p>
+            <h3 class="project-card__title" data-i18n="work.trading.title">Trading 230 - App</h3>
+            <p class="project-card__desc" data-i18n="work.trading.desc">Application de services de courtage et d'investissement avec scénarios UX optimisés.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -649,10 +648,10 @@ ses outils de production et de communication Alison en fournissant des interface
             <span class="project-card__tag">LMS · Apprentissage · Éducation</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">LMS Pro</h3>
-            <p class="project-card__desc">Plateforme avancée de gestion de formations et suivi de la progression des apprenants.</p>
+            <h3 class="project-card__title" data-i18n="work.lms.title">LMS Pro</h3>
+            <p class="project-card__desc" data-i18n="work.lms.desc">Plateforme avancée de gestion de formations et suivi de la progression des apprenants.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -664,10 +663,10 @@ ses outils de production et de communication Alison en fournissant des interface
             <span class="project-card__tag">UI International · Adobe Award · Finance</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">BNP & IA Secure</h3>
-            <p class="project-card__desc">Recherche UX/UI and conception d'une application bancaire internationale sécurisée.</p>
+            <h3 class="project-card__title" data-i18n="work.bnp.title">BNP & IA Secure</h3>
+            <p class="project-card__desc" data-i18n="work.bnp.desc">Recherche UX/UI et conception d'une application bancaire internationale sécurisée.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -679,10 +678,10 @@ ses outils de production et de communication Alison en fournissant des interface
             <span class="project-card__tag">UX/UI · EduTech · Irlande</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Alison Landing Pages</h3>
-            <p class="project-card__desc">Refonte des pages d'acquisition du leader mondial de la formation gratuite (+34% de conversion).</p>
+            <h3 class="project-card__title" data-i18n="work.alison_lp.title">Alison Landing Pages</h3>
+            <p class="project-card__desc" data-i18n="work.alison_lp.desc">Refonte des pages d'acquisition du leader mondial de la formation gratuite (+34% de conversion).</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -891,6 +890,7 @@ ses outils de production et de communication Alison en fournissant des interface
       }
     })();
   </script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
 

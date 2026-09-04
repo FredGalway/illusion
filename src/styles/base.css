@@ -186,6 +186,120 @@ body.is-loading {
     opacity var(--duration-base) var(--ease-out-expo);
 }
 
+.nav--dark {
+  mix-blend-mode: normal;
+}
+.nav--dark .nav__logo {
+  color: #ffffff;
+}
+.nav--dark .nav__burger-line {
+  background: #ffffff;
+}
+
+/* ─── Language Switcher UI ─── */
+.lang-switcher {
+  position: relative;
+  margin-left: auto;
+  margin-right: 1.25rem;
+  z-index: 310;
+}
+
+.lang-switcher__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lang-switcher__btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.nav--dark .lang-switcher__btn {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.lang-switcher__flag {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.lang-switcher__arrow {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  transition: transform 0.2s ease;
+}
+
+.lang-switcher__btn[aria-expanded="true"] .lang-switcher__arrow {
+  transform: rotate(180deg);
+}
+
+.lang-switcher__dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 170px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: rgba(18, 14, 35, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  padding: 0.4rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 9999;
+}
+
+.lang-switcher__dropdown[hidden] {
+  display: none;
+}
+
+.lang-switcher__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #d1ceea;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lang-switcher__option:hover,
+.lang-switcher__option.is-active {
+  background: rgba(0, 240, 255, 0.15);
+  color: #00f0ff;
+  font-weight: 700;
+}
+
+.lang-switcher__code-badge {
+  font-size: 0.68rem;
+  opacity: 0.6;
+  font-weight: 700;
+}
+
 .nav--menu-open {
   mix-blend-mode: normal;
 }
@@ -718,3 +832,19 @@ a.menu-overlay__link {
     text-align: center;
   }
 }
+
+/* ─── Floating Language Switcher for Standalone Pages ─── */
+.lang-switcher--floating {
+  position: fixed;
+  top: 1.5rem;
+  right: 12rem;
+  z-index: 1001;
+}
+
+@media (max-width: 768px) {
+  .lang-switcher--floating {
+    top: 5rem;
+    right: 1.5rem;
+  }
+}
+

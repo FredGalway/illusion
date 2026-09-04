@@ -45,17 +45,17 @@
           <path class="preloader__logo-path" d="M198.03,389.4c-15.18-28.85-17.73-58.89-26.61-90.27-11-38.84-38.93-69.24-76.96-82.92-19.9-7.16-40.07-10.29-61.25-10.84-6.03-.16-12.01-.83-17.9-.27-5.28.5-9.9.79-15.31,0,36.66-10.06,74.93-11.55,112.8-5.56,3.09.49,6.93.6,9.67.35,42.03-32.05,91.73-26.48,128.09,10.92l8.21,8.95c-38.99,61.14-48.25,127.1-37.14,199.46-10.64-8.42-16.73-19.07-23.6-29.82h0Z"/>
           <path class="preloader__logo-path" d="M336.26,136.06c3.7-6.31,8.68-10.75,13.15-16.34l34.02-33.8,12.67-11.48,10.13-9.04C433.72,42.43,461.58,20.79,492.22.01c3.09,17.85,3.12,33.78,3.16,50.65-40.85,15.56-79.44,34.03-116.5,56.55-14.79,8.99-27.57,18.35-42.62,28.86h0Z"/>
         </svg>
-        <span class="preloader__label">CHARGEMENT</span>
+        <span class="preloader__label" data-i18n="preloader.loading">CHARGEMENT</span>
         <span class="preloader__count">0%</span>
       </div>
       <div class="preloader__footer">
-        <p class="preloader__tagline">Frédéric Moitry — Product Designer &amp; Expert UX/UI</p>
+        <p class="preloader__tagline" data-i18n="preloader.tagline">Frédéric Moitry — Product Designer &amp; Expert UX/UI</p>
       </div>
     </div>
 
     <!-- Navigation -->
     <nav class="nav" role="navigation" aria-label="Navigation principale">
-      <a href="/" class="nav__logo" aria-label="Frédéric Moitry Portfolio">FRÉDÉRIC MOITRY</a>
+      <a href="/" class="nav__logo" aria-label="Frédéric Moitry Portfolio" data-i18n="nav.logo">FRÉDÉRIC MOITRY</a>
       <button class="nav__burger" id="js-burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="js-menu">
         <span class="nav__burger-line"></span>
         <span class="nav__burger-line"></span>
@@ -65,14 +65,14 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="js-menu" role="dialog" aria-modal="true" aria-label="Menu de navigation" hidden>
       <ul class="menu-overlay__list">
-        <li><a href="/" class="menu-overlay__link" data-index="01">Accueil</a></li>
-        <li><a href="#manifesto" class="menu-overlay__link" data-index="02">Vision & Parcours</a></li>
-        <li><a href="#work" class="menu-overlay__link" data-index="03">Projets Clés</a></li>
-        <li><a href="#testimonials" class="menu-overlay__link" data-index="03">Témoignages</a></li>
-        <li><a href="/contact.html" class="menu-overlay__link" data-index="04">Contact</a></li>
+        <li><a href="/" class="menu-overlay__link" data-index="01" data-i18n="menu.home">Accueil</a></li>
+        <li><a href="#manifesto" class="menu-overlay__link" data-index="02" data-i18n="menu.vision">Vision & Parcours</a></li>
+        <li><a href="#work" class="menu-overlay__link" data-index="03" data-i18n="menu.work">Projets Clés</a></li>
+        <li><a href="#testimonials" class="menu-overlay__link" data-index="03" data-i18n="menu.testimonials">Témoignages</a></li>
+        <li><a href="/contact.html" class="menu-overlay__link" data-index="04" data-i18n="menu.contact">Contact</a></li>
       </ul>
       <div class="menu-overlay__footer">
-        <a href="/contact.html">contact@fredericmoitry.fr</a>
+        <a href="/contact.html" data-i18n="menu.contact_email">contact@fredericmoitry.fr</a>
       </div>
     </div>
 
@@ -85,13 +85,13 @@
       <!-- §1 — Hero -->
       <section class="section hero" id="hero" aria-label="Hero">
         <div class="hero__content">
-          <p class="eyebrow" data-reveal>Product Designer & Expert UX/UI</p>
-          <h1 class="hero__headline" data-reveal>
+          <p class="eyebrow" data-reveal data-i18n="hero.eyebrow">Product Designer & Expert UX/UI</p>
+          <h1 class="hero__headline" data-reveal data-i18n="hero.headline">
            +25 ans d'expérience<br>
             solutions web<br>
             sur-mesure & iA.
           </h1>
-          <p class="hero__sub" data-reveal>Découvrir mon expertise</p>
+          <p class="hero__sub" data-reveal data-i18n="hero.sub">Découvrir mon expertise</p>
 
           <!-- Interactive 3D jacks container card -->
           <div id="home-hero-visual-container">
@@ -106,13 +106,12 @@
       <!-- §2 — Manifesto -->
       <section class="section manifesto" id="manifesto" aria-label="Manifesto">
         <div class="container">
-          <p class="eyebrow" data-reveal>Vision & Différenciation</p>
-          <p class="manifesto__statement" data-reveal>
+          <p class="eyebrow" data-reveal data-i18n="manifesto.eyebrow">Vision & Différenciation</p>
+          <p class="manifesto__statement" data-reveal data-i18n="manifesto.statement">
             Pionnier du design numérique depuis plus de +25 ans, je conçois des solutions web et des interfaces sur-mesure combinant ergonomie, direction artistique et nouvelles technologies (IA, Game Design). Récompensé par Adobe pour la meilleure interface UI internationale et co-auteur de 2 livres chez Dunod, j’accompagne grands comptes (Publicis, Havas, BNP, France TV) et agences dans la réalisation de produits digitaux d’exception.
           </p>
           <div class="manifesto__ctas" data-reveal>
-            <a href="#work" class="btn btn--pill js-magnetic">Voir mes Réalisations</a>
-            
+            <a href="#work" class="btn btn--pill js-magnetic" data-i18n="manifesto.cta">Voir mes Réalisations</a>
           </div>
         </div>
       </section>
@@ -121,7 +120,7 @@
       <section class="section work" id="work" aria-label="Featured Work">
         <div class="container">
           <div class="work__header">
-            <p class="eyebrow" data-reveal>Réalisations Clés</p>
+            <p class="eyebrow" data-reveal data-i18n="work.eyebrow">Réalisations Clés</p>
           </div>
           <ul class="work__list" role="list">
              <li class="work__item" data-reveal>
@@ -132,8 +131,8 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">Trading 230 - App</h2>
-                  <p class="work__tags">Trading · Application · FinTech</p>
+                  <h2 class="work__title" data-i18n="work.trading.title">Trading 230 - App</h2>
+                  <p class="work__tags" data-i18n="work.trading.tags">Trading · Application · FinTech</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
@@ -146,8 +145,8 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">LMS Pro</h2>
-                  <p class="work__tags">LMS · Learning Management System · education</p>
+                  <h2 class="work__title" data-i18n="work.lms.title">LMS Pro</h2>
+                  <p class="work__tags" data-i18n="work.lms.tags">LMS · Learning Management System · éducation</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
@@ -160,13 +159,13 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">BNP & IA Secure</h2>
-                  <p class="work__tags">UI International · Adobe Award · Finance</p>
+                  <h2 class="work__title" data-i18n="work.bnp.title">BNP & IA Secure</h2>
+                  <p class="work__tags" data-i18n="work.bnp.tags">UI International · Adobe Award · Finance</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
             </li>
-            <li class="work__item" data-reveal>
+             <li class="work__item" data-reveal>
               <a href="/03-alison-landing-pages.html" class="work__link">
                 <div class="work__thumb" data-distort>
                   <div class="work__thumb-inner">
@@ -174,13 +173,13 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">Alison Landing Pages</h2>
-                  <p class="work__tags">UX/UI · EduTech · Irlande</p>
+                  <h2 class="work__title" data-i18n="work.alison_lp.title">Alison Landing Pages</h2>
+                  <p class="work__tags" data-i18n="work.alison_lp.tags">UX/UI · EduTech · Irlande</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
             </li>
-            <li class="work__item" data-reveal>
+             <li class="work__item" data-reveal>
               <a href="/04-alison-app.html" class="work__link">
                 <div class="work__thumb" data-distort>
                   <div class="work__thumb-inner">
@@ -188,13 +187,13 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">Alison Mobile App</h2>
-                  <p class="work__tags">UX/UI · Prototype XD · Smartphone</p>
+                  <h2 class="work__title" data-i18n="work.alison_app.title">Alison Mobile App</h2>
+                  <p class="work__tags" data-i18n="work.alison_app.tags">UX/UI · Prototype XD · Smartphone</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
             </li>
-            <li class="work__item" data-reveal>
+             <li class="work__item" data-reveal>
               <a href="/05-alison-publishing.html" class="work__link">
                 <div class="work__thumb" data-distort>
                   <div class="work__thumb-inner">
@@ -202,14 +201,14 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">Alison Publishing</h2>
-                  <p class="work__tags">UX/UI · Progiciel · Design System</p>
+                  <h2 class="work__title" data-i18n="work.alison_pub.title">Alison Publishing</h2>
+                  <p class="work__tags" data-i18n="work.alison_pub.tags">UX/UI · Progiciel · Design System</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
             </li>
            
-            <li class="work__item" data-reveal>
+             <li class="work__item" data-reveal>
               <a href="/06-alison-publishing-app.html" class="work__link">
                 <div class="work__thumb" data-distort>
                   <div class="work__thumb-inner">
@@ -217,13 +216,13 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">Alison Publishing App</h2>
-                  <p class="work__tags">UX Innovation · Software · LMS</p>
+                  <h2 class="work__title" data-i18n="work.alison_pub_app.title">Alison Publishing App</h2>
+                  <p class="work__tags" data-i18n="work.alison_pub_app.tags">UX Innovation · Software · LMS</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
             </li>
-            <li class="work__item" data-reveal>
+             <li class="work__item" data-reveal>
               <a href="/07-credit-agricol-app.html" class="work__link">
                 <div class="work__thumb" data-distort>
                   <div class="work__thumb-inner">
@@ -231,15 +230,15 @@
                   </div>
                 </div>
                 <div class="work__info">
-                  <h2 class="work__title">Crédit Agricole App</h2>
-                  <p class="work__tags">Crédit Agricole · Figma App · UX/UI</p>
+                  <h2 class="work__title" data-i18n="work.ca.title">Crédit Agricole App</h2>
+                  <p class="work__tags" data-i18n="work.ca.tags">Crédit Agricole · Figma App · UX/UI</p>
                 </div>
                 <span class="work__arrow" aria-hidden="true">→</span>
               </a>
             </li>
           </ul>
           <div class="work__footer" data-reveal>
-            <a href="#vision" class="btn btn--pill js-magnetic">Pourquoi m'embaucher ?</a>
+            <a href="#vision" class="btn btn--pill js-magnetic" data-i18n="work.footer_cta">Pourquoi m'embaucher ?</a>
           </div>
         </div>
       </section>
@@ -247,20 +246,20 @@
       <!-- §4 — Vision -->
       <section class="section vision" id="vision" aria-label="Vision">
         <div class="container">
-          <p class="eyebrow" data-reveal>Pourquoi m'embaucher pour votre projet ?</p>
-          <h2 class="vision__headline" data-reveal>
+          <p class="eyebrow" data-reveal data-i18n="vision.eyebrow">Pourquoi m'embaucher pour votre projet ?</p>
+          <h2 class="vision__headline" data-reveal data-i18n="vision.headline">
             Une Approche Agile<br>et une Vision<br>Stratégique.
           </h2>
           <div class="vision__body" data-reveal>
-            <p>
+            <p data-i18n="vision.p1">
               Fort de plus de 25 ans d’expérience dans la communication digitale, je suis un expert polyvalent capable d’intervenir simultanément dans la conception UX/UI, la direction artistique, le packaging et la formation professionnelle. J’appuie ma pratique sur une méthodologie agile et une vision globale du produit digital.
             </p>
-            <p>
+            <p data-i18n="vision.p2">
               Des agences parisiennes (Havas, Publicis) au groupe Alison en Irlande, en passant par la co-écriture de 2 livres pour Dunod et l’initiation aux technologies FullStack (Python, React, GODOT, IA), j’explore vos nouveaux projets et construis des solutions sur-mesure adaptées à vos enjeux actuels et futurs.
             </p>
           </div>
           <div class="work__footer" data-reveal>
-            <a href="#testimonials" class="btn btn--pill js-magnetic">Témoignages & Références</a>
+            <a href="#testimonials" class="btn btn--pill js-magnetic" data-i18n="vision.cta">Témoignages & Références</a>
           </div>
         </div>
       </section>
@@ -268,48 +267,48 @@
       <!-- §5 — Testimonials -->
       <section class="section testimonials" id="testimonials" aria-label="Témoignages">
         <div class="container">
-          <p class="eyebrow" data-reveal>Témoignages & Références</p>
+          <p class="eyebrow" data-reveal data-i18n="testimonials.eyebrow">Témoignages & Références</p>
           <div class="testimonials__grid" data-reveal>
             <div class="testimonial__card">
-              <p class="testimonial__quote">« L’apport de Frédéric a été très apprécié car il combinait les compétences de directeur artistique pour construire l’interface utilisateur, et les connaissances en matière de design UX. »</p>
+              <p class="testimonial__quote" data-i18n="testimonial.1.quote">« L’apport de Frédéric a été très apprécié car il combinait les compétences de directeur artistique pour construire l’interface utilisateur, et les connaissances en matière de design UX. »</p>
               <div>
                 <p class="testimonial__author">Anne-Lyse Leroy</p>
-                <p class="testimonial__role">Directrice des stratégies d'engagement · Havas Life Paris</p>
+                <p class="testimonial__role" data-i18n="testimonial.1.role">Directrice des stratégies d'engagement · Havas Life Paris</p>
               </div>
             </div>
             <div class="testimonial__card">
-              <p class="testimonial__quote">« Frédéric est un designer talentueux et très créatif – qui peut sortir des sentiers battus et soutenir la vision d’une équipe avec des applications de conception époustouflantes. »</p>
+              <p class="testimonial__quote" data-i18n="testimonial.2.quote">« Frédéric est un designer talentueux et très créatif – qui peut sortir des sentiers battus et soutenir la vision d’une équipe avec des applications de conception époustouflantes. »</p>
               <div>
                 <p class="testimonial__author">Laura Colleran</p>
-                <p class="testimonial__role">Global Marketing Communications Manager</p>
+                <p class="testimonial__role" data-i18n="testimonial.2.role">Global Marketing Communications Manager</p>
               </div>
             </div>
             <div class="testimonial__card">
-              <p class="testimonial__quote">« Frédéric est un brillant UX/UI Designer et Directeur Artistique avec un large éventail de compétences. Je recommande Frédéric pour tous les projets nécessitant de hautes normes. »</p>
+              <p class="testimonial__quote" data-i18n="testimonial.3.quote">« Frédéric est un brillant UX/UI Designer et Directeur Artistique avec un large éventail de compétences. Je recommande Frédéric pour tous les projets nécessitant de hautes normes. »</p>
               <div>
                 <p class="testimonial__author">Milos Kurtes</p>
-                <p class="testimonial__role">Atlassian Operating Systems Administrator</p>
+                <p class="testimonial__role" data-i18n="testimonial.3.role">Atlassian Operating Systems Administrator</p>
               </div>
             </div>
             <div class="testimonial__card">
-              <p class="testimonial__quote">« Frédéric est un UX Designer très talentueux avec beaucoup de créativité et de passion. Ses connaissances en matière d'expérience client et son flux de travail sont incroyables. »</p>
+              <p class="testimonial__quote" data-i18n="testimonial.4.quote">« Frédéric est un UX Designer très talentueux avec beaucoup de créativité et de passion. Ses connaissances en matière d'expérience client et son flux de travail sont incroyables. »</p>
               <div>
                 <p class="testimonial__author">Ranjani Nagarajan</p>
-                <p class="testimonial__role">Marketing Manager @ HubSpot</p>
+                <p class="testimonial__role" data-i18n="testimonial.4.role">Marketing Manager @ HubSpot</p>
               </div>
             </div>
             <div class="testimonial__card">
-              <p class="testimonial__quote">« Frédéric a réalisé un prototype mobile très intelligemment conçu pour les Gobelins, l'École de l'Image. »</p>
+              <p class="testimonial__quote" data-i18n="testimonial.5.quote">« Frédéric a réalisé un prototype mobile très intelligemment conçu pour les Gobelins, l'École de l'Image. »</p>
               <div>
                 <p class="testimonial__author">Éric Martel</p>
-                <p class="testimonial__role">Enseignant-chercheur ICD Business School / Dr en Sciences de Gestion</p>
+                <p class="testimonial__role" data-i18n="testimonial.5.role">Enseignant-chercheur ICD Business School / Dr en Sciences de Gestion</p>
               </div>
             </div>
             <div class="testimonial__card">
-              <p class="testimonial__quote">« Ce n’est pas un mais deux livres que j’ai eu le plaisir de co-écrire avec Frédéric. Une expérience réussie grâce à sa grande compétence démontrée. »</p>
+              <p class="testimonial__quote" data-i18n="testimonial.6.quote">« Ce n’est pas un mais deux livres que j’ai eu le plaisir de co-écrire avec Frédéric. Une expérience réussie grâce à sa grande compétence démontrée. »</p>
               <div>
                 <p class="testimonial__author">Jean-Marie Cocheteau</p>
-                <p class="testimonial__role">Formateur au GRETA Arts Graphiques</p>
+                <p class="testimonial__role" data-i18n="testimonial.6.role">Formateur au GRETA Arts Graphiques</p>
               </div>
             </div>
           </div>
@@ -319,20 +318,20 @@
       <!-- §6 — CTA + Marquee -->
       <section class="section cta" id="cta" aria-label="Call to Action">
         <div class="container">
-          <p class="eyebrow" data-reveal>Collaborons ensemble</p>
-          <h2 class="cta__headline" data-reveal>
+          <p class="eyebrow" data-reveal data-i18n="cta.eyebrow">Collaborons ensemble</p>
+          <h2 class="cta__headline" data-reveal data-i18n="cta.headline">
             Prêt à propulser<br>votre prochain projet ?
           </h2>
-          <a href="/contact.html" class="btn btn--pill btn--large js-magnetic" data-reveal>Me contacter / Discuter d'un projet</a>
+          <a href="/contact.html" class="btn btn--pill btn--large js-magnetic" data-reveal data-i18n="cta.btn">Me contacter / Discuter d'un projet</a>
         </div>
         <div class="marquee" aria-hidden="true">
           <div class="marquee__track">
-            <span class="marquee__item">DISCUTONS DE VOTRE PROJET</span>
-            <span class="marquee__item" aria-hidden="true">25+ ANS D'EXPÉRIENCE UX/UI</span>
-            <span class="marquee__item" aria-hidden="true">EXPERT EN INNOVATION DIGITALE</span>
-            <span class="marquee__item" aria-hidden="true">DISCUTONS DE VOTRE PROJET</span>
-            <span class="marquee__item" aria-hidden="true">25+ ANS D'EXPÉRIENCE UX/UI</span>
-            <span class="marquee__item" aria-hidden="true">EXPERT EN INNOVATION DIGITALE</span>
+            <span class="marquee__item" data-i18n="marquee.item1">DISCUTONS DE VOTRE PROJET</span>
+            <span class="marquee__item" aria-hidden="true" data-i18n="marquee.item2">25+ ANS D'EXPÉRIENCE UX/UI</span>
+            <span class="marquee__item" aria-hidden="true" data-i18n="marquee.item3">EXPERT EN INNOVATION DIGITALE</span>
+            <span class="marquee__item" aria-hidden="true" data-i18n="marquee.item1">DISCUTONS DE VOTRE PROJET</span>
+            <span class="marquee__item" aria-hidden="true" data-i18n="marquee.item2">25+ ANS D'EXPÉRIENCE UX/UI</span>
+            <span class="marquee__item" aria-hidden="true" data-i18n="marquee.item3">EXPERT EN INNOVATION DIGITALE</span>
           </div>
         </div>
       </section>
@@ -343,25 +342,25 @@
     <footer class="footer" role="contentinfo">
       <div class="container footer__inner">
         <div class="footer__brand">
-          <a href="/" class="footer__logo" aria-label="Frédéric Moitry Portfolio">FRÉDÉRIC MOITRY</a>
-          <p class="footer__tagline">Product Designer & Expert UX/UI</p>
+          <a href="/" class="footer__logo" aria-label="Frédéric Moitry Portfolio" data-i18n="footer.logo">FRÉDÉRIC MOITRY</a>
+          <p class="footer__tagline" data-i18n="footer.tagline">Product Designer & Expert UX/UI</p>
         </div>
         <nav class="footer__nav" aria-label="Footer navigation">
-          <a href="#manifesto">Vision</a>
-          <a href="#work">Réalisations clés</a>
-          <a href="#vision">Mes atouts</a>
-          <a href="/contact.html">Me contacter</a>
+          <a href="#manifesto" data-i18n="footer.vision">Vision</a>
+          <a href="#work" data-i18n="footer.work">Réalisations clés</a>
+          <a href="#vision" data-i18n="footer.assets">Mes atouts</a>
+          <a href="/contact.html" data-i18n="footer.contact">Me contacter</a>
         </nav>
         <div class="footer__contact">
           <a href="/contact.html">contact@fredericmoitry.fr</a>
           <a href="https://fredericmoitry.fr" target="_blank" rel="noopener noreferrer">fredericmoitry.fr</a>
         </div>
         <div class="footer__social">
-          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" target="_blank" id="js-cv-link" rel="noopener noreferrer" aria-label="Voir mon CV">Voir mon CV</a>
+          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" target="_blank" id="js-cv-link" rel="noopener noreferrer" aria-label="Voir mon CV" data-i18n="footer.cv">Voir mon CV</a>
         </div>
         <div class="footer__bottom">
-          <p class="footer__address">Paris · Dublin· Galway · Montpellier · Remote</p>
-          <p class="footer__copy">&copy; 2026 Frédéric Moitry. Tous droits réservés.</p>
+          <p class="footer__address" data-i18n="footer.address">Paris · Dublin · Galway · Montpellier · Remote</p>
+          <p class="footer__copy" data-i18n="footer.copy">&copy; 2026 Frédéric Moitry. Tous droits réservés.</p>
         </div>
       </div>
     </footer>

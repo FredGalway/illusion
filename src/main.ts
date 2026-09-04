@@ -28,6 +28,11 @@ if (!prefersReduced) {
   lenis.on('scroll', ScrollTrigger.update)
 }
 
+import { i18n } from './i18n/i18nEngine'
+
+// Boot i18n immediately so preloader & initial texts are translated upon load
+i18n.init().catch(console.error)
+
 // ─── Boot app ─────────────────────────────────────────────────────────────
 const app = new App(lenis, prefersReduced)
 app.init()

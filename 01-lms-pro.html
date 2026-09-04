@@ -522,20 +522,20 @@
 <body>
 
   <!-- Boutons de Navigation (Haut Gauche / Haut Droite) -->
-  <a href="/#work" class="back-btn" aria-label="Retour à l'accueil">
+  <a href="/#work" class="back-btn" aria-label="Retour à l'accueil" data-i18n="case_study.back">
     <span class="back-btn__arrow">←</span> RETOUR
   </a>
 
-  <a href="https://lmspro.fr/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Voir site officiel LMS Pro">
+  <a href="https://lmspro.vercel.app/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Voir site officiel LMS Pro" data-i18n="case_study.visit_site">
     Voir SITE <span class="site-btn__icon">↗</span>
   </a>
 
   <!-- Hero d'introduction V3 avec Particle.js -->
   <section class="hero-intro">
     <div id="particles-js"></div>
-    <h1>LMS Pro</h1>
-    <p>LMS Pro est une solution avancée de plateforme de formation (Learning Management System) conçue pour la gestion des formations, le suivi des apprenant·e·s et la création de parcours pédagogiques personnalisés. Dotée d'outils d'administration complets et de tableaux de bord analytiques, elle offre une expérience utilisateur moderne pour le pilotage de l'apprentissage.</p>
-    <div class="scroll-down-badge">Scrollez vers le bas ↓</div>
+    <h1 data-i18n="work.lms.title">LMS Pro</h1>
+    <p data-i18n="project.lms.intro">Plateforme avancée de gestion de formations (LMS) et suivi de la progression des apprenants.</p>
+    <div class="scroll-down-badge" data-i18n="case_study.scroll_down">Scrollez vers le bas ↓</div>
   </section>
 
   <!-- Section de Scroll Horizontal Épinglée (V3) -->
@@ -555,7 +555,7 @@
           <div class="panel__card">
             <span class="panel__number">01</span>
             <img class="parallax parallax-x-20" src="./src/ui/lmspro/01-LMS-Pro_Home-Page-Liste-des-Formations-Recentes.jpg" alt="01 - LMS Pro Home Page">
-            <span class="panel__caption">01. Page d'Accueil — Liste des Formations Récentes</span>
+            <span class="panel__caption" data-i18n="project.lms.panel1">01. Page d'Accueil — Catalogue de Formations</span>
           </div>
         </article>
 
@@ -564,7 +564,7 @@
           <div class="panel__card">
             <span class="panel__number">02</span>
             <img class="parallax parallax-x-10 reverse" src="./src/ui/lmspro/02-LMS-Pro_Sample_Learning-Product-with-Python.jpg" alt="02 - LMS Pro Sample Learning Product with Python">
-            <span class="panel__caption">02. Produit de Formation — Apprendre avec Python</span>
+            <span class="panel__caption" data-i18n="project.lms.panel2">02. Tableau de Bord Apprenant</span>
           </div>
         </article>
 
@@ -573,7 +573,7 @@
           <div class="panel__card">
             <span class="panel__number">03</span>
             <img class="parallax parallax-y-15" src="./src/ui/lmspro/03-LMS-Pro-Three-JS-learning.jpg" alt="03 - LMS Pro Three JS learning">
-            <span class="panel__caption">03. Interface d'Apprentissage interactive — Three.js</span>
+            <span class="panel__caption" data-i18n="project.lms.panel3">03. Créateur de Parcours Pédagogique</span>
           </div>
         </article>
 
@@ -582,7 +582,7 @@
           <div class="panel__card">
             <span class="panel__number">04</span>
             <img class="parallax parallax-x-20 parallax-y-15" src="./src/ui/lmspro/04-Admin-Dashboard.jpg" alt="04 - Admin Dashboard">
-            <span class="panel__caption">04. Tableau de Bord Administrateur</span>
+            <span class="panel__caption" data-i18n="project.lms.panel4">04. Suivi de Progression & Analytics</span>
           </div>
         </article>
 
@@ -591,7 +591,7 @@
           <div class="panel__card">
             <span class="panel__number">05</span>
             <img class="parallax parallax-x-15 reverse" src="./src/ui/lmspro/05-Student-Comparison.jpg" alt="05 - Student Comparison">
-            <span class="panel__caption">05. Comparatif de Progression des Étudiants</span>
+            <span class="panel__caption" data-i18n="project.lms.panel5">05. Vue d'Ensemble Plateforme LMS</span>
           </div>
         </article>
 
@@ -603,23 +603,23 @@
   <section class="projects-section">
     <div class="projects-container">
       <div class="projects-header">
-        <span class="projects-eyebrow">PORTFOLIO & DESIGN SYSTEM</span>
-        <h2 class="projects-title">D’autres Projets à Découvrir</h2>
-        <p class="projects-subtitle">Explorez les autres réalisations majeures en UX/UI, Design System et Innovation Digitale.</p>
+        <span class="projects-eyebrow" data-i18n="case_study.more_projects_eyebrow">PORTFOLIO & DESIGN SYSTEM</span>
+        <h2 class="projects-title" data-i18n="case_study.more_projects_title">D’autres Projets à Découvrir</h2>
+        <p class="projects-subtitle" data-i18n="case_study.more_projects_subtitle">Explorez les autres réalisations majeures en UX/UI, Design System et Innovation Digitale.</p>
       </div>
 
       <div class="projects-grid">
         <!-- Projet 1 : BNP & IA Secure -->
         <a href="/02-bnp-motion-card.html" class="project-card">
           <div class="project-card__thumb">
-            <div class="project-card__bg project-card__bg--1" style="background-image: url('/src/ui/bnp-fortris/01-BNP-Fortris-Project.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="project-card__bg project-card__bg--1" style="background-image: url('/src/ui/bnp-fortris/01-BNP-Fortris-Motion-eCard-Process.jpg'); background-size: cover; background-position: center;"></div>
             <span class="project-card__tag">UI International · Adobe Award · Finance</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">BNP & IA Secure</h3>
-            <p class="project-card__desc">Recherche UX/UI and conception d'une application bancaire internationale sécurisée.</p>
+            <h3 class="project-card__title" data-i18n="work.bnp.title">BNP & IA Secure</h3>
+            <p class="project-card__desc" data-i18n="work.bnp.desc">Recherche UX/UI et conception d'une application bancaire internationale sécurisée.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -631,10 +631,10 @@
             <span class="project-card__tag">UX/UI · EduTech · Irlande</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Alison Landing Pages</h3>
-            <p class="project-card__desc">Refonte des pages d'acquisition du leader mondial de la formation gratuite (+34% de conversion).</p>
+            <h3 class="project-card__title" data-i18n="work.alison_lp.title">Alison Landing Pages</h3>
+            <p class="project-card__desc" data-i18n="work.alison_lp.desc">Refonte des pages d'acquisition du leader mondial de la formation gratuite (+34% de conversion).</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -646,10 +646,10 @@
             <span class="project-card__tag">UX/UI · Prototype XD · Mobile</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Alison Mobile App</h3>
-            <p class="project-card__desc">Application mobile éducative axée sur la gamification et l'engagement des apprenants.</p>
+            <h3 class="project-card__title" data-i18n="work.alison_app.title">Alison Mobile App</h3>
+            <p class="project-card__desc" data-i18n="work.alison_app.desc">Application mobile éducative axée sur la gamification et l'engagement des apprenants.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -661,10 +661,10 @@
             <span class="project-card__tag">UX/UI · Progiciel · Design System</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Alison Publishing</h3>
-            <p class="project-card__desc">Conception du progiciel de création de cours et système de publication en ligne.</p>
+            <h3 class="project-card__title" data-i18n="work.alison_pub.title">Alison Publishing</h3>
+            <p class="project-card__desc" data-i18n="work.alison_pub.desc">Conception du progiciel de création de cours et système de publication en ligne.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -676,10 +676,10 @@
             <span class="project-card__tag">UX Innovation · Software · LMS</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Alison Publishing App</h3>
-            <p class="project-card__desc">Éditeur d'applications de publication en ligne pour l'acquisition de compétences.</p>
+            <h3 class="project-card__title" data-i18n="work.alison_pub_app.title">Alison Publishing App</h3>
+            <p class="project-card__desc" data-i18n="work.alison_pub_app.desc">Éditeur d'applications de publication en ligne pour l'acquisition de compétences.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -691,10 +691,10 @@
             <span class="project-card__tag">Crédit Agricole · Figma App · UX/UI</span>
           </div>
           <div class="project-card__content">
-            <h3 class="project-card__title">Crédit Agricole App</h3>
-            <p class="project-card__desc">Conception de l'application mobile grand public et transactions bancaires sécurisées.</p>
+            <h3 class="project-card__title" data-i18n="work.ca.title">Crédit Agricole App</h3>
+            <p class="project-card__desc" data-i18n="work.ca.desc">Conception de l'application mobile grand public et transactions bancaires sécurisées.</p>
             <div class="project-card__footer">
-              <span class="project-card__link">Voir le projet <span class="arrow">→</span></span>
+              <span class="project-card__link"><span data-i18n="work.view_project">Voir le projet</span> <span class="arrow">→</span></span>
             </div>
           </div>
         </a>
@@ -903,5 +903,6 @@
       }
     })();
   </script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

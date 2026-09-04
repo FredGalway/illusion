@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:i18n": "npx tsx scripts/verify-i18n.ts"
   },
   "dependencies": {
     "@dimforge/rapier3d-compat": "^0.14.0",

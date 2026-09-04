@@ -528,13 +528,13 @@
         <span class="preloader__count">0%</span>
       </div>
       <div class="preloader__footer">
-        <p class="preloader__tagline">Frédéric Moitry — Product Designer &amp; Expert UX/UI</p>
+        <p class="preloader__tagline" data-i18n="preloader.tagline">Frédéric Moitry — Product Designer &amp; Expert UX/UI</p>
       </div>
     </div>
 
     <!-- Navigation Header -->
-    <nav class="nav" role="navigation" aria-label="Navigation principale">
-      <a href="/" class="nav__logo" aria-label="Frédéric Moitry Portfolio">FRÉDÉRIC MOITRY</a>
+    <nav class="nav nav--dark" role="navigation" aria-label="Navigation principale">
+      <a href="/" class="nav__logo" aria-label="Frédéric Moitry Portfolio" data-i18n="nav.logo">FRÉDÉRIC MOITRY</a>
       <button class="nav__burger" id="js-burger" aria-label="Toggle menu" aria-expanded="false" aria-controls="js-menu">
         <span class="nav__burger-line"></span>
         <span class="nav__burger-line"></span>
@@ -544,14 +544,14 @@
     <!-- Menu Overlay -->
     <div class="menu-overlay" id="js-menu" role="dialog" aria-modal="true" aria-label="Menu de navigation" hidden>
       <ul class="menu-overlay__list">
-        <li><a href="/" class="menu-overlay__link" data-index="01">Accueil</a></li>
-        <li><a href="/#manifesto" class="menu-overlay__link" data-index="02">Vision & Parcours</a></li>
-        <li><a href="/#work" class="menu-overlay__link" data-index="03">Projets Clés</a></li>
-        <li><a href="/#testimonials" class="menu-overlay__link" data-index="03">Témoignages</a></li>
-        <li><a href="/contact.html" class="menu-overlay__link" data-index="04">Contact</a></li>
+        <li><a href="/" class="menu-overlay__link" data-index="01" data-i18n="menu.home">Accueil</a></li>
+        <li><a href="/#manifesto" class="menu-overlay__link" data-index="02" data-i18n="menu.vision">Vision & Parcours</a></li>
+        <li><a href="/#work" class="menu-overlay__link" data-index="03" data-i18n="menu.work">Projets Clés</a></li>
+        <li><a href="/#testimonials" class="menu-overlay__link" data-index="03" data-i18n="menu.testimonials">Témoignages</a></li>
+        <li><a href="/contact.html" class="menu-overlay__link" data-index="04" data-i18n="menu.contact">Contact</a></li>
       </ul>
       <div class="menu-overlay__footer">
-        <a href="mailto:contact@fredericmoitry.fr">contact@fredericmoitry.fr</a>
+        <a href="mailto:contact@fredericmoitry.fr" data-i18n="menu.contact_email">contact@fredericmoitry.fr</a>
       </div>
     </div>
 
@@ -564,11 +564,11 @@
 
         <!-- Hero Section -->
         <header class="contact-hero">
-          <p class="eyebrow" data-reveal>Offres de Service & Collaboration</p>
-          <h1 class="contact-hero__headline" data-reveal>
+          <p class="eyebrow" data-reveal data-i18n="contact_page.eyebrow">Offres de Service & Collaboration</p>
+          <h1 class="contact-hero__headline" data-reveal data-i18n="contact_page.headline">
             Discutons de votre projet.<br>Des solutions sur-mesure & iA.
           </h1>
-          <p class="contact-hero__sub" data-reveal>
+          <p class="contact-hero__sub" data-reveal data-i18n="contact_page.sub">
             Sélectionnez une prestation ci-dessous pour pré-remplir votre demande ou décrivez directement vos besoins. Réponse garantie sous 24 à 48h.
           </p>
         </header>
@@ -577,32 +577,32 @@
         <section class="services-grid" aria-label="Offres de Service">
           <div class="service-card" data-service-value="da-product-design" data-reveal>
             <span class="service-card__icon">🎨</span>
-            <h3 class="service-card__title">Direction Artistique & DA</h3>
-            <p class="service-card__desc">Conception UI/UX haut de gamme, création d'identités visuelles digitales et Design Systems scalables.</p>
+            <h3 class="service-card__title" data-i18n="service.da.title">Direction Artistique & DA</h3>
+            <p class="service-card__desc" data-i18n="service.da.desc">Conception UI/UX haut de gamme, création d'identités visuelles digitales et Design Systems scalables.</p>
           </div>
 
           <div class="service-card" data-service-value="audit-ux-ui" data-reveal>
             <span class="service-card__icon">🔍</span>
-            <h3 class="service-card__title">Audit UX/UI & Ergonomie</h3>
-            <p class="service-card__desc">Analyse approfondie de vos parcours utilisateurs, optimisation du taux de conversion et de l'accessibilité.</p>
+            <h3 class="service-card__title" data-i18n="service.audit.title">Audit UX/UI & Ergonomie</h3>
+            <p class="service-card__desc" data-i18n="service.audit.desc">Analyse approfondie de vos parcours utilisateurs, optimisation du taux de conversion et de l'accessibilité.</p>
           </div>
 
           <div class="service-card" data-service-value="prototypage-webgl" data-reveal>
             <span class="service-card__icon">🚀</span>
-            <h3 class="service-card__title">Prototypage & WebGL</h3>
-            <p class="service-card__desc">Prototypes haute fidélité (Figma / XD), micro-animations interactives et intégrations WebGL / GSAP 3D.</p>
+            <h3 class="service-card__title" data-i18n="service.proto.title">Prototypage & WebGL</h3>
+            <p class="service-card__desc" data-i18n="service.proto.desc">Prototypes haute fidélité (Figma / XD), micro-animations interactives et intégrations WebGL / GSAP 3D.</p>
           </div>
 
           <div class="service-card" data-service-value="innovation-ia-gamedesign" data-reveal>
             <span class="service-card__icon">🤖</span>
-            <h3 class="service-card__title">Innovation UX & IA</h3>
-            <p class="service-card__desc">Intégration d'expériences génératives IA, workflows automatisés, interfaces conversationnelles et Gamification.</p>
+            <h3 class="service-card__title" data-i18n="service.ia.title">Innovation UX & IA</h3>
+            <p class="service-card__desc" data-i18n="service.ia.desc">Intégration d'expériences génératives IA, workflows automatisés, interfaces conversationnelles et Gamification.</p>
           </div>
 
           <div class="service-card" data-service-value="consulting-formation" data-reveal>
             <span class="service-card__icon">📚</span>
-            <h3 class="service-card__title">Consulting & Formation</h3>
-            <p class="service-card__desc">Accompagnement stratégique des équipes, ateliers de Co-Design, Masterclass et mentorat UX/UI.</p>
+            <h3 class="service-card__title" data-i18n="service.consult.title">Consulting & Formation</h3>
+            <p class="service-card__desc" data-i18n="service.consult.desc">Accompagnement stratégique des équipes, ateliers de Co-Design, Masterclass et mentorat UX/UI.</p>
           </div>
         </section>
 
@@ -613,8 +613,8 @@
               
               <!-- Nom & Prénom -->
               <div class="form-group">
-                <label for="form-name" class="form-label">Nom & Prénom <span>*</span></label>
-                <input type="text" id="form-name" name="name" class="form-input" placeholder="ex: Sarah Martin" required />
+                <label for="form-name" class="form-label"><span data-i18n="form.name_label">Nom & Prénom</span> <span>*</span></label>
+                <input type="text" id="form-name" name="name" class="form-input" placeholder="ex: Sarah Martin" data-i18n-placeholder="form.name_placeholder" required />
               </div>
 
               <!-- Honeypot anti-spam trap field (invisible to real users) -->
@@ -622,22 +622,22 @@
 
               <!-- Email -->
               <div class="form-group">
-                <label for="form-email" class="form-label">Adresse Email <span>*</span></label>
-                <input type="email" id="form-email" name="email" class="form-input" placeholder="ex: s.martin@entreprise.com" required />
+                <label for="form-email" class="form-label"><span data-i18n="form.email_label">Adresse Email</span> <span>*</span></label>
+                <input type="email" id="form-email" name="email" class="form-input" placeholder="ex: s.martin@entreprise.com" data-i18n-placeholder="form.email_placeholder" required />
                 <div class="email-validation-msg" id="js-email-validation" style="display: none; font-size: 0.82rem; margin-top: 0.4rem; font-weight: 500;"></div>
               </div>
 
               <!-- Entreprise -->
               <div class="form-group">
-                <label for="form-company" class="form-label">Entreprise / Organisation</label>
-                <input type="text" id="form-company" name="company" class="form-input" placeholder="ex: Nom de votre société ou agence" />
+                <label for="form-company" class="form-label" data-i18n="form.company_label">Entreprise / Organisation</label>
+                <input type="text" id="form-company" name="company" class="form-input" placeholder="ex: Nom de votre société ou agence" data-i18n-placeholder="form.company_placeholder" />
               </div>
 
               <!-- Dropdown Offre de Service -->
               <div class="form-group">
-                <label for="form-service" class="form-label">Offre de Service souhaitée <span>*</span></label>
+                <label for="form-service" class="form-label"><span data-i18n="form.service_label">Offre de Service souhaitée</span> <span>*</span></label>
                 <select id="form-service" name="service" class="form-select" required>
-                  <option value="" disabled selected>Choisissez une prestation dans le menu...</option>
+                  <option value="" disabled selected data-i18n="form.service_default">Choisissez une prestation dans le menu...</option>
                   <option value="da-product-design">Direction Artistique & Product Design (UI/UX sur-mesure)</option>
                   <option value="audit-ux-ui">Audit UX/UI & Optimisation Ergonomique</option>
                   <option value="prototypage-webgl">Prototypage Interactif & Expériences WebGL</option>
@@ -649,9 +649,9 @@
 
               <!-- Budget estimé -->
               <div class="form-group">
-                <label for="form-budget" class="form-label">Budget estimé</label>
+                <label for="form-budget" class="form-label" data-i18n="form.budget_label">Budget estimé</label>
                 <select id="form-budget" name="budget" class="form-select">
-                  <option value="" selected>Sélectionner une fourchette de budget...</option>
+                  <option value="" selected data-i18n="form.budget_default">Sélectionner une fourchette de budget...</option>
                   <option value="moins-5k">Moins de 5 000 €</option>
                   <option value="5k-15k">5 000 € — 15 000 €</option>
                   <option value="15k-30k">15 000 € — 30 000 €</option>
@@ -662,9 +662,9 @@
 
               <!-- Échéance -->
               <div class="form-group">
-                <label for="form-timeline" class="form-label">Échéance de réalisation</label>
+                <label for="form-timeline" class="form-label" data-i18n="form.timeline_label">Échéance de réalisation</label>
                 <select id="form-timeline" name="timeline" class="form-select">
-                  <option value="" selected>Choisir un délai souhaité...</option>
+                  <option value="" selected data-i18n="form.timeline_default">Choisir un délai souhaité...</option>
                   <option value="urgent">Urgent (&lt; 1 mois)</option>
                   <option value="court-terme">1 à 3 mois</option>
                   <option value="moyen-terme">3 à 6 mois</option>
@@ -674,18 +674,18 @@
 
               <!-- Message -->
               <div class="form-group form-group--full">
-                <label for="form-message" class="form-label">Présentation de votre projet <span>*</span></label>
-                <textarea id="form-message" name="message" class="form-textarea" placeholder="Décrivez les objectifs de votre projet, le contexte, vos attentes vis-à-vis de la prestation..." required></textarea>
+                <label for="form-message" class="form-label"><span data-i18n="form.message_label">Présentation de votre projet</span> <span>*</span></label>
+                <textarea id="form-message" name="message" class="form-textarea" placeholder="Décrivez les objectifs de votre projet, le contexte, vos attentes vis-à-vis de la prestation..." data-i18n-placeholder="form.message_placeholder" required></textarea>
               </div>
 
               <!-- Document joint -->
               <div class="form-group form-group--full">
-                <label for="form-file" class="form-label">Joindre un document <span style="font-weight: 400; color: #9f9bba;">(Optionnel — PDF, MD, DOCX, TXT — Max 2 Mo)</span></label>
+                <label for="form-file" class="form-label"><span data-i18n="form.file_label">Joindre un document</span> <span style="font-weight: 400; color: #9f9bba;">(Optionnel — PDF, MD, DOCX, TXT — Max 2 Mo)</span></label>
                 <div class="file-upload-wrapper" id="js-file-wrapper">
                   <input type="file" id="form-file" name="attachment" accept=".pdf,.md,.docx,.txt,application/pdf,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="file-upload-input" />
                   <div class="file-upload-box" id="js-file-box">
                     <span class="file-upload-icon">📎</span>
-                    <span class="file-upload-text" id="js-file-text">Cliquez ou glissez-déposez votre document ici</span>
+                    <span class="file-upload-text" id="js-file-text" data-i18n="form.file_hint">Cliquez ou glissez-déposez votre document ici</span>
                     <span class="file-upload-hint">PDF, MD, DOCX, TXT (Maximum 2 Mo)</span>
                   </div>
                   <div class="file-upload-info" id="js-file-info" style="display: none;">
@@ -706,12 +706,12 @@
 
             <!-- Submit Actions -->
             <div class="form-actions">
-              <button type="submit" class="btn-contact-submit js-magnetic">
+              <button type="submit" class="btn-contact-submit js-magnetic" data-i18n="form.submit_btn">
                 Envoyer ma Demande →
               </button>
               
               <div class="contact-direct-info">
-                <span>Ou écrivez-moi directement :</span>
+                <span data-i18n="form.direct_info">Ou écrivez-moi directement :</span>
                 <a href="mailto:contact@fredericmoitry.fr" id="js-copy-email" title="Cliquer pour écrire un mail (ou copier l'adresse)">contact@fredericmoitry.fr</a>
               </div>
             </div>

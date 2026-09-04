@@ -331,6 +331,31 @@
         transform: scale(1);
       }
 
+      .btn-success-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 2.2rem;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #ffffff !important;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .btn-success-close:hover {
+        background: #00f0ff;
+        border-color: #00f0ff;
+        color: #0b0818 !important;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      }
+
       .contact-success__icon {
         width: 70px;
         height: 70px;
@@ -576,7 +601,7 @@
         <p class="contact-success__text" id="js-success-text">
           Merci ! Votre demande de projet a bien été enregistrée. Je reviens vers vous dans un délai de 24 à 48 heures.
         </p>
-        <button type="button" class="btn btn--pill js-magnetic" id="js-close-success" style="border: none; cursor: pointer;">
+        <button type="button" class="btn-success-close js-magnetic" id="js-close-success">
           Fermer / Revenir au portfolio
         </button>
       </div>

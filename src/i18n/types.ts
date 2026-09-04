@@ -25,6 +25,7 @@ export interface LanguageMeta {
   name: string;
   nativeName: string;
   flag: string;
+  countryIso: string;
   dir?: 'ltr' | 'rtl';
 }
 

@@ -132,6 +132,14 @@ class I18nEngine {
   }
 
   public renderLanguageSwitcher(): void {
+    const renderFlag = (meta: { countryIso: string; code: string }) => `
+      <img src="https://flagcdn.com/20x15/${meta.countryIso}.png" 
+           srcset="https://flagcdn.com/40x30/${meta.countryIso}.png 2x" 
+           width="20" height="15" 
+           alt="${meta.code.toUpperCase()}" 
+           class="lang-switcher__flag-img" />
+    `;
+
     const navBars = document.querySelectorAll<HTMLElement>('.nav');
     if (navBars.length === 0) {
       if (document.querySelector('.lang-switcher')) return;
@@ -140,7 +148,7 @@ class I18nEngine {
       const currentMeta = SUPPORTED_LANGUAGES[this.currentLang];
       switcherContainer.innerHTML = `
         <button class="lang-switcher__btn" aria-label="Select Language" aria-expanded="false">
-          <span class="lang-switcher__flag">${currentMeta.flag}</span>
+          <span class="lang-switcher__flag">${renderFlag(currentMeta)}</span>
           <span class="lang-switcher__code">${currentMeta.code.toUpperCase()}</span>
           <span class="lang-switcher__arrow">▾</span>
         </button>
@@ -149,7 +157,7 @@ class I18nEngine {
             .map(
               (lang) => `
               <button class="lang-switcher__option ${lang.code === this.currentLang ? 'is-active' : ''}" data-lang="${lang.code}">
-                <span class="lang-switcher__flag">${lang.flag}</span>
+                <span class="lang-switcher__flag">${renderFlag(lang)}</span>
                 <span class="lang-switcher__name">${lang.nativeName}</span>
                 <span class="lang-switcher__code-badge">${lang.code.toUpperCase()}</span>
               </button>
@@ -174,7 +182,7 @@ class I18nEngine {
 
       switcherContainer.innerHTML = `
         <button class="lang-switcher__btn" aria-label="Select Language" aria-expanded="false">
-          <span class="lang-switcher__flag">${currentMeta.flag}</span>
+          <span class="lang-switcher__flag">${renderFlag(currentMeta)}</span>
           <span class="lang-switcher__code">${currentMeta.code.toUpperCase()}</span>
           <span class="lang-switcher__arrow">▾</span>
         </button>
@@ -183,7 +191,7 @@ class I18nEngine {
             .map(
               (lang) => `
               <button class="lang-switcher__option ${lang.code === this.currentLang ? 'is-active' : ''}" data-lang="${lang.code}">
-                <span class="lang-switcher__flag">${lang.flag}</span>
+                <span class="lang-switcher__flag">${renderFlag(lang)}</span>
                 <span class="lang-switcher__name">${lang.nativeName}</span>
                 <span class="lang-switcher__code-badge">${lang.code.toUpperCase()}</span>
               </button>
@@ -248,7 +256,15 @@ class I18nEngine {
       const flagSpan = switcher.querySelector('.lang-switcher__flag');
 
       if (codeSpan) codeSpan.textContent = currentMeta.code.toUpperCase();
-      if (flagSpan) flagSpan.textContent = currentMeta.flag;
+      if (flagSpan) {
+        flagSpan.innerHTML = `
+          <img src="https://flagcdn.com/20x15/${currentMeta.countryIso}.png" 
+               srcset="https://flagcdn.com/40x30/${currentMeta.countryIso}.png 2x" 
+               width="20" height="15" 
+               alt="${currentMeta.code.toUpperCase()}" 
+               class="lang-switcher__flag-img" />
+        `;
+      }
 
       switcher.querySelectorAll<HTMLButtonElement>('.lang-switcher__option').forEach((opt) => {
         if (opt.getAttribute('data-lang') === this.currentLang) {

@@ -638,12 +638,12 @@
                 <label for="form-service" class="form-label"><span data-i18n="form.service_label">Offre de Service souhaitée</span> <span>*</span></label>
                 <select id="form-service" name="service" class="form-select" required>
                   <option value="" disabled selected data-i18n="form.service_default">Choisissez une prestation dans le menu...</option>
-                  <option value="da-product-design">Direction Artistique & Product Design (UI/UX sur-mesure)</option>
-                  <option value="audit-ux-ui">Audit UX/UI & Optimisation Ergonomique</option>
-                  <option value="prototypage-webgl">Prototypage Interactif & Expériences WebGL</option>
-                  <option value="innovation-ia-gamedesign">Innovation UX & Intégration IA / Game Design</option>
-                  <option value="consulting-formation">Consulting, Co-Design & Formation Pro</option>
-                  <option value="autre">Autre projet / Besoin personnalisé</option>
+                  <option value="da-product-design" data-i18n="form.service_option1">Direction Artistique & Product Design (UI/UX sur-mesure)</option>
+                  <option value="audit-ux-ui" data-i18n="form.service_option2">Audit UX/UI & Optimisation Ergonomique</option>
+                  <option value="prototypage-webgl" data-i18n="form.service_option3">Prototypage Interactif & Expériences WebGL</option>
+                  <option value="innovation-ia-gamedesign" data-i18n="form.service_option4">Innovation UX & Intégration IA / Game Design</option>
+                  <option value="consulting-formation" data-i18n="form.service_option5">Consulting, Co-Design & Formation Pro</option>
+                  <option value="autre" data-i18n="form.service_option6">Autre projet / Besoin personnalisé</option>
                 </select>
               </div>
 
@@ -652,11 +652,11 @@
                 <label for="form-budget" class="form-label" data-i18n="form.budget_label">Budget estimé</label>
                 <select id="form-budget" name="budget" class="form-select">
                   <option value="" selected data-i18n="form.budget_default">Sélectionner une fourchette de budget...</option>
-                  <option value="moins-5k">Moins de 5 000 €</option>
-                  <option value="5k-15k">5 000 € — 15 000 €</option>
-                  <option value="15k-30k">15 000 € — 30 000 €</option>
-                  <option value="plus-30k">Plus de 30 000 €</option>
-                  <option value="a-definir">À définir ensemble</option>
+                  <option value="moins-5k" data-i18n="form.budget_option1">Moins de 5 000 €</option>
+                  <option value="5k-15k" data-i18n="form.budget_option2">5 000 € — 15 000 €</option>
+                  <option value="15k-30k" data-i18n="form.budget_option3">15 000 € — 30 000 €</option>
+                  <option value="plus-30k" data-i18n="form.budget_option4">Plus de 30 000 €</option>
+                  <option value="a-definir" data-i18n="form.budget_option5">À définir ensemble</option>
                 </select>
               </div>
 
@@ -665,10 +665,10 @@
                 <label for="form-timeline" class="form-label" data-i18n="form.timeline_label">Échéance de réalisation</label>
                 <select id="form-timeline" name="timeline" class="form-select">
                   <option value="" selected data-i18n="form.timeline_default">Choisir un délai souhaité...</option>
-                  <option value="urgent">Urgent (&lt; 1 mois)</option>
-                  <option value="court-terme">1 à 3 mois</option>
-                  <option value="moyen-terme">3 à 6 mois</option>
-                  <option value="exploration">Phase de cadrage / Exploration</option>
+                  <option value="urgent" data-i18n="form.timeline_option1">Urgent (&lt; 1 mois)</option>
+                  <option value="court-terme" data-i18n="form.timeline_option2">1 à 3 mois</option>
+                  <option value="moyen-terme" data-i18n="form.timeline_option3">3 à 6 mois</option>
+                  <option value="exploration" data-i18n="form.timeline_option4">Phase de cadrage / Exploration</option>
                 </select>
               </div>
 
@@ -680,13 +680,13 @@
 
               <!-- Document joint -->
               <div class="form-group form-group--full">
-                <label for="form-file" class="form-label"><span data-i18n="form.file_label">Joindre un document</span> <span style="font-weight: 400; color: #9f9bba;">(Optionnel — PDF, MD, DOCX, TXT — Max 2 Mo)</span></label>
+                <label for="form-file" class="form-label"><span data-i18n="form.file_label">Joindre un document</span> <span style="font-weight: 400; color: #9f9bba;" data-i18n="form.file_subhint">(Optionnel — PDF, MD, DOCX, TXT — Max 2 Mo)</span></label>
                 <div class="file-upload-wrapper" id="js-file-wrapper">
                   <input type="file" id="form-file" name="attachment" accept=".pdf,.md,.docx,.txt,application/pdf,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="file-upload-input" />
                   <div class="file-upload-box" id="js-file-box">
                     <span class="file-upload-icon">📎</span>
                     <span class="file-upload-text" id="js-file-text" data-i18n="form.file_hint">Cliquez ou glissez-déposez votre document ici</span>
-                    <span class="file-upload-hint">PDF, MD, DOCX, TXT (Maximum 2 Mo)</span>
+                    <span class="file-upload-hint" data-i18n="form.file_subhint">PDF, MD, DOCX, TXT (Maximum 2 Mo)</span>
                   </div>
                   <div class="file-upload-info" id="js-file-info" style="display: none;">
                     <div class="file-name-container">
@@ -696,7 +696,7 @@
                         <div class="file-size" id="js-file-size">0 KB</div>
                       </div>
                     </div>
-                    <button type="button" class="btn-remove-file" id="js-remove-file" title="Supprimer le fichier">✕ Retirer</button>
+                    <button type="button" class="btn-remove-file" id="js-remove-file" title="Supprimer le fichier" data-i18n="form.file_remove">✕ Retirer</button>
                   </div>
                 </div>
                 <div class="file-error-msg" id="js-file-error" style="display: none; color: #ff5555; font-size: 0.85rem; margin-top: 0.5rem; font-weight: 600;"></div>
@@ -728,11 +728,11 @@
     <div class="contact-success-modal" id="js-success-modal" role="dialog" aria-modal="true" aria-label="Confirmation d'envoi">
       <div class="contact-success-card">
         <div class="contact-success__icon">✓</div>
-        <h2 class="contact-success__title">Demande Envoyée !</h2>
-        <p class="contact-success__text" id="js-success-text">
+        <h2 class="contact-success__title" data-i18n="modal.success_title">Demande Envoyée !</h2>
+        <p class="contact-success__text" id="js-success-text" data-i18n="modal.success_text">
           Merci ! Votre demande de projet a bien été enregistrée. Je reviens vers vous dans un délai de 24 à 48 heures.
         </p>
-        <button type="button" class="btn-success-close js-magnetic" id="js-close-success">
+        <button type="button" class="btn-success-close js-magnetic" id="js-close-success" data-i18n="modal.success_close">
           Fermer / Revenir au portfolio
         </button>
       </div>
@@ -742,21 +742,21 @@
     <footer class="footer" role="contentinfo">
       <div class="container footer__inner">
         <div class="footer__brand">
-          <a href="/" class="footer__logo" aria-label="Frédéric Moitry Portfolio">FRÉDÉRIC MOITRY</a>
-          <p class="footer__tagline">Product Designer & Expert UX/UI</p>
+          <a href="/" class="footer__logo" aria-label="Frédéric Moitry Portfolio" data-i18n="footer.logo">FRÉDÉRIC MOITRY</a>
+          <p class="footer__tagline" data-i18n="footer.tagline">Product Designer & Expert UX/UI</p>
         </div>
         <nav class="footer__nav" aria-label="Footer navigation">
-          <a href="/#manifesto">Vision</a>
-          <a href="/#work">Réalisations clés</a>
-          <a href="/#vision">Mes atouts</a>
-          <a href="/contact.html">Me contacter</a>
+          <a href="/#manifesto" data-i18n="footer.vision">Vision</a>
+          <a href="/#work" data-i18n="footer.work">Réalisations clés</a>
+          <a href="/#vision" data-i18n="footer.assets">Mes atouts</a>
+          <a href="/contact.html" data-i18n="footer.contact">Me contacter</a>
         </nav>
         <div class="footer__contact">
-          <a href="mailto:contact@fredericmoitry.fr">contact@fredericmoitry.fr</a>
+          <a href="mailto:contact@fredericmoitry.fr" data-i18n="menu.contact_email">contact@fredericmoitry.fr</a>
           <a href="https://fredericmoitry.fr" target="_blank" rel="noopener noreferrer">fredericmoitry.fr</a>
         </div>
         <div class="footer__social">
-          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" target="_blank" id="js-cv-link" rel="noopener noreferrer" aria-label="Voir mon CV">Voir mon CV</a>
+          <a href="/cv/CV-FREDERIC-MOITRY-2026-Fr.pdf" target="_blank" id="js-cv-link" rel="noopener noreferrer" aria-label="Voir mon CV" data-i18n="footer.cv">Voir mon CV</a>
         </div>
         <div class="footer__bottom">
           <p class="footer__address">Paris · Dublin · Galway · Montpellier · Remote</p>

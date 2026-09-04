@@ -707,9 +707,9 @@
           });
         }
 
-        // Handle Form Submission
+        // Handle Form Submission via Formsubmit.co (no registration required)
         if (contactForm) {
-          contactForm.addEventListener('submit', (e) => {
+          contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
             const nameVal = document.getElementById('form-name').value.trim();
@@ -721,13 +721,58 @@
               return;
             }
 
-            // Customize success modal message
-            if (successText) {
-              successText.innerHTML = `Merci <strong>${nameVal}</strong> ! Votre demande pour la prestation <strong>${serviceOpt}</strong> a bien été enregistrée. Je vous recontacterai à l'adresse <strong>${emailVal}</strong> sous 24 à 48h.`;
+            // Disable submit button during sending
+            const submitBtn = contactForm.querySelector('.btn-contact-submit');
+            const originalText = submitBtn ? submitBtn.textContent : '';
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.textContent = 'Envoi en cours...';
             }
 
-            if (successModal) {
-              successModal.classList.add('is-open');
+            try {
+              // Build JSON payload for Formsubmit.co AJAX
+              const payload = {
+                name: nameVal,
+                email: emailVal,
+                company: document.getElementById('form-company')?.value?.trim() || '',
+                service: serviceOpt,
+                budget: document.getElementById('form-budget')?.value || '',
+                timeline: document.getElementById('form-timeline')?.value || '',
+                message: document.getElementById('form-message')?.value?.trim() || '',
+                _subject: `Nouvelle demande de projet — ${serviceOpt}`,
+                _replyto: emailVal,
+                _template: 'table',
+              };
+
+              const response = await fetch('https://formsubmit.co/ajax/contact@fredericmoitry.fr', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(payload),
+              });
+
+              const result = await response.json();
+
+              if (result.success === 'true' || result.success === true) {
+                // Customize success modal message
+                if (successText) {
+                  successText.innerHTML = `Merci <strong>${nameVal}</strong> ! Votre demande pour la prestation <strong>${serviceOpt}</strong> a bien été enregistrée. Je vous recontacterai à l'adresse <strong>${emailVal}</strong> sous 24 à 48h.`;
+                }
+                if (successModal) {
+                  successModal.classList.add('is-open');
+                }
+                contactForm.reset();
+                // Reset active cards
+                serviceCards.forEach(c => c.classList.remove('is-active'));
+              } else {
+                alert('Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr');
+              }
+            } catch (error) {
+              alert('Erreur de connexion. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr');
+            } finally {
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+              }
             }
           });
         }

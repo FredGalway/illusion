@@ -48,6 +48,7 @@ const report: Array<{
   fallbackLeaks: string[];
 }> = [];
 
+const frDict = TRANSLATIONS.fr;
 const enDict = TRANSLATIONS.en;
 
 for (const lang of languages) {
@@ -70,9 +71,12 @@ for (const lang of languages) {
       missing.push(key);
     } else if (!dict[key] || dict[key].trim() === '') {
       empty.push(key);
-    } else if (lang !== 'en' && lang !== 'fr' && dict[key] === enDict[key] && enDict[key] && enDict[key].length > 10 && !properNameKeys.has(key)) {
-      // If a non-English/non-French language has the exact long English sentence, flag as fallback leak
-      fallbackLeaks.push(key);
+    } else if (lang !== 'en' && lang !== 'fr' && !properNameKeys.has(key)) {
+      const isEnglishLeak = dict[key] === enDict[key] && enDict[key] && enDict[key].length > 10;
+      const isFrenchLeak = dict[key] === frDict[key] && frDict[key] && frDict[key].length > 10;
+      if (isEnglishLeak || isFrenchLeak) {
+        fallbackLeaks.push(key);
+      }
     }
   }
 

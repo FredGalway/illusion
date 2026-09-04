@@ -7,6 +7,9 @@ import { ar } from './ar';
 import { ja } from './ja';
 import { zh } from './zh';
 import { it } from './it';
+import { he } from './he';
+import { th } from './th';
+import { vi } from './vi';
 
 // Helper to create language dictionary with fallback to French
 function createDict(partial: Record<string, string>): TranslationDictionary {
@@ -22,6 +25,9 @@ export const TRANSLATIONS: Record<SupportedLanguage, TranslationDictionary> = {
   ja: createDict(ja),
   zh: createDict(zh),
   it: createDict(it),
+  he: createDict(he),
+  th: createDict(th),
+  vi: createDict(vi),
   pt: createDict({
     'preloader.loading': 'CARREGANDO',
     'preloader.tagline': 'Frédéric Moitry — Product Designer e Especialista UX/UI',

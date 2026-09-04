@@ -21,6 +21,9 @@ export const SUPPORTED_LANGUAGES: Record<SupportedLanguage, LanguageMeta> = {
   tr: { code: 'tr', name: 'Turkish', nativeName: 'Türkçe', flag: '🇹🇷', countryIso: 'tr' },
   el: { code: 'el', name: 'Greek', nativeName: 'Ελληνικά', flag: '🇬🇷', countryIso: 'gr' },
   cs: { code: 'cs', name: 'Czech', nativeName: 'Čeština', flag: '🇨🇿', countryIso: 'cz' },
+  he: { code: 'he', name: 'Hebrew', nativeName: 'עברית', flag: '🇮🇱', countryIso: 'il', dir: 'rtl' },
+  th: { code: 'th', name: 'Thai', nativeName: 'ไทย', flag: '🇹🇭', countryIso: 'th' },
+  vi: { code: 'vi', name: 'Vietnamese', nativeName: 'Tiếng Việt', flag: '🇻🇳', countryIso: 'vn' },
 };
 
 // Maps 2-letter Country ISO codes to corresponding language
@@ -45,6 +48,9 @@ export const COUNTRY_TO_LANG: Record<string, SupportedLanguage> = {
   TR: 'tr',
   GR: 'el',
   CZ: 'cs',
+  IL: 'he',
+  TH: 'th',
+  VN: 'vi',
 };
 
 export function getLanguageFromCountry(countryCode: string | null): SupportedLanguage | null {

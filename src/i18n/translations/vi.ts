@@ -1,0 +1,203 @@
+import { TranslationDictionary } from '../types';
+
+export const vi: TranslationDictionary = {
+  // Preloader
+  'preloader.loading': 'ĐANG TẢI',
+  'preloader.tagline': 'Frédéric Moitry — Nhà thiết kế sản phẩm & Chuyên gia UX/UI',
+
+  // Nav & Menu
+  'nav.logo': 'FRÉDÉRIC MOITRY',
+  'menu.home': 'Trang chủ',
+  'menu.vision': 'Tầm nhìn',
+  'menu.work': 'Dự án tiêu biểu',
+  'menu.testimonials': 'Đánh giá',
+  'menu.contact': 'Liên hệ',
+  'menu.contact_email': 'contact@fredericmoitry.fr',
+
+  // Case Study Common Keys
+  'case_study.back': '← Quay lại',
+  'case_study.visit_site': 'Ghé thăm trang ↗',
+  'case_study.scroll_down': 'Cuộn xuống ↓',
+  'case_study.more_projects_eyebrow': 'PORTFOLIO & ĐƠN VỊ THIẾT KẾ',
+  'case_study.more_projects_title': 'Các dự án khác cần khám phá',
+  'case_study.more_projects_subtitle': 'Khám phá các dự án lớn khác về trải nghiệm người dùng, hệ thống thiết kế và đổi mới kỹ thuật số.',
+  'work.view_project': 'Xem dự án ←',
+
+  // Project Descriptions
+  'work.trading.desc': 'Ứng dụng dịch vụ môi giới và đầu tư với kịch bản người dùng tối ưu.',
+  'work.lms.desc': 'Nền tảng nâng cao để quản lý học tập và theo dõi tiến trình của học viên.',
+  'work.bnp.desc': 'Nghiên cứu UX/UI và thiết kế ứng dụng ngân hàng quốc tế an toàn.',
+  'work.alison_lp.desc': 'Thiết kế lại trang đích cho đơn vị dẫn đầu về học tập miễn phí (+34% chuyển đổi).',
+  'work.alison_app.desc': 'Ứng dụng di động cho học tập trực tuyến và chứng chỉ trên iOS & Android.',
+  'work.alison_pub.desc': 'Phần mềm SaaS xuất bản khóa học cho đơn vị dẫn đầu về học tập miễn phí.',
+  'work.alison_pub_app.desc': 'Trình chỉnh sửa ứng dụng xuất bản trực tuyến để phát triển kỹ năng.',
+  'work.ca.desc': 'Thiết kế ứng dụng ngân hàng di động và giao dịch an toàn.',
+
+  // Project Panel Labels & Intros
+  'project.trading.intro': 'Ứng dụng Trading 230 là một ứng dụng môi giới và đầu tư hiện đại (FinTech) được thiết kế để tối ưu hóa giao dịch trực tuyến.',
+  'project.trading.panel1': '01. Kịch bản UX bảng điều khiển',
+  'project.trading.panel2': '02. Giao diện giao dịch thời gian thực',
+  'project.trading.panel3': '03. Quản lý danh mục & tài sản',
+  'project.trading.panel4': '04. Thực thi lệnh & phân tích',
+  'project.trading.panel5': '05. Bảng điều khiển tài chính di động',
+
+  'project.lms.intro': 'LMS Pro là giải pháp hệ thống quản lý học tập nâng cao được thiết kế cho đào tạo.',
+  'project.lms.panel1': '01. Trang chủ — Danh mục khóa học',
+  'project.lms.panel2': '02. Bảng điều khiển người học',
+  'project.lms.panel3': '03. Công cụ xây dựng lộ trình sư phạm',
+  'project.lms.panel4': '04. Theo dõi tiến trình & phân tích',
+  'project.lms.panel5': '05. Tổng quan nền tảng LMS',
+
+  'project.bnp.intro': 'BNP & IA Secure là giải pháp bảo mật ngân hàng và thẻ Motion Code đoạt giải thưởng Adobe Award.',
+  'project.bnp.panel1': '01. Trình bày thẻ Motion Code',
+  'project.bnp.panel2': '02. Ứng dụng ngân hàng di động',
+  'project.bnp.panel3': '03. Quy trình xác thực an toàn',
+  'project.bnp.panel4': '04. Xác minh giao dịch động',
+  'project.bnp.panel5': '05. Hệ sinh thái bảo mật BNP Fortris',
+
+  'project.alison_lp.intro': 'Thiết kế lại trang đích cho đơn vị dẫn đầu về học tập miễn phí (+34% chuyển đổi).',
+  'project.alison_lp.panel1': '01. Trang kết quả & chuyển đổi',
+  'project.alison_lp.panel2': '02. Tìm kiếm nâng cao & bộ lọc',
+  'project.alison_lp.panel3': '03. Trang đích danh mục khóa học',
+  'project.alison_lp.panel4': '04. Trang khóa học & đăng ký',
+  'project.alison_lp.panel5': '05. Bảng điều khiển người học Alison',
+
+  'project.alison_app.intro': 'Ứng dụng di động cho học tập trực tuyến và chứng chỉ trên iOS & Android.',
+  'project.alison_app.panel1': '01. Mô hình điện thoại thông minh Adobe XD',
+  'project.alison_app.panel2': '02. Màn hình chính & động lực học',
+  'project.alison_app.panel3': '03. Trình phát khóa học tương tác',
+  'project.alison_app.panel4': '04. Đánh giá & kiểm tra trên di động',
+  'project.alison_app.panel5': '05. Hồ sơ người học & chứng chỉ',
+
+  'project.alison_pub.intro': 'Alison Publishing là nhánh xuất bản khóa học của nền tảng học tập Alison.',
+  'project.alison_pub.panel1': '01. Trang chủ — Tổng quan',
+  'project.alison_pub.panel2': '02. Xem trước bảng điều khiển người học',
+  'project.alison_pub.panel3': '03. Modul tạo khóa học',
+  'project.alison_pub.panel4': '04. Trình chỉnh sửa nội dung & bài học',
+  'project.alison_pub.panel5': '05. Bộ phần mềm đầy đủ',
+
+  'project.alison_pub_app.intro': 'Trình chỉnh sửa ứng dụng xuất bản trực tuyến để phát triển kỹ năng.',
+  'project.alison_pub_app.panel1': '01. Ứng dụng trình chỉnh sửa Alison',
+  'project.alison_pub_app.panel2': '02. Trình tạo câu hỏi & đánh giá',
+  'project.alison_pub_app.panel3': '03. Quản lý phương tiện & tài nguyên',
+  'project.alison_pub_app.panel4': '04. Modul xác minh sư phạm',
+  'project.alison_pub_app.panel5': '05. Bộ phần mềm đầy đủ',
+
+  'project.ca.intro': 'Thiết kế ứng dụng ngân hàng di động và giao dịch an toàn.',
+  'project.ca.panel1': '01. Màn hình chính ứng dụng ngân hàng',
+  'project.ca.panel2': '02. Tra cứu tài khoản & số dư',
+  'project.ca.panel3': '03. Chuyển khoản & giao dịch ngân hàng',
+  'project.ca.panel4': '04. Giao diện thẻ & bảo mật',
+  'project.ca.panel5': '05. Bảng điều khiển quản lý tài chính',
+
+  // Hero Section
+  'hero.eyebrow': 'Nhà thiết kế sản phẩm & Chuyên gia UX/UI',
+  'hero.headline': 'Hơn 25 năm kinh nghiệm<br>giải pháp web tùy chỉnh<br>& đổi mới AI.',
+  'hero.sub': 'Khám phá chuyên môn của tôi',
+
+  // Manifesto Section
+  'manifesto.eyebrow': 'TẦM NHÌN & SỰ XUẤT SẮC',
+  'manifesto.statement': 'Là người tiên phong trong thiết kế kỹ thuật số hơn 25 năm, tôi thiết kế các giải pháp web tùy chỉnh và giao diện kết hợp khả năng sử dụng, chỉ đạo nghệ thuật và công nghệ tiên tiến (AI, Gamification). Đoạt giải thưởng Adobe Award cho giao diện quốc tế xuất sắc nhất và là đồng tác giả của 2 cuốn sách với Dunod, tôi đồng hành cùng các công ty và đại lý lớn để tạo ra các sản phẩm kỹ thuật số vượt trội.',
+  'manifesto.cta': 'Xem dự án của tôi',
+
+  // Work Section
+  'work.eyebrow': 'DỰ ÁN TIÊU BIỂU',
+  'work.trading.title': 'Trading 230 - App',
+  'work.trading.tags': 'Giao dịch · Ứng dụng · FinTech',
+  'work.lms.title': 'LMS Pro',
+  'work.lms.tags': 'Hệ thống quản lý học tập · Giáo dục',
+  'work.bnp.title': 'BNP & IA Secure',
+  'work.bnp.tags': 'Giao diện quốc tế · Giải thưởng Adobe · Tài chính',
+  'work.alison_lp.title': 'Alison Landing Pages',
+  'work.alison_lp.tags': 'UX/UI · Công nghệ giáo dục · Ireland',
+  'work.alison_app.title': 'Alison Mobile App',
+  'work.alison_app.tags': 'UX/UI · Mô hình XD · Di động',
+  'work.alison_pub.title': 'Alison Publishing',
+  'work.alison_pub.tags': 'UX/UI · Nền tảng doanh nghiệp · Hệ thống thiết kế',
+  'work.alison_pub_app.title': 'Alison Publishing App',
+  'work.alison_pub_app.tags': 'Đổi mới UX · Phần mềm · LMS',
+  'work.ca.title': 'Crédit Agricole App',
+  'work.ca.tags': 'Crédit Agricole · Ứng dụng Figma · UX/UI',
+  'work.footer_cta': 'Tại sao nên thuê tôi?',
+
+  // Vision Section
+  'vision.eyebrow': 'Tại sao nên thuê tôi cho dự án tiếp theo của bạn?',
+  'vision.headline': 'Phương pháp Agile<br>& tầm nhìn chiến lược<br>toàn diện.',
+  'vision.p1': 'Với hơn 25 năm kinh nghiệm trong truyền thông kỹ thuật số, tôi là một chuyên gia đa năng có khả năng cung cấp dịch vụ thiết kế UX/UI, chỉ đạo nghệ thuật, bao bì và đào tạo chuyên nghiệp. Tôi áp dụng phương pháp luận Agile và tầm nhìn toàn diện cho sản phẩm kỹ thuật số.',
+  'vision.p2': 'Từ các đại lý ở Paris (Havas, Publicis) đến tập đoàn Alison ở Ireland, bao gồm việc viết 2 cuốn sách cho Dunod và thành thạo công nghệ FullStack, tôi khám phá các dự án mới của bạn và xây dựng các giải pháp tùy chỉnh đáp ứng thách thức của bạn.',
+  'vision.cta': 'Đánh giá & Tham chiếu',
+
+  // Testimonials Section
+  'testimonials.eyebrow': 'ĐÁNH GIÁ & THAM CHIẾU',
+  'testimonial.1.quote': '« Sự đóng góp của Frédéric rất được đánh giá cao khi ông kết hợp kỹ năng chỉ đạo nghệ thuật, xây dựng UI và kinh nghiệm UX sâu rộng. »',
+  'testimonial.1.role': 'Giám đốc Chiến lược Tương tác · Havas Life Paris',
+  'testimonial.2.quote': '« Frédéric là một nhà thiết kế tài năng và rất sáng tạo, ông có thể tư duy đột phá và hỗ trợ tầm nhìn của nhóm với các thiết kế tuyệt vời. »',
+  'testimonial.2.role': 'Giám đốc Truyền thông Marketing Toàn cầu',
+  'testimonial.3.quote': '« Frédéric là một nhà thiết kế UX/UI và giám đốc nghệ thuật xuất sắc với nhiều kỹ năng đa dạng. Tôi rất khuyến nghị Frédéric cho mọi dự án. »',
+  'testimonial.3.role': 'Quản trị viên Hệ thống Atlassian',
+  'testimonial.4.quote': '« Frédéric là một nhà thiết kế UX rất tài năng với niềm đam mê và sự sáng tạo lớn. Kiến thức của ông về trải nghiệm khách hàng rất ấn tượng. »',
+  'testimonial.4.role': 'Giám đốc Marketing @ HubSpot',
+  'testimonial.5.quote': '« Frédéric đã cung cấp một mô hình di động rất thông minh cho trường Nghệ thuật Thị giác Gobelins. »',
+  'testimonial.5.role': 'Giáo sư nghiên cứu tại Trường Kinh doanh ICD / Tiến sĩ Khoa học Quản lý',
+  'testimonial.6.quote': '« Tôi vinh hạnh được là đồng tác giả của 2 cuốn sách cùng Frédéric. Thành công rực rỡ nhờ chuyên môn vượt trội của ông. »',
+  'testimonial.6.role': 'Giảng viên tại GRETA Arts Graphiques',
+
+  // CTA Section
+  'cta.eyebrow': 'HÃY CÙNG LÀM VIỆC',
+  'cta.headline': 'Sẵn sàng khởi chạy<br>dự án tiếp theo của bạn?',
+  'cta.btn': 'Liên hệ với tôi / Thảo luận dự án',
+  'marquee.item1': 'THẢO LUẬN VỀ DỰ ÁN CỦA BẠN',
+  'marquee.item2': 'HƠN 25 NĂM KINH NGHIỆM UX/UI',
+  'marquee.item3': 'CHUYÊN GIA ĐỔI MỚI KỸ THUẬT SỐ',
+
+  // Contact Page
+  'contact_page.eyebrow': 'DỊCH VỤ & HỢP TÁC',
+  'contact_page.headline': 'Thảo luận về dự án của bạn.<br>Giải pháp tùy chỉnh & AI.',
+  'contact_page.sub': 'Chọn dịch vụ bên dưới để điền trước yêu cầu của bạn hoặc mô tả trực tiếp nhu cầu của bạn. Cam kết phản hồi trong 24 đến 48 giờ.',
+  'service.da.title': 'Chỉ đạo nghệ thuật & Hệ thống thiết kế',
+  'service.da.desc': 'Thiết kế UI/UX cấp cao, tạo bản sắc kỹ thuật số và hệ thống thiết kế có thể mở rộng.',
+  'service.audit.title': 'Kiểm toán UX/UI & Khả năng sử dụng',
+  'service.audit.desc': 'Phân tích sâu về hành trình người dùng, tối ưu hóa tỷ lệ chuyển đổi và khả năng truy cập.',
+  'service.proto.title': 'Mô hình mẫu & WebGL',
+  'service.proto.desc': 'Mô hình mẫu độ phân giải cao (Figma / XD), hoạt ảnh tương tác và tích hợp WebGL / GSAP 3D.',
+  'service.ia.title': 'Đổi mới UX & Trí tuệ nhân tạo',
+  'service.ia.desc': 'Tích hợp trải nghiệm Generative AI, quy trình làm việc tự động và giao diện tương tác.',
+  'service.consult.title': 'Tư vấn & Hội thảo đào tạo',
+  'service.consult.desc': 'Định hướng chiến lược cho nhóm, hội thảo hợp tác, các khóa học nâng cao và hướng dẫn.',
+
+  // Form Fields
+  'form.name_label': 'Họ và tên',
+  'form.name_placeholder': 'Ví dụ: Nguyễn Văn A',
+  'form.email_label': 'Email',
+  'form.email_placeholder': 'Ví dụ: a.nguyen@company.com',
+  'form.company_label': 'Công ty / Tổ chức',
+  'form.company_placeholder': 'Ví dụ: Tên công ty hoặc đại lý của bạn',
+  'form.service_label': 'Dịch vụ yêu cầu',
+  'form.service_default': 'Chọn một dịch vụ từ danh sách...',
+  'form.budget_label': 'Ngân sách ước tính',
+  'form.budget_default': 'Chọn khoảng ngân sách...',
+  'form.timeline_label': 'Thời gian mục tiêu',
+  'form.timeline_default': 'Chọn khung thời gian...',
+  'form.message_label': 'Tổng quan dự án',
+  'form.message_placeholder': 'Mô tả mục tiêu, phạm vi và kỳ vọng dự án của bạn...',
+  'form.file_label': 'Đính kèm tài liệu',
+  'form.file_hint': 'Nhấp hoặc kéo tài liệu vào đây',
+  'form.submit_btn': 'Gửi yêu cầu của tôi ←',
+  'form.direct_info': 'Hoặc viết thư trực tiếp cho tôi:',
+
+  // Modal Success
+  'modal.success_title': 'Yêu cầu đã được gửi!',
+  'modal.success_text': 'Cảm ơn bạn! Yêu cầu dự án của bạn đã được ghi nhận thành công. Tôi sẽ liên hệ lại trong 24 đến 48 giờ.',
+  'modal.success_close': 'Đóng / Quay lại portfolio',
+
+  // Footer
+  'footer.logo': 'FRÉDÉRIC MOITRY',
+  'footer.tagline': 'Nhà thiết kế sản phẩm & Chuyên gia UX/UI',
+  'footer.vision': 'Tầm nhìn',
+  'footer.work': 'Dự án tiêu biểu',
+  'footer.assets': 'Ưu điểm của tôi',
+  'footer.contact': 'Liên hệ với tôi',
+  'footer.cv': 'Xem CV của tôi',
+  'footer.address': 'Paris · Dublin · Galway · Montpellier · Từ xa',
+  'footer.copy': '© 2026 Frédéric Moitry. Bảo lưu mọi quyền.',
+};

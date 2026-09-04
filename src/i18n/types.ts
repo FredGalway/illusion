@@ -18,7 +18,10 @@ export type SupportedLanguage =
   | 'no'
   | 'tr'
   | 'el'
-  | 'cs';
+  | 'cs'
+  | 'he'
+  | 'th'
+  | 'vi';
 
 export interface LanguageMeta {
   code: SupportedLanguage;

@@ -32,10 +32,13 @@ export class App {
   }
 
   async init(): Promise<void> {
-    document.body.classList.add('is-loading')
+    this.mainEl = document.getElementById('main-content') as HTMLElement
+    if (!this.mainEl) {
+      document.body.classList.remove('is-loading')
+      return
+    }
 
-    // Cache main element and home content
-    this.mainEl = document.getElementById('main-content')!
+    document.body.classList.add('is-loading')
     this.homeContent = this.mainEl.innerHTML
 
     // Shell setup (runs ONCE, survives route changes)

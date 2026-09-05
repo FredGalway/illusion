@@ -263,7 +263,7 @@
       transform: translateX(-3px);
     }
 
-    /* Bouton Voir site haut à droite */
+    /* Bouton Voir site / projet haut à droite */
     .site-btn {
       position: fixed;
       top: 1.5rem;
@@ -283,6 +283,9 @@
       text-transform: uppercase;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
     }
 
     .site-btn:hover {
@@ -326,15 +329,15 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 5rem 1rem 3rem 1rem;
+      padding: 5rem 0 3rem 0;
     }
 
     .project-modal__img {
-      width: 100vw;
+      width: 100%;
       max-width: 100%;
       height: auto;
       display: block;
-      border-radius: 8px;
+      border-radius: 0;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 240, 255, 0.2);
     }
 
@@ -578,9 +581,9 @@
     <span class="back-btn__arrow">←</span> RETOUR
   </a>
 
-  <a href="https://bnpfortris.fr/" target="_blank" rel="noopener noreferrer" class="site-btn" aria-label="Voir site officiel BNP & IA Secure" data-i18n="case_study.visit_site">
-    Voir SITE <span class="site-btn__icon">↗</span>
-  </a>
+  <button class="site-btn" id="js-project-btn" aria-label="Voir le projet BNP & IA Secure" data-i18n="case_study.view_project">
+    VOIR PROJET <span class="site-btn__icon">↗</span>
+  </button>
 
   <!-- Hero d'introduction V3 avec Particle.js -->
   <section class="hero-intro">
@@ -755,7 +758,7 @@
   </section>
 
   <!-- Modal Plein Écran Maquette Projet -->
-  <div class="project-modal" id="js-project-modal" aria-hidden="true">
+  <div class="project-modal" id="js-project-modal" aria-hidden="true" data-lenis-prevent data-lenis-prevent-wheel>
     <button class="project-modal__close" id="js-modal-close" aria-label="Fermer la vue plein écran">×</button>
     <div class="project-modal__content">
       <img src="/src/ui/bnp-fortris/project/BNP%20Fortris%20_%20Motion%20eCard%20Process.png" alt="BNP Fortris Motion eCard Process" class="project-modal__img" />
@@ -871,9 +874,11 @@
         projectBtn.addEventListener('click', function (e) {
           if (!e.ctrlKey && !e.metaKey && !e.shiftKey) {
             e.preventDefault();
+            projectModal.scrollTop = 0;
             projectModal.classList.add('is-active');
             projectModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
+            if (window.lenis) window.lenis.stop();
           }
         });
 
@@ -881,6 +886,7 @@
           projectModal.classList.remove('is-active');
           projectModal.setAttribute('aria-hidden', 'true');
           document.body.style.overflow = '';
+          if (window.lenis) window.lenis.start();
         }
 
         if (modalClose) {
@@ -892,6 +898,11 @@
             closeModal();
           }
         });
+
+        projectModal.addEventListener('wheel', function (e) {
+          e.stopPropagation();
+          projectModal.scrollTop += e.deltaY;
+        }, { passive: true });
 
         document.addEventListener('keydown', function (e) {
           if (e.key === 'Escape' && projectModal.classList.contains('is-active')) {

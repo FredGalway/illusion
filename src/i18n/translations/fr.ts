@@ -17,6 +17,7 @@ export const fr: TranslationDictionary = {
   // Case Study Common Keys
   'case_study.back': '← RETOUR',
   'case_study.visit_site': 'VOIR SITE ↗',
+  'case_study.view_project': 'VOIR PROJET ↗',
   'case_study.scroll_down': 'SCROLLEZ VERS LE BAS ↓',
   'case_study.more_projects_eyebrow': 'PORTFOLIO & DESIGN SYSTEM',
   'case_study.more_projects_title': 'D’autres Projets à Découvrir',

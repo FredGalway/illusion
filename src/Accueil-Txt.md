@@ -2,7 +2,7 @@
 
 ## Formateur Professionnel
 
-Fort de 20 ans d’expérience en UX/UI, direction artistique et conseil, j’ai dirigé des équipes agiles et formé dans des institutions prestigieuses comme les Gobelins et le CNRS. J’ai collaboré avec des clients tels que Publicis, Havas et France TV, et écrit deux ouvrages pour Dunod sur les applications web. Responsable UX chez Alison (Irlande), j’ai évolué dans un cadre international.
+Fort de 15 ans d’expérience en UX/UI, direction artistique et conseil, j’ai dirigé des équipes agiles et formé dans des institutions prestigieuses comme les Gobelins et le CNRS. J’ai collaboré avec des clients tels que Publicis, Havas et France TV, et écrit deux ouvrages pour Dunod sur les applications web. Responsable UX chez Alison (Irlande), j’ai évolué dans un cadre international.
 
 **Objectifs :**
 
@@ -34,7 +34,7 @@ Mes compétences
 
 ## Pourquoi m’embaucher pour votre prochain projet?
 
-Fort de plus de 20 ans d’expérience dans la communication digitale, je suis un expert polyvalent, capable d’intervenir à la fois dans la conception UX/UI, la direction artistique, la création de packaging et la formation professionnelle. Ma pratique s’appuie sur une approche agile et une vision stratégique, qu’il s’agisse de la création de produits digitaux ou de l’accompagnement sur des solutions de communication visuelle. Ensemble, explorons vos nouveaux projets et construisons des solutions sur-mesure, adaptées à vos besoins actuels et futurs.
+Fort de plus de 25 ans d’expérience dans la communication digitale, je suis un expert polyvalent, capable d’intervenir à la fois dans la conception UX/UI, la direction artistique, la création de packaging et la formation professionnelle. Ma pratique s’appuie sur une approche agile et une vision stratégique, qu’il s’agisse de la création de produits digitaux ou de l’accompagnement sur des solutions de communication visuelle. Ensemble, explorons vos nouveaux projets et construisons des solutions sur-mesure, adaptées à vos besoins actuels et futurs.
 
 [Me Contacter](https://fredericmoitry.fr/me-contacter/)
 

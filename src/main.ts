@@ -20,6 +20,7 @@ let lenis: Lenis | null = null
 
 if (!prefersReduced) {
   lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1 })
+  ;(window as any).lenis = lenis
 
   // Drive Lenis with GSAP ticker (synced to rAF, no duplicate loops)
   gsap.ticker.add((t: number) => lenis!.raf(t * 1000))

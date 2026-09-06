@@ -61,7 +61,7 @@ class I18nEngine {
 
   private async detectIpCountry(): Promise<void> {
     try {
-      // Call local Serverless API route or fallback API
+      // Call local Serverless API route
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2000);
 
@@ -75,10 +75,31 @@ class I18nEngine {
           if (detectedLang && detectedLang !== this.currentLang) {
             this.setLanguage(detectedLang, false);
           }
+          return;
         }
       }
     } catch {
       // Fallback silently if API is offline or restricted
+    }
+
+    // Fallback for local dev (localhost:5173) or non-Vercel environment
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
+      const res = await fetch('https://ipapi.co/json/', { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (res.ok) {
+        const data = await res.json();
+        const country = data.country_code || data.country;
+        if (country) {
+          const detectedLang = getLanguageFromCountry(country);
+          if (detectedLang && detectedLang !== this.currentLang) {
+            this.setLanguage(detectedLang, false);
+          }
+        }
+      }
+    } catch {
+      // Ignore if fallback API fails
     }
   }
 
@@ -101,16 +122,19 @@ class I18nEngine {
 
   public applyTranslations(): void {
     const dict = TRANSLATIONS[this.currentLang] || TRANSLATIONS.fr;
+    const fallbackDict = TRANSLATIONS.fr;
 
     // 1. Text elements
     document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
-      if (key && dict[key] !== undefined) {
-        const val = dict[key];
-        if (val.includes('<br>') || val.includes('<span') || val.includes('&')) {
-          el.innerHTML = val;
-        } else {
-          el.textContent = val;
+      if (key) {
+        const val = dict[key] !== undefined ? dict[key] : fallbackDict[key];
+        if (val !== undefined) {
+          if (val.includes('<br>') || val.includes('<span') || val.includes('&')) {
+            el.innerHTML = val;
+          } else {
+            el.textContent = val;
+          }
         }
       }
     });
@@ -118,27 +142,35 @@ class I18nEngine {
     // 2. Input placeholders
     document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-i18n-placeholder]').forEach((el) => {
       const key = el.getAttribute('data-i18n-placeholder');
-      if (key && dict[key] !== undefined) {
-        el.placeholder = dict[key];
+      if (key) {
+        const val = dict[key] !== undefined ? dict[key] : fallbackDict[key];
+        if (val !== undefined) {
+          el.placeholder = val;
+        }
       }
     });
 
     // 3. Titles & aria-labels
     document.querySelectorAll<HTMLElement>('[data-i18n-title]').forEach((el) => {
       const key = el.getAttribute('data-i18n-title');
-      if (key && dict[key] !== undefined) {
-        el.title = dict[key];
+      if (key) {
+        const val = dict[key] !== undefined ? dict[key] : fallbackDict[key];
+        if (val !== undefined) {
+          el.title = val;
+        }
       }
     });
 
     // 4. Update preloader dynamically if present
     const preloaderLabel = document.querySelector<HTMLElement>('.preloader__label');
-    if (preloaderLabel && dict['preloader.loading']) {
-      preloaderLabel.textContent = dict['preloader.loading'];
+    const loadingVal = dict['preloader.loading'] || fallbackDict['preloader.loading'];
+    if (preloaderLabel && loadingVal) {
+      preloaderLabel.textContent = loadingVal;
     }
     const preloaderTagline = document.querySelector<HTMLElement>('.preloader__tagline');
-    if (preloaderTagline && dict['preloader.tagline']) {
-      preloaderTagline.textContent = dict['preloader.tagline'];
+    const taglineVal = dict['preloader.tagline'] || fallbackDict['preloader.tagline'];
+    if (preloaderTagline && taglineVal) {
+      preloaderTagline.textContent = taglineVal;
     }
 
     // 5. Update Document Title & Meta Description for international SEO & browser tab
@@ -168,160 +200,129 @@ class I18nEngine {
            class="lang-switcher__flag-img" />
     `;
 
-    const navBars = document.querySelectorAll<HTMLElement>('.nav');
-    if (navBars.length === 0) {
-      if (document.querySelector('.lang-switcher')) return;
-      const switcherContainer = document.createElement('div');
-      switcherContainer.className = 'lang-switcher lang-switcher--floating';
-      const currentMeta = SUPPORTED_LANGUAGES[this.currentLang];
-      switcherContainer.innerHTML = `
-        <button class="lang-switcher__btn" aria-label="Select Language" aria-expanded="false">
-          <span class="lang-switcher__flag">${renderFlag(currentMeta)}</span>
-          <span class="lang-switcher__code">${currentMeta.code.toUpperCase()}</span>
-          <span class="lang-switcher__arrow">▾</span>
-        </button>
-        <div class="lang-switcher__dropdown" hidden>
-          ${Object.values(SUPPORTED_LANGUAGES)
-            .map(
-              (lang) => `
-              <button class="lang-switcher__option ${lang.code === this.currentLang ? 'is-active' : ''}" data-lang="${lang.code}">
-                <span class="lang-switcher__flag">${renderFlag(lang)}</span>
-                <span class="lang-switcher__name">${lang.nativeName}</span>
-                <span class="lang-switcher__code-badge">${lang.code.toUpperCase()}</span>
-              </button>
-            `
-            )
-            .join('')}
-        </div>
-      `;
-      document.body.appendChild(switcherContainer);
-      this.attachSwitcherEvents(switcherContainer);
-      return;
-    }
+    // 1. Ensure Centered Language Popup Modal exists on document body
+    let modal = document.getElementById('js-lang-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'js-lang-modal';
+      modal.className = 'lang-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-label', 'Select Language');
+      modal.setAttribute('hidden', '');
 
-    navBars.forEach((nav) => {
-      if (nav.querySelector('.lang-switcher')) return;
-
-      const burger = nav.querySelector('.nav__burger');
-      const switcherContainer = document.createElement('div');
-      switcherContainer.className = 'lang-switcher';
-
-      const currentMeta = SUPPORTED_LANGUAGES[this.currentLang];
-
-      switcherContainer.innerHTML = `
-        <button class="lang-switcher__btn" aria-label="Select Language" aria-expanded="false">
-          <span class="lang-switcher__flag">${renderFlag(currentMeta)}</span>
-          <span class="lang-switcher__code">${currentMeta.code.toUpperCase()}</span>
-          <span class="lang-switcher__arrow">▾</span>
-        </button>
-        <div class="lang-switcher__dropdown" hidden>
-          ${Object.values(SUPPORTED_LANGUAGES)
-            .map(
-              (lang) => `
-              <button class="lang-switcher__option ${lang.code === this.currentLang ? 'is-active' : ''}" data-lang="${lang.code}">
-                <span class="lang-switcher__flag">${renderFlag(lang)}</span>
-                <span class="lang-switcher__name">${lang.nativeName}</span>
-                <span class="lang-switcher__code-badge">${lang.code.toUpperCase()}</span>
-              </button>
-            `
-            )
-            .join('')}
+      modal.innerHTML = `
+        <div class="lang-modal__backdrop" id="js-lang-modal-backdrop"></div>
+        <div class="lang-modal__card">
+          <div class="lang-modal__header">
+            <div class="lang-modal__title-group">
+              <h2 class="lang-modal__title" data-i18n="menu.languages">Langues</h2>
+              <p class="lang-modal__subtitle" data-i18n="menu.languages_subtitle">Sélectionnez la langue et la zone géographique</p>
+            </div>
+            <button type="button" class="lang-modal__close" id="js-lang-modal-close" aria-label="Close modal">✕</button>
+          </div>
+          <div class="lang-modal__grid" id="js-lang-modal-grid">
+            ${Object.values(SUPPORTED_LANGUAGES)
+              .map(
+                (lang) => `
+                <button type="button" class="lang-modal__option ${lang.code === this.currentLang ? 'is-active' : ''}" data-lang="${lang.code}">
+                  <span class="lang-switcher__flag">${renderFlag(lang)}</span>
+                  <span class="lang-modal__name">${lang.nativeName}</span>
+                  <span class="lang-modal__code-badge">${lang.code.toUpperCase()}</span>
+                </button>
+              `
+              )
+              .join('')}
+          </div>
         </div>
       `;
 
-      if (burger) {
-        nav.insertBefore(switcherContainer, burger);
-      } else {
-        nav.appendChild(switcherContainer);
-      }
+      document.body.appendChild(modal);
 
-      this.attachSwitcherEvents(switcherContainer);
-    });
-  }
+      // Event listeners for closing modal
+      const closeModal = () => {
+        modal?.setAttribute('hidden', '');
+        modal?.classList.remove('is-open');
+      };
 
-  private attachSwitcherEvents(switcherContainer: HTMLElement): void {
-    const btn = switcherContainer.querySelector<HTMLButtonElement>('.lang-switcher__btn');
-    const dropdown = switcherContainer.querySelector<HTMLElement>('.lang-switcher__dropdown');
+      const closeBtn = document.getElementById('js-lang-modal-close');
+      const backdrop = document.getElementById('js-lang-modal-backdrop');
 
-    if (btn && dropdown) {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const isHidden = dropdown.hasAttribute('hidden');
-        if (isHidden) {
-          dropdown.removeAttribute('hidden');
-          btn.setAttribute('aria-expanded', 'true');
-        } else {
-          dropdown.setAttribute('hidden', '');
-          btn.setAttribute('aria-expanded', 'false');
+      closeBtn?.addEventListener('click', closeModal);
+      backdrop?.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal?.hasAttribute('hidden')) {
+          closeModal();
         }
       });
 
-      dropdown.querySelectorAll<HTMLButtonElement>('.lang-switcher__option').forEach((opt) => {
+      // Handle language selection click
+      modal.querySelectorAll<HTMLButtonElement>('.lang-modal__option').forEach((opt) => {
         opt.addEventListener('click', (e) => {
+          e.preventDefault();
           e.stopPropagation();
           const langCode = opt.getAttribute('data-lang') as SupportedLanguage;
           if (langCode) {
             this.setLanguage(langCode, true);
-            dropdown.setAttribute('hidden', '');
-            btn.setAttribute('aria-expanded', 'false');
+            closeModal();
           }
         });
       });
 
-      // Scroll isolation: prevent wheel events from scrolling background page
-      dropdown.addEventListener(
-        'wheel',
-        (e) => {
-          e.stopPropagation();
-          const scrollTop = dropdown.scrollTop;
-          const scrollHeight = dropdown.scrollHeight;
-          const height = dropdown.clientHeight;
-          const delta = e.deltaY;
-
-          if (
-            (delta > 0 && scrollTop + height >= scrollHeight - 1) ||
-            (delta < 0 && scrollTop <= 0)
-          ) {
-            e.preventDefault();
-          }
-        },
-        { passive: false }
-      );
-
-      document.addEventListener('click', () => {
-        if (!dropdown.hasAttribute('hidden')) {
-          dropdown.setAttribute('hidden', '');
-          btn.setAttribute('aria-expanded', 'false');
-        }
-      });
+      // Translate modal elements right after creation
+      this.applyTranslations();
     }
+
+    const openModal = (e?: Event) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      this.applyTranslations();
+      modal?.removeAttribute('hidden');
+      requestAnimationFrame(() => {
+        modal?.classList.add('is-open');
+      });
+    };
+
+    // 2. Attach toggle listener to menu overlay 06 item
+    const menuLangToggle = document.getElementById('js-menu-lang-toggle');
+    if (menuLangToggle) {
+      menuLangToggle.addEventListener('click', openModal);
+    }
+
+    this.updateSwitcherUI();
   }
 
   private updateSwitcherUI(): void {
     const currentMeta = SUPPORTED_LANGUAGES[this.currentLang];
-    document.querySelectorAll<HTMLElement>('.lang-switcher').forEach((switcher) => {
-      const codeSpan = switcher.querySelector('.lang-switcher__code');
-      const flagSpan = switcher.querySelector('.lang-switcher__flag');
 
-      if (codeSpan) codeSpan.textContent = currentMeta.code.toUpperCase();
-      if (flagSpan) {
-        flagSpan.innerHTML = `
-          <img src="https://flagcdn.com/20x15/${currentMeta.countryIso}.png" 
-               srcset="https://flagcdn.com/40x30/${currentMeta.countryIso}.png 2x" 
-               width="20" height="15" 
-               alt="${currentMeta.code.toUpperCase()}" 
-               class="lang-switcher__flag-img" />
-        `;
-      }
+    // Update Menu Overlay language badge
+    const menuLangBadge = document.getElementById('js-menu-lang-badge');
+    if (menuLangBadge) {
+      menuLangBadge.innerHTML = `
+        <img src="https://flagcdn.com/20x15/${currentMeta.countryIso}.png" 
+             srcset="https://flagcdn.com/40x30/${currentMeta.countryIso}.png 2x" 
+             width="20" height="15" 
+             alt="${currentMeta.code.toUpperCase()}" 
+             class="lang-switcher__flag-img" />
+        <span class="menu-overlay__lang-code">${currentMeta.code.toUpperCase()}</span>
+        <span class="menu-overlay__lang-arrow">▾</span>
+      `;
+    }
 
-      switcher.querySelectorAll<HTMLButtonElement>('.lang-switcher__option').forEach((opt) => {
+    // Update Modal grid options active state
+    const modalGrid = document.getElementById('js-lang-modal-grid');
+    if (modalGrid) {
+      modalGrid.querySelectorAll<HTMLButtonElement>('.lang-modal__option').forEach((opt) => {
         if (opt.getAttribute('data-lang') === this.currentLang) {
           opt.classList.add('is-active');
         } else {
           opt.classList.remove('is-active');
         }
       });
-    });
+    }
   }
 }
 

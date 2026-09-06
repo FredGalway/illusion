@@ -10,11 +10,14 @@ export const ja: TranslationDictionary = {
   'menu.work': '主要プロジェクト',
   'menu.testimonials': 'お客様の声',
   'menu.contact': 'お問い合わせ',
+  'menu.languages': '言語',
+  'menu.languages_subtitle': '言語と地域設定を選択してください',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← 戻る',
-  'case_study.visit_site': 'サイトを見る ↗',
+  'case_study.visit_site': 'サイトを見る ↗', 
+  'case_study.view_project': 'プロジェクトを見る ↗',
   'case_study.scroll_down': '下にスクロール ↓',
   'case_study.more_projects_eyebrow': 'ポートフォリオ＆デザインシステム',
   'case_study.more_projects_title': 'その他のプロジェクト',

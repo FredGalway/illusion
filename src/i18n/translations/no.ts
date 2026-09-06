@@ -10,11 +10,14 @@ export const no: TranslationDictionary = {
   'menu.work': 'Nøkkelprosjekter',
   'menu.testimonials': 'Attester',
   'menu.contact': 'Kontakt',
+  'menu.languages': 'Språk',
+  'menu.languages_subtitle': 'Velg språk og landskonfigurasjon',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← TILBAKE',
-  'case_study.visit_site': 'BESØK NETTSIDE ↗',
+  'case_study.visit_site': 'BESØK NETTSIDE ↗', 
+  'case_study.view_project': 'SE PROSJEKT ↗',
   'case_study.scroll_down': 'RULL NED ↓',
   'case_study.more_projects_eyebrow': 'PORTFØLJE & DESIGN SYSTEM',
   'case_study.more_projects_title': 'Andre prosjekter å utforske',

@@ -12,6 +12,8 @@ export const fr: TranslationDictionary = {
   'menu.work': 'Projets Clés',
   'menu.testimonials': 'Témoignages',
   'menu.contact': 'Contact',
+  'menu.languages': 'Langues',
+  'menu.languages_subtitle': 'Sélectionnez la langue et la zone géographique',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys

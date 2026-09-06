@@ -10,11 +10,14 @@ export const zh: TranslationDictionary = {
   'menu.work': '核心项目',
   'menu.testimonials': '客户评价',
   'menu.contact': '联系我们',
+  'menu.languages': '语言',
+  'menu.languages_subtitle': '选择语言与国家/地区配置',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← 返回',
-  'case_study.visit_site': '访问网站 ↗',
+  'case_study.visit_site': '访问网站 ↗', 
+  'case_study.view_project': '查看项目 ↗',
   'case_study.scroll_down': '向下滚动 ↓',
   'case_study.more_projects_eyebrow': '作品集与设计系统',
   'case_study.more_projects_title': '探索其他项目',

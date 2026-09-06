@@ -12,11 +12,14 @@ export const th: TranslationDictionary = {
   'menu.work': 'ผลงานหลัก',
   'menu.testimonials': 'คำนิยม',
   'menu.contact': 'ติดต่อ',
+  'menu.languages': 'ภาษา',
+  'menu.languages_subtitle': 'เลือกภาษาและการกำหนดค่าภูมิภาค',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← ย้อนกลับ',
-  'case_study.visit_site': 'เยี่ยมชมเว็บไซต์ ↗',
+  'case_study.visit_site': 'เยี่ยมชมเว็บไซต์ ↗', 
+  'case_study.view_project': 'ดูโปรเจกต์ ↗',
   'case_study.scroll_down': 'เลื่อนลง ↓',
   'case_study.more_projects_eyebrow': 'พอร์ตโฟลิโอและระบบการออกแบบ',
   'case_study.more_projects_title': 'โครงการอื่นๆ ที่น่าสนใจ',

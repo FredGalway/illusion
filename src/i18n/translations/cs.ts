@@ -10,11 +10,14 @@ export const cs: TranslationDictionary = {
   'menu.work': 'Klíčové Projekty',
   'menu.testimonials': 'Doporučení',
   'menu.contact': 'Kontakt',
+  'menu.languages': 'Jazyky',
+  'menu.languages_subtitle': 'Vyberte jazyk a regionální konfiguraci',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← ZPĚT',
-  'case_study.visit_site': 'NAVŠTÍVIT WEBOVÉ STRÁNKY ↗',
+  'case_study.visit_site': 'NAVŠTÍVIT WEBOVÉ STRÁNKY ↗', 
+  'case_study.view_project': 'ZOBRAZIT PROJEKT ↗',
   'case_study.scroll_down': 'POSUNOUT DOLŮ ↓',
   'case_study.more_projects_eyebrow': 'PORTFOLIO & DESIGN SYSTEM',
   'case_study.more_projects_title': 'Další projekty k objevení',

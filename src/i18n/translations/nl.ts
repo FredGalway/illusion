@@ -10,11 +10,14 @@ export const nl: TranslationDictionary = {
   'menu.work': 'Belangrijkste Projecten',
   'menu.testimonials': 'Referenties',
   'menu.contact': 'Contact',
+  'menu.languages': 'Talen',
+  'menu.languages_subtitle': 'Selecteer taal en landconfiguratie',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← TERUG',
-  'case_study.visit_site': 'BEZOEK WEBSITE ↗',
+  'case_study.visit_site': 'BEZOEK WEBSITE ↗', 
+  'case_study.view_project': 'BEKIJK PROJECT ↗',
   'case_study.scroll_down': 'SCROLL OMLAAG ↓',
   'case_study.more_projects_eyebrow': 'PORTFOLIO & DESIGN SYSTEM',
   'case_study.more_projects_title': 'Andere projecten om te ontdekken',

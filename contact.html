@@ -22,9 +22,10 @@
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+    <!-- Local Inter Font Preload (Instant loading without external render blocking) -->
+    <link rel="preload" href="/fonts/inter/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <!-- Chinese Font Mirror Fallback (fonts.geekzu.org instead of Google Fonts) -->
+    <link rel="alternate stylesheet" id="js-china-font-mirror" href="https://fonts.geekzu.org/css2?family=Inter:wght@100..900&display=swap" disabled />
     <link rel="stylesheet" href="/src/styles/tokens.css" />
     <link rel="stylesheet" href="/src/styles/base.css" />
     <link rel="stylesheet" href="/src/styles/sections.css" />
@@ -547,8 +548,21 @@
         <li><a href="/" class="menu-overlay__link" data-index="01" data-i18n="menu.home">Accueil</a></li>
         <li><a href="/#manifesto" class="menu-overlay__link" data-index="02" data-i18n="menu.vision">Vision & Parcours</a></li>
         <li><a href="/#work" class="menu-overlay__link" data-index="03" data-i18n="menu.work">Projets Clés</a></li>
-        <li><a href="/#testimonials" class="menu-overlay__link" data-index="03" data-i18n="menu.testimonials">Témoignages</a></li>
-        <li><a href="/contact.html" class="menu-overlay__link" data-index="04" data-i18n="menu.contact">Contact</a></li>
+        <li><a href="/#testimonials" class="menu-overlay__link" data-index="04" data-i18n="menu.testimonials">Témoignages</a></li>
+        <li><a href="/contact.html" class="menu-overlay__link" data-index="05" data-i18n="menu.contact">Contact</a></li>
+        <li class="menu-overlay__item--languages">
+          <div class="menu-overlay__lang-wrapper">
+            <button type="button" class="menu-overlay__link menu-overlay__link--lang" id="js-menu-lang-toggle" data-index="06" aria-expanded="false">
+              <span data-i18n="menu.languages">Langues</span>
+              <span class="menu-overlay__lang-badge" id="js-menu-lang-badge">
+                <span class="lang-switcher__flag"></span>
+                <span class="menu-overlay__lang-code">EN</span>
+                <span class="menu-overlay__lang-arrow">▾</span>
+              </span>
+            </button>
+            <div class="menu-overlay__lang-dropdown" id="js-menu-lang-dropdown" hidden></div>
+          </div>
+        </li>
       </ul>
       <div class="menu-overlay__footer">
         <a href="mailto:contact@fredericmoitry.fr" data-i18n="menu.contact_email">contact@fredericmoitry.fr</a>

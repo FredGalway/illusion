@@ -12,11 +12,14 @@ export const he: TranslationDictionary = {
   'menu.work': 'פרויקטים נבחרים',
   'menu.testimonials': 'המלצות',
   'menu.contact': 'צור קשר',
+  'menu.languages': 'שפות',
+  'menu.languages_subtitle': 'בחר שפה והגדרות אזור',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← חזרה',
-  'case_study.visit_site': 'ביקור באתר ↗',
+  'case_study.visit_site': 'ביקור באתר ↗', 
+  'case_study.view_project': 'צפה בפרויקט ↗',
   'case_study.scroll_down': 'גלול למטה ↓',
   'case_study.more_projects_eyebrow': 'תיק עבודות ומערכת עיצוב',
   'case_study.more_projects_title': 'פרויקטים נוספים לגילוי',

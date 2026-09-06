@@ -12,11 +12,14 @@ export const vi: TranslationDictionary = {
   'menu.work': 'Dự án tiêu biểu',
   'menu.testimonials': 'Đánh giá',
   'menu.contact': 'Liên hệ',
+  'menu.languages': 'Ngôn ngữ',
+  'menu.languages_subtitle': 'Chọn ngôn ngữ và cấu hình quốc gia',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← Quay lại',
-  'case_study.visit_site': 'Ghé thăm trang ↗',
+  'case_study.visit_site': 'Ghé thăm trang ↗', 
+  'case_study.view_project': 'XEM DỰ ÁN ↗',
   'case_study.scroll_down': 'Cuộn xuống ↓',
   'case_study.more_projects_eyebrow': 'PORTFOLIO & ĐƠN VỊ THIẾT KẾ',
   'case_study.more_projects_title': 'Các dự án khác cần khám phá',

@@ -10,11 +10,14 @@ export const ko: TranslationDictionary = {
   'menu.work': '주요 프로젝트',
   'menu.testimonials': '추천서',
   'menu.contact': '문의하기',
+  'menu.languages': '언어',
+  'menu.languages_subtitle': '언어 및 국가 구성을 선택하세요',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← 뒤로가기',
-  'case_study.visit_site': '사이트 방문 ↗',
+  'case_study.visit_site': '사이트 방문 ↗', 
+  'case_study.view_project': '프로젝트 보기 ↗',
   'case_study.scroll_down': '스크롤 다운 ↓',
   'case_study.more_projects_eyebrow': '포트폴리오 & 디자인 시스템',
   'case_study.more_projects_title': '다른 프로젝트 탐색',

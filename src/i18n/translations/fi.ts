@@ -10,11 +10,14 @@ export const fi: TranslationDictionary = {
   'menu.work': 'Avainprojektit',
   'menu.testimonials': 'Suositukset',
   'menu.contact': 'Ota yhteyttä',
+  'menu.languages': 'Kielet',
+  'menu.languages_subtitle': 'Valitse kieli ja alue',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← TAKAISIN',
-  'case_study.visit_site': 'VIERAILE SIVUSTOLLA ↗',
+  'case_study.visit_site': 'VIERAILE SIVUSTOLLA ↗', 
+  'case_study.view_project': 'KATSO PROJEKTI ↗',
   'case_study.scroll_down': 'VIERITÄ ALAS ↓',
   'case_study.more_projects_eyebrow': 'PORTFOLIO & DESIGN SYSTEM',
   'case_study.more_projects_title': 'Muita tutustuttavia projekteja',

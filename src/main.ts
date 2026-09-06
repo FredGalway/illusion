@@ -30,9 +30,13 @@ if (!prefersReduced) {
 }
 
 import { i18n } from './i18n/i18nEngine'
+import { initGeoAwareGTM } from './utils/gtm-loader'
 
 // Boot i18n immediately so preloader & initial texts are translated upon load
 i18n.init().catch(console.error)
+
+// Boot geo-aware async GTM loader (bypasses China traffic to avoid GFW lag)
+initGeoAwareGTM()
 
 // ─── Boot app ─────────────────────────────────────────────────────────────
 const app = new App(lenis, prefersReduced)

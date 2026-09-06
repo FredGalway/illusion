@@ -10,11 +10,14 @@ export const el: TranslationDictionary = {
   'menu.work': 'Κύρια Έργα',
   'menu.testimonials': 'Συστάσεις',
   'menu.contact': 'Επικοινωνία',
+  'menu.languages': 'Γλώσσες',
+  'menu.languages_subtitle': 'Επιλέξτε γλώσσα και περιοχή',
   'menu.contact_email': 'contact@fredericmoitry.fr',
 
   // Case Study Common Keys
   'case_study.back': '← ΠΙΣΩ',
-  'case_study.visit_site': 'ΕΠΙΣΚΕΨΗ ΙΣΤΟΣΕΛΙΔΑΣ ↗',
+  'case_study.visit_site': 'ΕΠΙΣΚΕΨΗ ΙΣΤΟΣΕΛΙΔΑΣ ↗', 
+  'case_study.view_project': 'ΔΕΙΤΕ ΤΟ ΕΡΓΟ ↗',
   'case_study.scroll_down': 'ΚΥΛΙΣΗ ΠΡΟΣ ΤΑ ΚΑΤΩ ↓',
   'case_study.more_projects_eyebrow': 'ΧΑΡΤΟΦΥΛΑΚΙΟ & DESIGN SYSTEM',
   'case_study.more_projects_title': 'Άλλα έργα προς ανακάλυψη',

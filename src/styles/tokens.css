@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 /* ============================================
    DESIGN TOKENS
    ============================================ */
@@ -11,8 +13,8 @@
   --overlay: rgba(10, 10, 10, 0.96);
 
   /* ─── Typography ─── */
-  --font-display: 'Archivo', sans-serif;
-  --font-body: 'Archivo', sans-serif;
+  --font-display: 'Inter', 'Archivo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Inter', 'Archivo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   /* Display scale — fluid from 320px → 1440px */
   --text-hero: clamp(3.25rem, 6.5vw, 7.5rem);

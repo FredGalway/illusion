@@ -733,7 +733,7 @@
         </section>
 
         <!-- Toast notification for copied email -->
-        <div class="email-copy-toast" id="js-email-toast">✓ Adresse contact@fredericmoitry.fr copiée !</div>
+        <div class="email-copy-toast" id="js-email-toast" data-i18n="contact.email_copied">✓ Adresse contact@fredericmoitry.fr copiée !</div>
 
       </div>
     </main>
@@ -878,7 +878,8 @@
 
           if (!ALLOWED_EXTENSIONS.includes(fileExt)) {
             if (fileErrorEl) {
-              fileErrorEl.textContent = `Format non autorisé (.${fileExt}). Seuls les fichiers PDF, MD, DOCX et TXT sont acceptés.`;
+              const msg = window.i18n ? window.i18n.t('contact.file_format_unsupported', { ext: fileExt }) : `Format non autorisé (.${fileExt}). Seuls les fichiers PDF, MD, DOCX et TXT sont acceptés.`;
+              fileErrorEl.textContent = msg;
               fileErrorEl.style.display = 'block';
             }
             if (fileInput) fileInput.value = '';
@@ -888,7 +889,9 @@
 
           if (file.size > MAX_FILE_SIZE) {
             if (fileErrorEl) {
-              fileErrorEl.textContent = `Le fichier dépasse la taille maximale de 2 Mo (${(file.size / (1024 * 1024)).toFixed(2)} Mo).`;
+              const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+              const msg = window.i18n ? window.i18n.t('contact.file_size_exceeded', { size: sizeMb }) : `Le fichier dépasse la taille maximale de 2 Mo (${sizeMb} Mo).`;
+              fileErrorEl.textContent = msg;
               fileErrorEl.style.display = 'block';
             }
             if (fileInput) fileInput.value = '';
@@ -989,7 +992,7 @@
           if (!EMAIL_REGEX.test(val)) {
             emailValidationEl.style.display = 'block';
             emailValidationEl.style.color = '#ff5555';
-            emailValidationEl.textContent = '❌ Format d\'email invalide (ex: nom@domaine.fr)';
+            emailValidationEl.textContent = window.i18n ? window.i18n.t('contact.email_format_invalid') : '❌ Format d\'email invalide (ex: nom@domaine.fr)';
             emailInput.style.borderColor = '#ff5555';
             return false;
           }
@@ -999,7 +1002,7 @@
           if (DISPOSABLE_DOMAINS.includes(domain)) {
             emailValidationEl.style.display = 'block';
             emailValidationEl.style.color = '#ff5555';
-            emailValidationEl.textContent = '🚫 Les adresses jetables / temporaires ne sont pas acceptées';
+            emailValidationEl.textContent = window.i18n ? window.i18n.t('contact.email_disposable_blocked') : '🚫 Les adresses jetables / temporaires ne sont pas acceptées';
             emailInput.style.borderColor = '#ff5555';
             return false;
           }
@@ -1007,14 +1010,14 @@
           if (TYPO_DOMAINS.includes(domain)) {
             emailValidationEl.style.display = 'block';
             emailValidationEl.style.color = '#ffaa00';
-            emailValidationEl.textContent = `⚠️ Attention : @${domain} semble contenir une faute de frappe`;
+            emailValidationEl.textContent = window.i18n ? window.i18n.t('contact.email_typo_warning', { domain }) : `⚠️ Attention : @${domain} semble contenir une faute de frappe`;
             emailInput.style.borderColor = '#ffaa00';
             return true;
           }
 
           emailValidationEl.style.display = 'block';
           emailValidationEl.style.color = '#00f0ff';
-          emailValidationEl.textContent = '✓ Adresse email valide';
+          emailValidationEl.textContent = window.i18n ? window.i18n.t('contact.email_valid') : '✓ Adresse email valide';
           emailInput.style.borderColor = 'rgba(0, 240, 255, 0.5)';
           return true;
         }
@@ -1035,12 +1038,14 @@
             const websiteVal = document.getElementById('form-website')?.value || '';
 
             if (!nameVal || !emailVal || !serviceSelect.value) {
-              alert('Veuillez remplir tous les champs obligatoires (Nom, Email et Offre de service).');
+              const msg = window.i18n ? window.i18n.t('contact.validation_required') : 'Veuillez remplir tous les champs obligatoires (Nom, Email et Offre de service).';
+              alert(msg);
               return;
             }
 
             if (!validateEmailLive()) {
-              alert('Veuillez vérifier votre adresse email avant d\'envoyer le formulaire.');
+              const msg = window.i18n ? window.i18n.t('contact.validation_email_check') : 'Veuillez vérifier votre adresse email avant d\'envoyer le formulaire.';
+              alert(msg);
               return;
             }
 
@@ -1049,7 +1054,7 @@
             const originalText = submitBtn ? submitBtn.textContent : '';
             if (submitBtn) {
               submitBtn.disabled = true;
-              submitBtn.textContent = 'Envoi en cours...';
+              submitBtn.textContent = window.i18n ? window.i18n.t('contact.submitting') : 'Envoi en cours...';
             }
 
             try {
@@ -1102,10 +1107,12 @@
                 // Reset active cards
                 serviceCards.forEach(c => c.classList.remove('is-active'));
               } else {
-                alert(result.error || 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr');
+                const defaultErrMsg = window.i18n ? window.i18n.t('contact.error_submission') : 'Une erreur est survenue lors de l\'envoi. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr';
+                alert(result.error || defaultErrMsg);
               }
             } catch (error) {
-              alert('Erreur de connexion. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr');
+              const connErrMsg = window.i18n ? window.i18n.t('contact.error_connection') : 'Erreur de connexion. Veuillez réessayer ou envoyer un email directement à contact@fredericmoitry.fr';
+              alert(connErrMsg);
             } finally {
               if (submitBtn) {
                 submitBtn.disabled = false;

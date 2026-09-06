@@ -200,6 +200,20 @@ export const zh: TranslationDictionary = {
   'modal.success_text': '感谢您的来信！您的项目需求已成功登记。我将在24至48小时内予以回复。',
   'modal.success_close': '关闭 / 返回作品集',
 
+  // Contact Notifications & Alerts
+  'contact.validation_required': '请填写所有必填字段（姓名、电子邮箱和服务项目）。',
+  'contact.validation_email_check': '请在提交表格之前核对您的电子邮箱地址。',
+  'contact.email_format_invalid': '❌ 电子邮箱格式无效（例如：name@domain.com）',
+  'contact.email_disposable_blocked': '🚫 不接受一次性或临时电子邮箱地址',
+  'contact.email_typo_warning': '⚠️ 注意：@{domain} 似乎包含拼写错误',
+  'contact.email_valid': '✓ 电子邮箱地址有效',
+  'contact.email_copied': '✓ 邮箱 contact@fredericmoitry.fr 已复制！',
+  'contact.file_format_unsupported': '不支持的文件格式 (.{ext})。仅接受 PDF、MD、DOCX 和 TXT 文件。',
+  'contact.file_size_exceeded': '文件超过最大限制 2 MB ({size} MB)。',
+  'contact.submitting': '正在发送...',
+  'contact.error_submission': '发送过程中出错。请重试或直接发送邮件至 contact@fredericmoitry.fr',
+  'contact.error_connection': '网络连接错误。请重试或直接发送邮件至 contact@fredericmoitry.fr',
+
   'footer.logo': 'FRÉDÉRIC MOITRY',
   'footer.tagline': '产品设计师与UX/UI专家',
   'footer.vision': '愿景',

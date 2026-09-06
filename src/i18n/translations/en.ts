@@ -210,6 +210,20 @@ export const en: TranslationDictionary = {
   'modal.success_text': 'Thank you! Your project request has been successfully recorded. I will get back to you within 24 to 48 hours.',
   'modal.success_close': 'Close / Return to portfolio',
 
+  // Contact Notifications & Alerts
+  'contact.validation_required': 'Please fill in all required fields (Name, Email, and Service Offer).',
+  'contact.validation_email_check': 'Please verify your email address before submitting the form.',
+  'contact.email_format_invalid': '❌ Invalid email format (e.g., name@domain.com)',
+  'contact.email_disposable_blocked': '🚫 Temporary / disposable email addresses are not accepted',
+  'contact.email_typo_warning': '⚠️ Warning: @{domain} appears to contain a typo',
+  'contact.email_valid': '✓ Valid email address',
+  'contact.email_copied': '✓ Address contact@fredericmoitry.fr copied!',
+  'contact.file_format_unsupported': 'Unsupported file format (.{ext}). Only PDF, MD, DOCX, and TXT files are accepted.',
+  'contact.file_size_exceeded': 'File exceeds maximum size of 2 MB ({size} MB).',
+  'contact.submitting': 'Sending request...',
+  'contact.error_submission': 'An error occurred while sending. Please try again or email directly to contact@fredericmoitry.fr',
+  'contact.error_connection': 'Connection error. Please try again or email directly to contact@fredericmoitry.fr',
+
   // Footer
   'footer.logo': 'FRÉDÉRIC MOITRY',
   'footer.tagline': 'Product Designer & Expert UX/UI',

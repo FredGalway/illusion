@@ -33,6 +33,18 @@ class I18nEngine {
     return this.currentLang;
   }
 
+  public t(key: string, params?: Record<string, string>): string {
+    const dict = TRANSLATIONS[this.currentLang] || TRANSLATIONS.fr;
+    const fallbackDict = TRANSLATIONS.fr;
+    let val = dict[key] !== undefined ? dict[key] : (fallbackDict[key] || key);
+    if (params) {
+      Object.keys(params).forEach((paramKey) => {
+        val = val.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), params[paramKey]);
+      });
+    }
+    return val;
+  }
+
   public async init(): Promise<void> {
     if (this.initialized) return;
 
@@ -327,3 +339,6 @@ class I18nEngine {
 }
 
 export const i18n = new I18nEngine();
+if (typeof window !== 'undefined') {
+  (window as any).i18n = i18n;
+}
